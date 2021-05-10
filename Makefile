@@ -28,7 +28,10 @@ test:
 	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/Dragonborne-demo.gb"
 	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/Deadeus - rom/deadeus.gb"
 	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/2bityou.itch.io-aliens-game.gb"
-	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/discord-mel-lumpytouch.itch.io-super-impostor-bros.gb"	
+	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/discord-mel-lumpytouch.itch.io-super-impostor-bros.gb"
+	./$(BIN) ~/"Desktop/incoming/Gameboy Homebrew ROMs/discord-tortussa-darionquest.gb"
+
+
 
 # Linux MinGW build for Windows
 # (static linking to avoid DLL dependencies)
