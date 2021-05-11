@@ -5,57 +5,32 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "gbtoolchainid.h"
 
+#include "common.h"
+#include "gbsignatures.h"
+
+#define SIG_LOC_ANY 0xffffffff
 
 static uint8_t * g_p_searchbuf = NULL;
 static uint32_t g_searchbuf_len = 0;
 
+char g_tools_name[MAX_STR_LEN] = "";
+char g_tools_version[MAX_STR_LEN] = "";
+bool g_tools_found = false;
 
-// TODO: try to extract ROM name string
-
-
-// Set the global search buffer
-static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
-    g_p_searchbuf = p_rom_data;
-    g_searchbuf_len = rom_size;
-}
+char g_engine_name[MAX_STR_LEN] = "";
+char g_engine_version[MAX_STR_LEN] = "";
+bool g_engine_found = false;
 
 
-// TODO: add a max_position value to limit searches the possible range (don't search inapplicable areas)
-// TODO: uint32_t -> size_t
-// TODO: optimize: at least to rolling hash, or better
-//                 https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
-// Find pattern in a buffer, set p_index to starting location if found
-static bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t * p_index) {
-    
-    if (pattern_len > g_searchbuf_len) {
-        return false;
-    }
+static void set_search_buf(uint8_t *, uint32_t);
+static bool find_pattern(const uint8_t *, uint32_t, uint32_t);
+static void set_tools(const char * , const char *);
+static void set_engine(const char * , const char *);
+static bool check_gbstudio(void);
+static bool check_gbdk(void);
+static bool check_zgb(void) ;
 
-    // Zero out index location
-    *p_index = 0;
-
-    // Try to locate first possible instance
-    uint8_t * p_match = memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
-    uint32_t remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
-
-    while (p_match != NULL) {       
-        if (pattern_len <= remaining) {
-
-            if (memcmp(p_match, p_pattern, pattern_len) == 0) {
-                *p_index = (uint32_t)(p_match - g_p_searchbuf);
-                return true;
-            }
-        } else
-            break;
-
-        p_match++;
-        p_match = memchr(p_match, p_pattern[0], remaining);
-        remaining = g_searchbuf_len - (p_match - g_p_searchbuf);        
-    }
-    return false;
-}
 
 
 // ==== ZGB ====
@@ -65,7 +40,7 @@ static bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32
     const uint8_t sig_zgb_2020_0_pushbank[] = {0x34, 0x4E, 0x23, 0x46, 0x02, 0x01, 0x00, 0x20, 0x02};
     const uint8_t sig_zgb_2020_0_popbank[]  = {0x35, 0x4E, 0x23, 0x46, 0x0A, 0x01, 0x00, 0x20, 0x02};
     const uint8_t sig_zgb_2020_1_to_2021_0_pushbank[] = {0x34, 0x4E, 0x23, 0x46, 0xFA, 0x90, 0xFF, 0x02, 0xF8, 0x02, 0x7E, 0xEA, 0x90, 0xFF, 0xEA, 0x00, 0x20};
-    const uint8_t sig_zgb_2020_1_to_2021_0_popbank[]  = {0x4E, 0x23, 0x46, 0x0A, 0xEA, 0x90, 0xFF, 0xEA, 0x00, 0x20, 0x2B, 0x35};
+    const uint8_t sig_zgb_2020_1_to_2021_0_popbank[]  = {0x4E, 0x23, 0x46, 0x0A, 0xEA, 0x90, 0xFF, 0xEA, 0x00, 0x20, 0x2B, 0x35};   
 
 // ==== GBDK ====
 // Bitmap defines
@@ -111,179 +86,196 @@ static bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32
 
 
 
-// Check GBStudio engine
-static bool check_gbstudio() {
 
-    uint32_t p_match_idx;
+// Set the global search buffer
+static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
+    g_p_searchbuf = p_rom_data;
+    g_searchbuf_len = rom_size;
+}
+
+
+// TODO: uint32_t -> size_t
+// TODO: optimize: at least to rolling hash, or better
+//                 https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
+// Find pattern in a buffer, return true/false depending on whether it 
+// matched the expected location. Search aborts if past requested address
+static bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t match_index) {
+
+    uint32_t cur_addr = 0;
+
+    if (pattern_len > g_searchbuf_len) {
+        return false;
+    }
+
+
+    // Try to locate first possible instance
+    uint8_t * p_match = memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
+    uint32_t remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
+
+    while (p_match != NULL) {
+        if (pattern_len <= remaining) {
+
+            if (memcmp(p_match, p_pattern, pattern_len) == 0) {
+                cur_addr = (uint32_t)(p_match - g_p_searchbuf);
+
+                if (match_index == SIG_LOC_ANY)   // Any address allowed: Success
+                    return true;
+                else if (match_index == cur_addr) // Matched requested address: Success
+                    return true;
+                if (cur_addr > match_index)       // Abort search if past requested address
+                    return false;
+            }
+        } else
+            break;
+
+        p_match++;
+        p_match = memchr(p_match, p_pattern[0], remaining);
+        remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
+    }
+    return false;
+}
+
+
+static void set_tools(const char * tools_name, const char * tools_version) {
+    snprintf(g_tools_name,    MAX_STR_LEN, "%s", tools_name);
+    snprintf(g_tools_version, MAX_STR_LEN, "%s", tools_version);
+    g_tools_found = true;
+}
+
+
+static void set_engine(const char * engine_name, const char * engine_version) {
+    snprintf(g_engine_name,    MAX_STR_LEN, "%s", engine_name);
+    snprintf(g_engine_version, MAX_STR_LEN, "%s", engine_version);
+    g_engine_found = true;
+}
+
+
+// Check GBStudio engine
+static bool check_gbstudio(void) {
+
+    const char str_gbstudio[] = "GBStudio";
 
     // GBStudio 1.0.0 - 1.2.1
-    if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1), &p_match_idx)) {        
-         // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_fades_1_0_0_to_1_2_1");
+    if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1), SIG_LOC_ANY)) {
         
-        if (find_pattern(sig_gbs_uicolors_1_0_0, sizeof(sig_gbs_uicolors_1_0_0), &p_match_idx)) {
-            fprintf(stdout, "  - Engine: GBStudio 1.0.0\n");
+        if (find_pattern(sig_gbs_uicolors_1_0_0, sizeof(sig_gbs_uicolors_1_0_0), SIG_LOC_ANY)) {
+            set_engine(str_gbstudio, "1.0.0");
             return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_uicolors_1_0_0");
         }
         // GBStudio 1.1.0 - 1.2.1
-        else
-        if (find_pattern(sig_gbs_uicolors_1_1_0_plus, sizeof(sig_gbs_uicolors_1_1_0_plus), &p_match_idx)) {
-            fprintf(stdout, "  - Engine: GBStudio 1.0.0 - 1.2.1\n");
+        else if (find_pattern(sig_gbs_uicolors_1_1_0_plus, sizeof(sig_gbs_uicolors_1_1_0_plus), SIG_LOC_ANY)) {
+            set_engine(str_gbstudio, "1.0.0 - 1.2.1");
             return true;
-            fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_uicolors_1_1_0_plus");
         }
     }
-    // GBStudio 2.0.0 beta 1
-    // Should only be checked if previous fails
-    else if (find_pattern(sig_gbs_fades_2_0_0_beta1, sizeof(sig_gbs_fades_2_0_0_beta1), &p_match_idx)) {        
-        fprintf(stdout, "  - Engine: GBStudio 2.0.0 beta 1\n");
+    // GBStudio 2.0.0 beta 1 (Should only be checked if previous test fails)
+    else if (find_pattern(sig_gbs_fades_2_0_0_beta1, sizeof(sig_gbs_fades_2_0_0_beta1), SIG_LOC_ANY)) {
+        set_engine(str_gbstudio, "2.0.0 Beta 1");
         return true;
-        // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_fades_2_0_0_beta1");
     }
+
     // GBStudio 2.0.0 beta 2+
-    if (find_pattern(sig_gbs_fades_2_0_0_beta2_plus, sizeof(sig_gbs_fades_2_0_0_beta2_plus), &p_match_idx)) {        
-         // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_fades_2_0_0_beta2_plus");
+    if (find_pattern(sig_gbs_fades_2_0_0_beta2_plus, sizeof(sig_gbs_fades_2_0_0_beta2_plus), SIG_LOC_ANY)) {
 
         // GBStudio 2.0.0 beta 5+ (preliminary- not yet offically released)
-        if (find_pattern(sig_gbs_uicolors_2_0_0_beta5_plus, sizeof(sig_gbs_uicolors_2_0_0_beta5_plus), &p_match_idx)) {
-            fprintf(stdout, "  - Engine: GBStudio 2.0.0 beta 5+\n");
+        // Check Beta 5 first, then fall back since it has shared signatures
+        if (find_pattern(sig_gbs_uicolors_2_0_0_beta5_plus, sizeof(sig_gbs_uicolors_2_0_0_beta5_plus), SIG_LOC_ANY)) {
+            set_engine(str_gbstudio, "2.0.0 beta 5+");
             return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbs_uicolors_2_0_0_beta5_plus");
         }
         // Otherwise GBStudio 2.0.0 beta 2 - 4
         else {
-            fprintf(stdout, "  - Engine: GBStudio 2.0.0 beta 2 - 4\n");
+            set_engine(str_gbstudio, "2.0.0 beta 2 - 4");
             return true;
         }
-
     }
+
     return false;
 }
 
 
 // Check for GBDK 2.x - GBDK-2020
-static bool check_gbdk() {
+static bool check_gbdk(void) {
 
-    uint32_t p_match_idx;
-
-    // GBDK 2.x - GBDK-2020 3.2.0
-    if (find_pattern(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), &p_match_idx)) {
-        if (p_match_idx == sig_gbdk_bmp_2x_to_2020_320_at) {
-
-
-            // Otherwise: GBDK 2.x - GBDK-2020 3.2.0
-            fprintf(stdout, "  - Tools: GBDK 2.x - GBDK-2020 3.2.0\n");
-            return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_bmp_2x_to_2020_320_at");
-        }
-    }
+        const char str_gbdk[] = "GBDK";
 
     // GBDK-2020 4.0.0
-    if (find_pattern(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), &p_match_idx)) {
-        if (p_match_idx == sig_gbdk_0x80_at) {
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x80_GBDK_4_0_0");
-
-            // A second test
-            // GBDK-2020 4.0.0
-            if (find_pattern(sig_gbdk_0x20_GBDK_2020_400, sizeof(sig_gbdk_0x20_GBDK_2020_400), &p_match_idx)) {
-                if (p_match_idx == sig_gbdk_0x20_at) {
-
-                    fprintf(stdout, "  - Tools: GBDK-2020.4.0.0\n");
-                    return true;
-                    // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x20_GBDK_2020_400");
-                }
-            }
+    if (find_pattern(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), sig_gbdk_0x80_at)) {
+        // GBDK-2020 4.0.0 (Additional test to strengthen match)
+        if (find_pattern(sig_gbdk_0x20_GBDK_2020_400, sizeof(sig_gbdk_0x20_GBDK_2020_400), sig_gbdk_0x20_at)) {
+            set_tools(str_gbdk, "2020.4.0.0");
+            return true;
         }
     }
 
+    // GBDK 2.x - GBDK-2020 3.2.0
+    if (find_pattern(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
+        set_tools(str_gbdk, "2.x - 2020-3.2.0");
+        return true;
+    }
+
+
     // GBDK-2020 4.0.1 and later
-    if (find_pattern(sig_gbdk_0x20_GBDK_2020_401_plus, sizeof(sig_gbdk_0x20_GBDK_2020_401_plus), &p_match_idx)) {
-        if (p_match_idx == sig_gbdk_0x20_at) {
-            // fprintf(stdout, "  - Tools: GBDK-2020.4.0.1+\n");
+    if (find_pattern(sig_gbdk_0x20_GBDK_2020_401_plus, sizeof(sig_gbdk_0x20_GBDK_2020_401_plus), sig_gbdk_0x20_at)) {
+        // GBDK-2020 4.0.1 and later (Additional test to strengthen match)
+        if (find_pattern(sig_gbdk_0x30_GBDK_2020_401_plus, sizeof(sig_gbdk_0x30_GBDK_2020_401_plus), sig_gbdk_0x30_at)) {
 
-            // An additional check
-            // GBDK Part 3 (0x30) GBDK-2020 4.0.1 and later
-            if (find_pattern(sig_gbdk_0x30_GBDK_2020_401_plus, sizeof(sig_gbdk_0x30_GBDK_2020_401_plus), &p_match_idx)) {
-                if (p_match_idx == sig_gbdk_0x30_at) {
+            // GBDK Part 4 (0x150) GBDK-2020 4.0.1
+            if (find_pattern(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2x_to_2020_401_at)) {
+                set_tools(str_gbdk, "2020.4.0.1");
+                return true;
+            }
 
-                    // fprintf(stdout, "  - Tools: GBDK-2020.4.0.1+\n");
-                    // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x30_GBDK_2020_401_plus");
+            //  GBDK-2020 4.0.2
+            if (find_pattern(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2020_401_to_402_at)) {
+                set_tools(str_gbdk, "2020.4.0.2");
+                return true;
+            }
 
-                    // GBDK Part 4 (0x150) GBDK-2020 4.0.1
-                    if (find_pattern(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), &p_match_idx)) {
-
-                        if (p_match_idx == sig_gbdk_0x150_GBDK_2x_to_2020_401_at) {
-                            fprintf(stdout, "  - Tools: GBDK 2020.4.0.1\n");
-                            return true;
-                            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x150_GBDK_2x_to_2020_401_at");
-                        }
-
-                        //  GBDK-2020 4.0.2
-                        if (p_match_idx == sig_gbdk_0x150_GBDK_2020_401_to_402_at) {
-                            fprintf(stdout, "  - Tools: GBDK 2020.4.0.2\n");
-                            return true;
-                            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x150_GBDK_2020_401_to_402_at");
-                        }
-                    }
-
-                    // GBDK-2020 4.0.3 and later
-                    if (find_pattern(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), &p_match_idx)) {
-                        if (p_match_idx == sig_gbdk_0x153_GBDK_2020_403_plus_at) {
-                            fprintf(stdout, "  - Tools: GBDK 2020.4.0.3+\n");
-                            return true;
-                            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_gbdk_0x153_GBDK_2020_403_plus_at");
-                        }
-                    }
-                }
+            // GBDK-2020 4.0.3 and later
+            if (find_pattern(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
+                set_tools(str_gbdk, "2020.4.0.3+");
+                return true;
             }
         }
     }
 
     return false;
 }
-
 
 
 // TODO: early ZGB titles (2016 - 2017) aren't reliably detected. Consider dropping the sound table requirement.
 // Check ZGB engine
-static bool check_zgb() {
+static bool check_zgb(void) {
 
-    uint32_t p_match_idx;
+    const char str_zgb[] = "ZGB";
 
     // Require sound const pattern, as starting filter
-    if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound), &p_match_idx)) {        
-        // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_sound");
+    if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound), SIG_LOC_ANY)) {
         
-        if (find_pattern(sig_zgb_2017, sizeof(sig_zgb_2017), &p_match_idx)) {
-            fprintf(stdout, "  - Engine: ZGB 2016-2017\n");
+        if (find_pattern(sig_zgb_2017, sizeof(sig_zgb_2017), SIG_LOC_ANY)) {
+            set_engine(str_zgb, "2016-2017");
             return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_2017");
         }
 
         // ZGB 2020.0
-        if ((find_pattern(sig_zgb_2020_0_pushbank, sizeof(sig_zgb_2020_0_pushbank), &p_match_idx)) &&
-            (find_pattern(sig_zgb_2020_0_popbank,  sizeof(sig_zgb_2020_0_popbank), &p_match_idx))) {
+        if ((find_pattern(sig_zgb_2020_0_pushbank, sizeof(sig_zgb_2020_0_pushbank), SIG_LOC_ANY)) &&
+            (find_pattern(sig_zgb_2020_0_popbank,  sizeof(sig_zgb_2020_0_popbank), SIG_LOC_ANY))) {
 
-            fprintf(stdout, "  - Engine: ZGB 2020.0\n");
+            set_engine(str_zgb, "2020.0");
             return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_2020_0_pushbank");
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_2020_0_popbank");
         }
 
         // ZGB 2020.1        
-        if ((find_pattern(sig_zgb_2020_1_to_2021_0_pushbank, sizeof(sig_zgb_2020_1_to_2021_0_pushbank), &p_match_idx)) &&
-            (find_pattern(sig_zgb_2020_1_to_2021_0_popbank, sizeof(sig_zgb_2020_1_to_2021_0_popbank), &p_match_idx))) {
-            fprintf(stdout, "  - Engine: ZGB 2020.1 - 2021.0\n");
+        if ((find_pattern(sig_zgb_2020_1_to_2021_0_pushbank, sizeof(sig_zgb_2020_1_to_2021_0_pushbank), SIG_LOC_ANY)) &&
+            (find_pattern(sig_zgb_2020_1_to_2021_0_popbank, sizeof(sig_zgb_2020_1_to_2021_0_popbank), SIG_LOC_ANY))) {
+            set_engine(str_zgb, "2020.1 - 2021.0");
             return true;
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_2020_1_to_2021_0_pushbank");
-            // fprintf(stdout, "  - Found: 0x%08x - %s\n", p_match_idx, "sig_zgb_2020_1_to_2021_0_popbank");
         }
     }
 
     return false;
 }
-
-
 
 
 bool gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
@@ -294,6 +286,12 @@ bool gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
     // if (check_gbdk()) {
     check_zgb();
     check_gbstudio();
+
+    if (g_tools_found)
+        printf("Tools: %s, Version: %s\n", g_tools_name, g_tools_version);
+
+    if (g_engine_found)
+        printf("Engine: %s, Version: %s\n", g_engine_name, g_engine_version);
 
  
 
