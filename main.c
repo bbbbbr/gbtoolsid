@@ -84,9 +84,9 @@ static int process_file() {
     uint32_t  buf_size_in = 0;
 
     fprintf(stdout, "File: %s\n", get_filename_from_path(filename_in));
-    p_buf_in =  file_read_into_buffer(filename_in, &buf_size_in);
+    p_buf_in = file_read_into_buffer(filename_in, &buf_size_in);
 
-    if (p_buf_in)
+    if ((p_buf_in) && (buf_size_in > 0))
         return gbtools_detect(p_buf_in, buf_size_in);
     else
         fprintf(stdout, "ERROR:  -->Failed to open %s\n", filename_in);
