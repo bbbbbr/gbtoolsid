@@ -39,7 +39,7 @@ linux: $(COBJ)
 linuxzip: linux
 	mkdir -p bin
 	zip $(BIN)_linux.zip $(BIN)
-	cp $(BIN)_linux.zip bin
+	mv $(BIN)_linux.zip bin
 
 
 # Linux MinGW build for Windows
@@ -53,7 +53,7 @@ wincross: $(COBJ)
 wincrosszip: wincross
 	mkdir -p bin
 	zip $(BIN)_windows.zip $(BIN).exe 
-	cp $(BIN)_windows.zip bin
+	mv $(BIN)_windows.zip bin
 
 
 package:
