@@ -84,7 +84,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
         return false;
 
     // Try to locate first possible instance
-    uint8_t * p_match = memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
+    uint8_t * p_match = (uint8_t *)memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
     uint32_t remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
 
     while (p_match != NULL) {
@@ -99,7 +99,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
             break;
 
         p_match++;
-        p_match = memchr(p_match, p_pattern[0], remaining);
+        p_match = (uint8_t *)memchr(p_match, p_pattern[0], remaining);
         remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
     }
 
