@@ -57,7 +57,7 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
     if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
         (g_searchbuf_len == 0)  || (pattern_len == 0))
         return false;
-    
+
     // Don't try to search if requested match address or
     // pattern length would be past end of [zero indexed] search buffer
     if ((match_index + pattern_len - 1) > (g_searchbuf_len - 1))
@@ -75,28 +75,7 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 // No memmem on MinGW, so use the same for both instead of:
 // return (memmem(g_p_searchbuf, g_searchbuf_len, p_pattern, pattern_len) != NULL);
 //
-// Expects 
 bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
-
-/*
-    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
-        (g_searchbuf_len == 0)  || (pattern_len == 0)  ||
-        (pattern_len > g_searchbuf_len))
-        return false;
-
-    uint8_t * p_match = g_p_searchbuf;
-    int bytes_left = g_searchbuf_len - pattern_len;
-
-    while (bytes_left--) {
-        if (*p_match == *p_pattern) {
-            if (memcmp(p_match, p_pattern, pattern_len) == 0)
-                return true;
-        }
-        p_match++;
-    }
-
-    return false;
-*/
 
     uint32_t cur_addr = 0;
 
