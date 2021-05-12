@@ -2,10 +2,11 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
-#define MAX_FILE_STR 2048
+#define MAX_FILE_STR 4096
 #define MAX_STR_LEN  2048
 
-#define STRINGIFY(x) #x
-#define TOSTR(x) STRINGIFY(x)
+#define OUTPUT_DEFAULT 0
+#define OUTPUT_JSON    1
+#define OUTPUT_CSV     2
 
 #endif // _COMMON_H

@@ -11,7 +11,6 @@
 #include "sig_zgb.h"
 #include "sig_gbstudio.h"
 
-
 static uint8_t * g_p_searchbuf = NULL;
 static uint32_t g_searchbuf_len = 0;
 
@@ -108,7 +107,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
 }
 
 
-bool gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
+void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
 
     set_search_buf(p_rom_data, rom_size);
 
@@ -117,16 +116,46 @@ bool gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
     // if (check_gbdk()) {
     check_zgb();
     check_gbstudio();
-
-    if (g_tools_found)
-        printf("Tools: %s, Version: %s\n", g_tools_name, g_tools_version);
-    else
-        printf("Tools: <unknown>\n");
-
-    if (g_engine_found)
-        printf("Engine: %s, Version: %s\n", g_engine_name, g_engine_version);
-
-    return true;
-//    return false;
 }
 
+
+void display_output(int output_style, const char * filename) {
+
+    if (output_style == OUTPUT_JSON) {
+        fprintf(stdout,"{\n");
+
+        fprintf(stdout, "\"file\": \"%s\",\n", filename);
+
+        if (g_tools_found)
+            fprintf(stdout,"\"tools\": \"%s\", \"version\": \"%s\",\n", g_tools_name, g_tools_version);
+        else
+            fprintf(stdout,"\"tools\": null,   \"version\": null,\n");
+
+        if (g_engine_found)
+            fprintf(stdout,"\"engine\": \"%s\", \"version\": \"%s\",\n", g_engine_name, g_engine_version);
+        else
+            fprintf(stdout,"\"engine\": null, \"version\": null\n");
+
+        fprintf(stdout,"}\n");
+    }
+    else if (output_style == OUTPUT_CSV) {
+
+        fprintf(stdout,"\"File\",\"%s\", ", filename);
+        fprintf(stdout,"\"Tools\",\"%s\",\"Version\",\"%s\", ", g_tools_name, g_tools_version);
+        fprintf(stdout,"\"Engine\",\"%s\",\"Version\",\"%s\"\n", g_engine_name, g_engine_version);
+    } 
+    else { // OUTPUT_DEFAULT
+
+        fprintf(stdout, "File: %s\n", filename);
+
+        if (g_tools_found)
+            fprintf(stdout,"Tools: %s, Version: %s\n", g_tools_name, g_tools_version);
+        else
+            fprintf(stdout,"Tools: <unknown>\n");
+
+        if (g_engine_found)
+            fprintf(stdout,"Engine: %s, Version: %s\n", g_engine_name, g_engine_version);
+
+        fprintf(stdout,"\n");
+    }
+}
