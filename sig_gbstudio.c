@@ -28,30 +28,30 @@ bool check_gbstudio(void) {
     const char str_gbstudio[] = "GBStudio";
 
     // GBStudio 1.0.0 - 1.2.1
-    if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1), SIG_LOC_ANY)) {
+    if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1))) {
         
-        if (find_pattern(sig_gbs_uicolors_1_0_0, sizeof(sig_gbs_uicolors_1_0_0), SIG_LOC_ANY)) {
+        if (find_pattern(sig_gbs_uicolors_1_0_0, sizeof(sig_gbs_uicolors_1_0_0))) {
             set_engine(str_gbstudio, "1.0.0");
             return true;
         }
         // GBStudio 1.1.0 - 1.2.1
-        else if (find_pattern(sig_gbs_uicolors_1_1_0_plus, sizeof(sig_gbs_uicolors_1_1_0_plus), SIG_LOC_ANY)) {
+        else if (find_pattern(sig_gbs_uicolors_1_1_0_plus, sizeof(sig_gbs_uicolors_1_1_0_plus))) {
             set_engine(str_gbstudio, "1.0.0 - 1.2.1");
             return true;
         }
     }
     // GBStudio 2.0.0 beta 1 (Should only be checked if previous test fails)
-    else if (find_pattern(sig_gbs_fades_2_0_0_beta1, sizeof(sig_gbs_fades_2_0_0_beta1), SIG_LOC_ANY)) {
+    else if (find_pattern(sig_gbs_fades_2_0_0_beta1, sizeof(sig_gbs_fades_2_0_0_beta1))) {
         set_engine(str_gbstudio, "2.0.0 Beta 1");
         return true;
     }
 
     // GBStudio 2.0.0 beta 2+
-    if (find_pattern(sig_gbs_fades_2_0_0_beta2_plus, sizeof(sig_gbs_fades_2_0_0_beta2_plus), SIG_LOC_ANY)) {
+    if (find_pattern(sig_gbs_fades_2_0_0_beta2_plus, sizeof(sig_gbs_fades_2_0_0_beta2_plus))) {
 
         // GBStudio 2.0.0 beta 5+ (preliminary- not yet offically released)
         // Check Beta 5 first, then fall back since it has shared signatures
-        if (find_pattern(sig_gbs_uicolors_2_0_0_beta5_plus, sizeof(sig_gbs_uicolors_2_0_0_beta5_plus), SIG_LOC_ANY)) {
+        if (find_pattern(sig_gbs_uicolors_2_0_0_beta5_plus, sizeof(sig_gbs_uicolors_2_0_0_beta5_plus))) {
             set_engine(str_gbstudio, "2.0.0 beta 5+");
             return true;
         }

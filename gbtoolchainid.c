@@ -48,19 +48,33 @@ static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
 }
 
 
-// TODO: uint32_t -> size_t ?
-// TODO: optimize: at least to rolling hash, or better
-//                 https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
-// Find pattern in a buffer, return true/false depending on whether it 
-// matched the expected location. Search aborts if past requested address
-bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t match_index) {
+// Test for a pattern at a specific address
+//
+bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t match_index) {
+
+    uint8_t * p_match = g_p_searchbuf;
+
+    // Don't try to search if requested match address or
+    // pattern length would be past end of [zero indexed] search buffer
+    if ((match_index + pattern_len - 1) > (g_searchbuf_len - 1))
+        return false;
+
+    if (memcmp(&p_match[match_index], p_pattern, pattern_len) == 0)
+        return true;
+    else
+        return false;
+}
+
+
+// Try to find a pattern in a buffer
+//
+bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
 
     uint32_t cur_addr = 0;
 
     if (pattern_len > g_searchbuf_len) {
         return false;
     }
-
 
     // Try to locate first possible instance
     uint8_t * p_match = memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
@@ -72,12 +86,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t matc
             if (memcmp(p_match, p_pattern, pattern_len) == 0) {
                 cur_addr = (uint32_t)(p_match - g_p_searchbuf);
 
-                if (match_index == SIG_LOC_ANY)   // Any address allowed: Success
-                    return true;
-                else if (match_index == cur_addr) // Matched requested address: Success
-                    return true;
-                if (cur_addr > match_index)       // Abort search if past requested address
-                    return false;
+                return true;
             }
         } else
             break;

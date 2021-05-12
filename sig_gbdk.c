@@ -44,40 +44,40 @@ bool check_gbdk(void) {
         const char str_gbdk[] = "GBDK";
 
     // GBDK-2020 4.0.0
-    if (find_pattern(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), sig_gbdk_0x80_at)) {
+    if (check_pattern_addr(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), sig_gbdk_0x80_at)) {
         // GBDK-2020 4.0.0 (Additional test to strengthen match)
-        if (find_pattern(sig_gbdk_0x20_GBDK_2020_400, sizeof(sig_gbdk_0x20_GBDK_2020_400), sig_gbdk_0x20_at)) {
+        if (check_pattern_addr(sig_gbdk_0x20_GBDK_2020_400, sizeof(sig_gbdk_0x20_GBDK_2020_400), sig_gbdk_0x20_at)) {
             set_tools(str_gbdk, "2020.4.0.0");
             return true;
         }
     }
 
     // GBDK 2.x - GBDK-2020 3.2.0
-    if (find_pattern(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
+    if (check_pattern_addr(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
         set_tools(str_gbdk, "2.x - 2020-3.2.0");
         return true;
     }
 
 
     // GBDK-2020 4.0.1 and later
-    if (find_pattern(sig_gbdk_0x20_GBDK_2020_401_plus, sizeof(sig_gbdk_0x20_GBDK_2020_401_plus), sig_gbdk_0x20_at)) {
+    if (check_pattern_addr(sig_gbdk_0x20_GBDK_2020_401_plus, sizeof(sig_gbdk_0x20_GBDK_2020_401_plus), sig_gbdk_0x20_at)) {
         // GBDK-2020 4.0.1 and later (Additional test to strengthen match)
-        if (find_pattern(sig_gbdk_0x30_GBDK_2020_401_plus, sizeof(sig_gbdk_0x30_GBDK_2020_401_plus), sig_gbdk_0x30_at)) {
+        if (check_pattern_addr(sig_gbdk_0x30_GBDK_2020_401_plus, sizeof(sig_gbdk_0x30_GBDK_2020_401_plus), sig_gbdk_0x30_at)) {
 
             // GBDK Part 4 (0x150) GBDK-2020 4.0.1
-            if (find_pattern(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2x_to_2020_401_at)) {
+            if (check_pattern_addr(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2x_to_2020_401_at)) {
                 set_tools(str_gbdk, "2020.4.0.1");
                 return true;
             }
 
             //  GBDK-2020 4.0.2
-            if (find_pattern(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2020_401_to_402_at)) {
+            if (check_pattern_addr(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2020_401_to_402_at)) {
                 set_tools(str_gbdk, "2020.4.0.2");
                 return true;
             }
 
             // GBDK-2020 4.0.3 and later
-            if (find_pattern(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
+            if (check_pattern_addr(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
                 set_tools(str_gbdk, "2020.4.0.3+");
                 return true;
             }
