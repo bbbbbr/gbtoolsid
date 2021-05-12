@@ -127,22 +127,28 @@ void display_output(int output_style, const char * filename) {
         fprintf(stdout, "\"file\": \"%s\",\n", filename);
 
         if (g_tools_found)
-            fprintf(stdout,"\"tools\": \"%s\", \"version\": \"%s\",\n", g_tools_name, g_tools_version);
+            fprintf(stdout,"\"toolsName\": \"%s\", \"toolsVersion\": \"%s\",\n", g_tools_name, g_tools_version);
         else
-            fprintf(stdout,"\"tools\": null,   \"version\": null,\n");
+            fprintf(stdout,"\"toolsName\": null,   \"toolsVersion\": null,\n");
 
         if (g_engine_found)
-            fprintf(stdout,"\"engine\": \"%s\", \"version\": \"%s\",\n", g_engine_name, g_engine_version);
+            fprintf(stdout,"\"engineName\": \"%s\", \"engineVersion\": \"%s\",\n", g_engine_name, g_engine_version);
         else
-            fprintf(stdout,"\"engine\": null, \"version\": null\n");
+            fprintf(stdout,"\"engineName\": null, \"engineVersion\": null\n");
 
         fprintf(stdout,"}\n");
     }
     else if (output_style == OUTPUT_CSV) {
 
-        fprintf(stdout,"\"File\",\"%s\", ", filename);
-        fprintf(stdout,"\"Tools\",\"%s\",\"Version\",\"%s\", ", g_tools_name, g_tools_version);
-        fprintf(stdout,"\"Engine\",\"%s\",\"Version\",\"%s\"\n", g_engine_name, g_engine_version);
+        fprintf(stdout,"\"File\",\"%s\",", filename);
+        fprintf(stdout,"\"Tools Name \",\"%s\",\"Tools Version\",\"%s\",", g_tools_name, g_tools_version);
+        fprintf(stdout,"\"Engine Name\",\"%s\",\"Engine Version\",\"%s\"\n", g_engine_name, g_engine_version);
+    }
+    else if (output_style == OUTPUT_CSV_BARE) {
+
+        fprintf(stdout,"\"%s\",", filename);
+        fprintf(stdout,"\"%s\",\"%s\",", g_tools_name, g_tools_version);
+        fprintf(stdout,"\"%s\",\"%s\"\n", g_engine_name, g_engine_version);
     } 
     else { // OUTPUT_DEFAULT
 

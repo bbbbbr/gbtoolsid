@@ -30,9 +30,10 @@ static void display_help(void) {
        "     Game Boy game the result is printed to stdout.\n"
        "\n"
        "Options\n"
-       "-h  : Show this help screen\n"
-       "-oj : json style output\n"
-       "-oc : csv style output\n"
+       "-h   : Show this help screen\n"
+       "-oj  : json style output\n"
+       "-oc  : csv style output\n"
+       "-oC  : bare csv style output (no field names)\n"
        "\n"
        "Example: \"gbtoolchainid petris.gbc\"\n"
        );
@@ -62,6 +63,9 @@ int handle_args(int argc, char * argv[]) {
             }
             else if (strstr(argv[i], "-oc")) {
                 opt_output_style = OUTPUT_CSV;
+            }
+            else if (strstr(argv[i], "-oC")) {
+                opt_output_style = OUTPUT_CSV_BARE;
             } else
                 printf("gbtoolchainid: Warning: Ignoring unknown option %s\n", argv[i]);
         }
