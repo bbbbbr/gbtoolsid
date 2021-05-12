@@ -54,6 +54,10 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 
     uint8_t * p_match = g_p_searchbuf;
 
+    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
+        (g_searchbuf_len == 0)  || (pattern_len == 0))
+        return false;
+    
     // Don't try to search if requested match address or
     // pattern length would be past end of [zero indexed] search buffer
     if ((match_index + pattern_len - 1) > (g_searchbuf_len - 1))
@@ -68,13 +72,38 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 
 // Try to find a pattern in a buffer
 //
+// No memmem on MinGW, so use the same for both instead of:
+// return (memmem(g_p_searchbuf, g_searchbuf_len, p_pattern, pattern_len) != NULL);
+//
+// Expects 
 bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
+
+/*
+    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
+        (g_searchbuf_len == 0)  || (pattern_len == 0)  ||
+        (pattern_len > g_searchbuf_len))
+        return false;
+
+    uint8_t * p_match = g_p_searchbuf;
+    int bytes_left = g_searchbuf_len - pattern_len;
+
+    while (bytes_left--) {
+        if (*p_match == *p_pattern) {
+            if (memcmp(p_match, p_pattern, pattern_len) == 0)
+                return true;
+        }
+        p_match++;
+    }
+
+    return false;
+*/
 
     uint32_t cur_addr = 0;
 
-    if (pattern_len > g_searchbuf_len) {
+    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
+        (g_searchbuf_len == 0)  || (pattern_len == 0)  ||
+        (pattern_len > g_searchbuf_len))
         return false;
-    }
 
     // Try to locate first possible instance
     uint8_t * p_match = memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
@@ -95,7 +124,8 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
         p_match = memchr(p_match, p_pattern[0], remaining);
         remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
     }
-    return false;
+
+    return false; 
 }
 
 
