@@ -3,7 +3,7 @@
 #ifndef _GBTOOLCHAINID_H
 #define _GBTOOLCHAINID_H
 
-void gbtools_detect(uint8_t *, uint32_t);
+void gbtools_detect(uint8_t *, uint32_t, bool);
 void display_output(int, const char *);
 
 void set_tools(const char * , const char *);

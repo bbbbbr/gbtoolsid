@@ -18,6 +18,7 @@ char filename_in[MAX_STR_LEN] = {'\0'};
 uint8_t * p_buf_in  = NULL;
 
 int opt_output_style = OUTPUT_DEFAULT;
+bool opt_strict_checks = false;
 
 
 static void display_help(void);
@@ -36,7 +37,8 @@ static void display_help(void) {
        "-h   : Show this help screen\n"
        "-oj  : json style output\n"
        "-oc  : csv style output\n"
-       "-oC  : bare csv style output (no field names)\n"
+       "-oC  : Bare csv style output (no field names)\n"
+       "-s   : Strict mode: require GBDK match before testing ZGB or GBStudio\n"
        "\n"
        "Example: \"gbtoolchainid petris.gbc\"\n"
        );
@@ -52,7 +54,7 @@ int handle_args(int argc, char * argv[]) {
         return false;
     }
 
-    if (strstr(argv[i], "-h")) {
+    if (strstr(argv[i], "-h") == argv[i]) {
         display_help();
         return false;  // Don't parse input when -h is used
     }
@@ -61,14 +63,17 @@ int handle_args(int argc, char * argv[]) {
     // Last argument *must* be input files
     for (i = 1; i < (argc - 1); i++ ) {
         if (argv[i][0] == '-') {
-            if (strstr(argv[i], "-oj")) {
+            if (strstr(argv[i], "-oj") == argv[i]) {
                 opt_output_style = OUTPUT_JSON;
             }
-            else if (strstr(argv[i], "-oc")) {
+            else if (strstr(argv[i], "-oc") == argv[i]) {
                 opt_output_style = OUTPUT_CSV;
             }
-            else if (strstr(argv[i], "-oC")) {
+            else if (strstr(argv[i], "-oC") == argv[i]) {
                 opt_output_style = OUTPUT_CSV_BARE;
+            }
+            else if (strstr(argv[i], "-s") == argv[i]) {
+                opt_strict_checks = true;
             } else
                 printf("gbtoolchainid: Warning: Ignoring unknown option %s\n", argv[i]);
         }
@@ -100,7 +105,7 @@ static int process_file() {
     p_buf_in = file_read_into_buffer(filename_in, &buf_size_in);
 
     if ((p_buf_in) && (buf_size_in > 0)) {
-        gbtools_detect(p_buf_in, buf_size_in);
+        gbtools_detect(p_buf_in, buf_size_in, opt_strict_checks);
         return true;
     }
 

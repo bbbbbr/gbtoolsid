@@ -109,15 +109,22 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
 }
 
 
-void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size) {
+void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
+
+    bool result_gbdk     = false;
+    bool result_zgb      = false;
+    bool result_gbstudio = false;
 
     set_search_buf(p_rom_data, rom_size);
 
-    check_gbdk();
-    // TODO: probably better to only test ZGB and GBStudio if GBDK has a positive match
-    // if (check_gbdk()) {
-    check_zgb();
-    check_gbstudio();
+    result_gbdk = check_gbdk();
+
+    // If strict mode is turned on, only test
+    // for ZGB and GBStudio when GBDK is present
+    if ((strict_mode == false) || (result_gbdk == true)) {
+        result_zgb      = check_zgb();
+        result_gbstudio = check_gbstudio();
+    }
 }
 
 
