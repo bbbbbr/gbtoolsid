@@ -49,7 +49,7 @@ linuxzip: linux
 
 wincrosszip: wincross
 	mkdir -p bin
-	zip $(BIN)_windows.zip $(BIN).exe 
+	zip $(BIN)_windows.zip $(BIN_WIN)
 	mv $(BIN)_windows.zip bin
 
 
