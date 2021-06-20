@@ -3,6 +3,11 @@ gbtoolsid - Game Boy Toolchain ID
 
 A command line app for identifying tools used to build Game Boy ROMs
 
+For the web version see:  
+https://bbbbbr.github.io/gbtoolsid_web/  
+https://github.com/bbbbbr/gbtoolsid
+
+
 It attempts to identify the toolchain and engine through binary fingerprints:
 - GBDK 2.x and GBDK-2020
 - ZGB
