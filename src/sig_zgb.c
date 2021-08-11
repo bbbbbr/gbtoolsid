@@ -31,7 +31,7 @@ bool check_zgb(void) {
 
     // Require sound const pattern, as starting filter
     if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound))) {
-        
+
         if (find_pattern(sig_zgb_2017, sizeof(sig_zgb_2017))) {
             set_engine(str_zgb, "2016-2017");
             return true;
@@ -45,7 +45,7 @@ bool check_zgb(void) {
             return true;
         }
 
-        // ZGB 2020.1        
+        // ZGB 2020.1
         if ((find_pattern(sig_zgb_2020_1_to_2021_0_pushbank, sizeof(sig_zgb_2020_1_to_2021_0_pushbank))) &&
             (find_pattern(sig_zgb_2020_1_to_2021_0_popbank, sizeof(sig_zgb_2020_1_to_2021_0_popbank)))) {
             set_engine(str_zgb, "2020.1 - 2021.0");

@@ -33,7 +33,7 @@ bool check_gbstudio(void) {
 
     // GBStudio 1.0.0 - 1.2.1
     if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1))) {
-        
+
         if (find_pattern(sig_gbs_uicolors_1_0_0, sizeof(sig_gbs_uicolors_1_0_0))) {
             set_engine(str_gbstudio, "1.0.0");
             return true;

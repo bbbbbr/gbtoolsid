@@ -10,7 +10,7 @@
 
 
 // ==== GBDK ====
-// 
+//
 // These are almost all in crt0.s
 //
 // Bitmap defines
@@ -31,6 +31,9 @@
 // 0x80
     const uint32_t sig_gbdk_0x80_at = 0x0080;
     const uint8_t sig_gbdk_0x80_GBDK_4_0_0[]  = {0xC5, 0xD5, 0x2A, 0xB6, 0x28, 0x09, 0xE5, 0x3A, 0x6E, 0x67, 0xE7, 0xE1, 0x23, 0x18, 0xF3, 0xD1, 0xC1, 0xE1, 0xF0, 0x41, 0xE6, 0x02, 0x20, 0xFA, 0xF1, 0xD9};
+// 0x100
+    const uint32_t sig_gbdk_0x100_at = 0x0100;
+    const uint8_t sig_gbdk_0x100_GBDK_4_0_4[]  = {0x18, 0x51};
 // 0x150
     // These should only be used when stacked on other entries
     const uint8_t sig_gbdk_0x150[] = {0xF3, 0x57, 0xAF, 0x31};
@@ -84,7 +87,14 @@ bool check_gbdk(void) {
 
             // GBDK-2020 4.0.3 and later
             if (check_pattern_addr(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
-                set_tools(str_gbdk, "2020.4.0.3+");
+                set_tools(str_gbdk, "2020.4.0.3");
+
+                // GBDK-2020 4.0.4 and later
+                if (check_pattern_addr(sig_gbdk_0x100_GBDK_4_0_4, sizeof(sig_gbdk_0x100_GBDK_4_0_4), sig_gbdk_0x100_at)) {
+                    set_tools(str_gbdk, "2020.4.0.4+");
+                    return true;
+                }
+
                 return true;
             }
         }
