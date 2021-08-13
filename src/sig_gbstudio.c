@@ -68,6 +68,7 @@ bool check_gbstudio(void) {
         }
     }
 
+    // GBStudio 3.0.0 alpha +
     if (find_pattern(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus, sizeof(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus))) {
         set_engine(str_gbstudio, "3.0.0 alpha 1+");
         return true;

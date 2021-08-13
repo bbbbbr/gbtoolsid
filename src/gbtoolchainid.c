@@ -13,6 +13,14 @@
 #include "sig_zgb.h"
 #include "sig_gbstudio.h"
 
+#include "sig_music_gbtplayer.h"
+#include "sig_music_hugetracker.h"
+#include "sig_music_carillon.h"
+#include "sig_music_paragon5.h"
+#include "sig_music_lemon.h"
+
+#include "sig_soundfx_fxhammer.h"
+
 static uint8_t * g_p_searchbuf = NULL;
 static uint32_t g_searchbuf_len = 0;
 
@@ -24,9 +32,19 @@ char g_engine_name[MAX_STR_LEN] = "";
 char g_engine_version[MAX_STR_LEN] = "";
 bool g_engine_found = false;
 
+char g_music_name[MAX_STR_LEN] = "";
+char g_music_version[MAX_STR_LEN] = "";
+bool g_music_found = false;
+
+char g_soundfx_name[MAX_STR_LEN] = "";
+char g_soundfx_version[MAX_STR_LEN] = "";
+bool g_soundfx_found = false;
+
 
 static void set_search_buf(uint8_t *, uint32_t);
 
+
+// TODO: switch to just registering type / name / version entries
 
 void set_tools(const char * tools_name, const char * tools_version) {
     snprintf(g_tools_name,    MAX_STR_LEN, "%s", tools_name);
@@ -39,6 +57,19 @@ void set_engine(const char * engine_name, const char * engine_version) {
     snprintf(g_engine_name,    MAX_STR_LEN, "%s", engine_name);
     snprintf(g_engine_version, MAX_STR_LEN, "%s", engine_version);
     g_engine_found = true;
+}
+
+
+void set_music(const char * music_name, const char * music_version) {
+    snprintf(g_music_name,    MAX_STR_LEN, "%s", music_name);
+    snprintf(g_music_version, MAX_STR_LEN, "%s", music_version);
+    g_music_found = true;
+}
+
+void set_soundfx(const char * soundfx_name, const char * soundfx_version) {
+    snprintf(g_soundfx_name,    MAX_STR_LEN, "%s", soundfx_name);
+    snprintf(g_soundfx_version, MAX_STR_LEN, "%s", soundfx_version);
+    g_soundfx_found = true;
 }
 
 
@@ -105,7 +136,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
         remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
     }
 
-    return false; 
+    return false;
 }
 
 
@@ -114,6 +145,14 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     bool result_gbdk     = false;
     bool result_zgb      = false;
     bool result_gbstudio = false;
+
+    bool result_music_gbtplayer   = false;
+    bool result_music_hugetracker = false;
+    bool result_music_carillon    = false;
+    bool result_music_paragon5    = false;
+    bool result_music_lemon       = false;
+
+    bool result_soundfx_fxhammer  = false;
 
     set_search_buf(p_rom_data, rom_size);
 
@@ -125,6 +164,16 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
         result_zgb      = check_zgb();
         result_gbstudio = check_gbstudio();
     }
+    // Check for music drivers
+    // TODO: Should only one driver per ROM be supported? 2+ is unlikely, but...
+    result_music_gbtplayer = check_music_gbtplayer();
+    result_music_hugetracker = check_music_hugetracker();
+    result_music_carillon = check_music_carillon();
+    result_music_paragon5 = check_music_paragon5();
+    result_music_lemon = check_music_lemon();
+
+    // Check for sound fx drivers
+    result_soundfx_fxhammer = check_soundfx_fxhammer();
 }
 
 
@@ -158,7 +207,7 @@ void display_output(int output_style, const char * filename) {
         fprintf(stdout,"\"%s\",", filename);
         fprintf(stdout,"\"%s\",\"%s\",", g_tools_name, g_tools_version);
         fprintf(stdout,"\"%s\",\"%s\"\n", g_engine_name, g_engine_version);
-    } 
+    }
     else { // OUTPUT_DEFAULT
 
         fprintf(stdout, "File: %s\n", filename);
@@ -170,6 +219,12 @@ void display_output(int output_style, const char * filename) {
 
         if (g_engine_found)
             fprintf(stdout,"Engine: %s, Version: %s\n", g_engine_name, g_engine_version);
+
+        if (g_music_found)
+            fprintf(stdout,"Music: %s, Version: %s\n", g_music_name, g_music_version);
+
+        if (g_soundfx_found)
+            fprintf(stdout,"SoundFX: %s, Version: %s\n", g_soundfx_name, g_soundfx_version);
 
         fprintf(stdout,"\n");
     }

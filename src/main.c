@@ -26,6 +26,7 @@ static int handle_args(int argc, char * argv[]);
 void cleanup(void);
 
 
+// TODO: exclusive mode: only one entry per category (default = enabled?)
 static void display_help(void) {
     fprintf(stdout,
        "gbtoolsid [options] infile.gb[c]\n"
