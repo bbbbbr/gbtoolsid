@@ -18,6 +18,7 @@
 #include "sig_music_carillon.h"
 #include "sig_music_paragon5.h"
 #include "sig_music_lemon.h"
+#include "sig_music_tbengine.h"
 
 #include "sig_soundfx_fxhammer.h"
 
@@ -151,6 +152,7 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     bool result_music_carillon    = false;
     bool result_music_paragon5    = false;
     bool result_music_lemon       = false;
+    bool result_music_tbengine    = false;
 
     bool result_soundfx_fxhammer  = false;
 
@@ -166,11 +168,12 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     }
     // Check for music drivers
     // TODO: Should only one driver per ROM be supported? 2+ is unlikely, but...
-    result_music_gbtplayer = check_music_gbtplayer();
+    result_music_gbtplayer =   check_music_gbtplayer();
     result_music_hugetracker = check_music_hugetracker();
-    result_music_carillon = check_music_carillon();
-    result_music_paragon5 = check_music_paragon5();
-    result_music_lemon = check_music_lemon();
+    result_music_carillon =    check_music_carillon();
+    result_music_paragon5 =    check_music_paragon5();
+    result_music_lemon =       check_music_lemon();
+    result_music_tbengine =    check_music_tbengine();
 
     // Check for sound fx drivers
     result_soundfx_fxhammer = check_soundfx_fxhammer();
