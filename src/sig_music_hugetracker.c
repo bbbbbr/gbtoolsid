@@ -10,7 +10,7 @@
 
 
 // ==== hUGETracker
-// Records can be at any locations
+// Records can be at any location
 
     // _load_note_data -> lookup_note
     // https://github.com/untoxa/hUGEBuild/blame/master/hUGEDriver.asm#L332

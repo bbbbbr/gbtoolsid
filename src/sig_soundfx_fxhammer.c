@@ -10,7 +10,7 @@
 
 
 // ==== FX Hammer Player
-// Records can be at any locations
+// Records can be at any location
 
     // From "Sliced" 32KB SRAM File (*.sav) into two files (or ROM banks for assembler)
     // Slices a 32KB SRAM File (*.sav) into two files (or ROM banks for assembler):
