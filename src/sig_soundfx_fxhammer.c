@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -20,16 +21,13 @@
 
 
 // Check for FX Hammer sound and sample driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_soundfx_fxhammer(void) {
 
-    const char str_FXHammer_soundfx[] = "FX Hammer";
+    tool_entry entry = {.type = TYPE_SOUNDFX, .name = "FX Hammer", .version = "1.0"};
 
     // FXHammer music 1.0
     if (find_pattern(sig_fxhammer_info_1_0, sizeof(sig_fxhammer_info_1_0))) {
-        set_soundfx(str_FXHammer_soundfx, "1.0");
+        entry_add(entry);
         return true;
     }
 

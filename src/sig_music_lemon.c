@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -27,16 +28,13 @@
 
 
 // Check for lemon sound driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_lemon(void) {
 
-    const char str_lemon[] = "Lemon";
+    tool_entry entry = {.type = TYPE_MUSIC, .name = "Lemon", .version = ""};
 
     // lemon (all versions)
     if (find_pattern(sig_lemon_wave_default, sizeof(sig_lemon_wave_default))) {
-        set_music(str_lemon, "");
+        entry_add(entry);
         return true;
     }
 

@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -19,17 +20,13 @@
         0xFD, 0xEC, 0xDB, 0xCA, 0xB9, 0xA8, 0x97, 0x86, 0x79, 0x68, 0x57, 0x46, 0x35, 0x24, 0x13, 0x02};
 
 // Check for gbt_player sound driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_gbtplayer(void) {
 
-    const char str_gbtplayer[] = "gbt_player";
+    tool_entry entry = {.type = TYPE_MUSIC, .name = "GBT Player", .version = ""};
 
     // gbtplayer (all versions)
     if (find_pattern(sig_gbtplayer_gbt_wave, sizeof(sig_gbtplayer_gbt_wave))) {
-
-        set_music(str_gbtplayer, "");
+        entry_add(entry);
         return true;
     }
 

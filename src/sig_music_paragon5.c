@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -36,32 +37,27 @@
 
 
 // Check for paragon5 sound and sample driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_paragon5(void) {
 
-    const char str_paragon5_driver[]            = "Paragon 5";
-    const char str_version_original[]           = "Original";
-    const char str_version_gameboysoundsystem[] = "GBSoundSystem";
+    tool_entry entry_orig = {.type = TYPE_MUSIC, .name = "Paragon 5", .version = "Classic"};
+    tool_entry entry_GBS  = {.type = TYPE_MUSIC, .name = "Paragon 5", .version = "GBSoundSystem"};
 
     // paragon5 & GBSoundSystem shared frequency table
     if (find_pattern(sig_paragon5_freq, sizeof(sig_paragon5_freq))) {
 
         // GBSoundSystem
         if (find_pattern(sig_gbsoundsystem_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_SSFP_multi_sfx))) {
-            //set_music(str_gbsoundsystem_music, "1.0");
-            set_music(str_paragon5_driver, str_version_gameboysoundsystem);
+            entry_add(entry_GBS);
             return true;
         }
         // Optional extra validation
         // // GBSoundSystem
         // else if (find_pattern(sig_paragon5_MultiSFXLoop, sizeof(sig_paragon5_MultiSFXLoop))) {
-        //     set_music(str_paragon5_driver, str_version_original);
+        //     entry_add(entry_orig);
         //     return true;
         // }
 
-        set_music(str_paragon5_driver, str_version_original);
+        entry_add(entry_orig);
         return true;
     }
 

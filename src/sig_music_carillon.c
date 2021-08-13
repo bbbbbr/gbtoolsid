@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -38,31 +39,30 @@
 
 
 // Check for carillon sound and sample driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_carillon(void) {
 
-    const char str_carillon_music[] = "Carillon Player";
+    tool_entry entry = {.type = TYPE_MUSIC, .name = "Carillon Player", .version = ""};
 
     // carillon music 1.0
     if (find_pattern(sig_carillon_player_info_1_0, sizeof(sig_carillon_player_info_1_0))) {
-        set_music(str_carillon_music, "1.0");
+
+        entry_add_with_version(entry, "1.0");
         return true;
     }
     // carillon 1.2 (doesn't seem to be very common)
     else if (find_pattern(sig_carillon_player_info_1_2, sizeof(sig_carillon_player_info_1_2))) {
-        set_music(str_carillon_music, "1.2");
+
+        entry_add_with_version(entry, "1.2");
         return true;
     }
 
     // TODO: handle / report the sample player? (doesn't appear to be very common outside of included demos)
     //
-    // const char str_carillon_sample[] = "Carillon Sample Player";
+    // tool_entry entry = {.type = TYPE_MUSIC, .name = "Carillon Sample Player", .version = "1.0"};
     //
     // // carillon sample player
     // if (find_pattern(sig_carillon_sample_header, sizeof(sig_carillon_sample_header))) {
-    //     set_music(str_carillon_sample, "1.0");
+    //     entry_add(entry);
     //     status = true;
     // }
 

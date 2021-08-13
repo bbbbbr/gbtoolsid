@@ -9,9 +9,11 @@
 #include <stdint.h>
 
 #include "common.h"
+
 #include "files.h"
 #include "path_ops.h"
 #include "gbtoolchainid.h"
+#include "display.h"
 
 char filename_in[MAX_STR_LEN] = {'\0'};
 

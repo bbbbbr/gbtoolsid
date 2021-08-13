@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -45,25 +46,22 @@
 
 
 // Check for GBDK 2.x - GBDK-2020
-//
-// If match is found: calls set_tools() and returns true
-//
 bool check_gbdk(void) {
 
-        const char str_gbdk[] = "GBDK";
+    tool_entry entry = {.type = TYPE_TOOLS, .name = "GBDK", .version = ""};
 
     // GBDK-2020 4.0.0
     if (check_pattern_addr(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), sig_gbdk_0x80_at)) {
         // GBDK-2020 4.0.0 (Additional test to strengthen match)
         if (check_pattern_addr(sig_gbdk_0x20_GBDK_2020_400, sizeof(sig_gbdk_0x20_GBDK_2020_400), sig_gbdk_0x20_at)) {
-            set_tools(str_gbdk, "2020.4.0.0");
+            entry_add_with_version(entry, "2020.4.0.0");
             return true;
         }
     }
 
     // GBDK 2.x - GBDK-2020 3.2.0
     if (check_pattern_addr(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
-        set_tools(str_gbdk, "2.x - 2020-3.2.0");
+        entry_add_with_version(entry, "2.x - 2020-3.2.0");
         return true;
     }
 
@@ -75,23 +73,23 @@ bool check_gbdk(void) {
 
             // GBDK Part 4 (0x150) GBDK-2020 4.0.1
             if (check_pattern_addr(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2x_to_2020_401_at)) {
-                set_tools(str_gbdk, "2020.4.0.1");
+                entry_add_with_version(entry, "2020.4.0.1");
                 return true;
             }
 
             //  GBDK-2020 4.0.2
             if (check_pattern_addr(sig_gbdk_0x150, sizeof(sig_gbdk_0x150), sig_gbdk_0x150_GBDK_2020_401_to_402_at)) {
-                set_tools(str_gbdk, "2020.4.0.2");
+                entry_add_with_version(entry, "2020.4.0.2");
                 return true;
             }
 
             // GBDK-2020 4.0.3 and later
             if (check_pattern_addr(sig_gbdk_0x153, sizeof(sig_gbdk_0x153), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
-                set_tools(str_gbdk, "2020.4.0.3");
+                entry_add_with_version(entry, "2020.4.0.3");
 
                 // GBDK-2020 4.0.4 and later
                 if (check_pattern_addr(sig_gbdk_0x100_GBDK_4_0_4, sizeof(sig_gbdk_0x100_GBDK_4_0_4), sig_gbdk_0x100_at)) {
-                    set_tools(str_gbdk, "2020.4.0.4+");
+                    entry_add_with_version(entry, "2020.4.0.4+");
                     return true;
                 }
 

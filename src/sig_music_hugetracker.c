@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -18,16 +19,13 @@
 
 
 // Check for hUGETracker sound driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_hugetracker(void) {
 
-    const char str_hugetracker[] = "hUGETracker";
+    tool_entry entry = {.type = TYPE_MUSIC, .name = "hUGETracker", .version = ""};
 
     // hugetracker (all versions)
     if (find_pattern(sig_hugetracker_load_note_data, sizeof(sig_hugetracker_load_note_data))) {
-        set_music(str_hugetracker, "");
+        entry_add(entry);
         return true;
     }
 

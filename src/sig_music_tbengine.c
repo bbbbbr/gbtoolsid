@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "common.h"
+#include "entries.h"
 #include "gbtoolchainid.h"
 
 
@@ -25,16 +26,13 @@
 
 
 // Check for tbengine sound driver
-//
-// If match is found: calls set_music() and returns true
-//
 bool check_music_tbengine(void) {
 
-    const char str_tbengine[] = "Trackerboy engine";
+    tool_entry entry = {.type = TYPE_MUSIC, .name = "Trackerboy engine", .version = ""};
 
     // tbengine (all versions)
     if (find_pattern(sig_tbengine_noisetable, sizeof(sig_tbengine_noisetable))) {
-        set_music(str_tbengine, "");
+        entry_add(entry);
         return true;
     }
 
