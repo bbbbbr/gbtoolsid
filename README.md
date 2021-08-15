@@ -18,18 +18,7 @@ Game Engines:
 - GBStudio
 
 Audio Drivers:
-- Carillon Player
-- DevSound
-- Freaq
-- GHX
-- GB Sound System
-- GBT Player
-- hUGETracker
-- Lemon
-- LSDJ
-- MusyX
-- Trackerboy
-- Visual Impact's
+- Carillon Player, DevSound, Freaq, GHX, GB Sound System, GBT Player, hUGETracker, Lemon, LSDJ, MusyX, Trackerboy, Visual Impact's
 
 Sound FX Drivers:
 - FX Hammer
