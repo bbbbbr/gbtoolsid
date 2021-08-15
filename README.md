@@ -52,22 +52,33 @@ Some example output:
 File: deadeus.gb
 Tools: GBDK, Version: 2.x - 2020-3.2.0
 Engine: GBStudio, Version: 1.0.0 - 1.2.1
+Music: GBT Player
 
 
 File: POWA! DEMO.gbc
 Tools: GBDK, Version: 2.x - 2020-3.2.0
 Engine: ZGB, Version: 2020.1 - 2021.0
+Music: GBT Player
 
 
 File: IndestructoTankGB.gb
 Tools: GBDK, Version: 2020.4.0.2
+Music: GBT Player
 
 
 File: Super_JetPak_DX_DMG-SJPD-UKV.gbc
 Tools: GBDK, Version: 2.x - 2020-3.2.0
+Music: GHX
 
 
 File: Tuff.gb
 Tools: <unknown>
+
+
+File: Last Crown Warriors (Demo) 1.1.1.gb
+Tools: <unknown>
+Music: Carillon Player
+SoundFX: FX Hammer
+
 ```
 
