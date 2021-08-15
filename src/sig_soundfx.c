@@ -24,7 +24,7 @@
 // Check for Sound FX drivers
 void check_soundfx(void) {
 
-    tool_entry entry = {.type = TYPE_SOUNDFX, .name = "FX Hammer", .version = ""};
+    tool_entry entry = {.type = TYPE_SOUNDFX, .c_name = "FX Hammer", .c_version = ""};
 
     // FXHammer music 1.0
     if (find_pattern(sig_fxhammer_info_1, sizeof_str_noterm(sig_fxhammer_info_1)) ||

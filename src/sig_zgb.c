@@ -25,7 +25,7 @@
 // Check ZGB engine
 bool check_zgb(void) {
 
-    tool_entry entry = {.type = TYPE_ENGINE, .name = "ZGB", .version = ""};
+    tool_entry entry = {.type = TYPE_ENGINE, .c_name = "ZGB", .c_version = ""};
 
     // Require sound const pattern, as starting filter
     if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound))) {

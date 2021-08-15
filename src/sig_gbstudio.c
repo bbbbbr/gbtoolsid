@@ -29,7 +29,7 @@
 // Check GBStudio engine
 bool check_gbstudio(void) {
 
-    tool_entry entry = {.type = TYPE_ENGINE, .name = "GBStudio", .version = ""};
+    tool_entry entry = {.type = TYPE_ENGINE, .c_name = "GBStudio", .c_version = ""};
 
     // GBStudio 1.0.0 - 1.2.1
     if (find_pattern(sig_gbs_fades_1_0_0_to_1_2_1, sizeof(sig_gbs_fades_1_0_0_to_1_2_1))) {

@@ -76,63 +76,63 @@
 void check_music(void) {
     tool_entry entry;
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "GHX", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GHX", .c_version = ""};
     if (find_pattern(sig_str_ghx_audio, sizeof_str_noterm(sig_str_ghx_audio)) ||
         find_pattern(sig_str_ghx_sound, sizeof_str_noterm(sig_str_ghx_sound)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "DevSound", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = ""};
     if (find_pattern(sig_str_devsound, sizeof_str_noterm(sig_str_devsound)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "Visual Impact", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Visual Impact", .c_version = ""};
     if (find_pattern(sig_str_gbmusicplayer_audio, sizeof_str_noterm(sig_str_gbmusicplayer_audio)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "MusyX", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "MusyX", .c_version = ""};
     if (find_pattern(sig_str_MusyX_1, sizeof_str_noterm(sig_str_MusyX_1)) ||
         find_pattern(sig_str_MusyX_2, sizeof_str_noterm(sig_str_MusyX_2)) ||
         find_pattern(sig_str_MusyX_3, sizeof_str_noterm(sig_str_MusyX_3)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "Freaq", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Freaq", .c_version = ""};
     if (find_pattern(sig_str_freaq_1, sizeof_str_noterm(sig_str_freaq_1)) ||
         find_pattern(sig_str_freaq_2, sizeof_str_noterm(sig_str_freaq_2)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "LSDJ", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "LSDJ", .c_version = ""};
     if (find_pattern(sig_str_lsdj_1, sizeof_str_noterm(sig_str_lsdj_1)) ||
         find_pattern(sig_str_lsdj_2, sizeof_str_noterm(sig_str_lsdj_2)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "hUGETracker", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "hUGETracker", .c_version = ""};
     if (find_pattern(sig_hugetracker_load_note_data, sizeof(sig_hugetracker_load_note_data)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "Trackerboy engine", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Trackerboy engine", .c_version = ""};
     if (find_pattern(sig_tbengine_noisetable, sizeof_str_noterm(sig_tbengine_noisetable)))
         entry_add(entry);
 
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "Lemon", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Lemon", .c_version = ""};
     if (find_pattern(sig_lemon_wave_default, sizeof(sig_lemon_wave_default)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "GBT Player", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBT Player", .c_version = ""};
     if (find_pattern(sig_gbtplayer_gbt_wave, sizeof(sig_gbtplayer_gbt_wave)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "Carillon Player", .version = ""};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Carillon Player", .c_version = ""};
     if (find_pattern(sig_carillon_player_1, sizeof_str_noterm(sig_carillon_player_1)) ||
         find_pattern(sig_carillon_player_2, sizeof_str_noterm(sig_carillon_player_2)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .name = "GBSoundSystem", .version = "BlitterObject"};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "BlitterObject"};
     if (find_pattern(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx))) {
         entry_add(entry);
     }
     else {
-        entry = (tool_entry){.type = TYPE_MUSIC, .name = "GBSoundSystem", .version = "Classic"};
+        entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "Classic"};
         if (find_pattern(sig_str_gbsoundsystem_1, sizeof_str_noterm(sig_str_gbsoundsystem_1)) &&
             find_pattern(sig_str_gbsoundsystem_2, sizeof_str_noterm(sig_str_gbsoundsystem_2)))
             entry_add(entry);

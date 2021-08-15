@@ -12,13 +12,13 @@
 #include "entries.h"
 
 
-static void render_entry_json(char * name_field, char * version_field, int tool_type, bool comma);
-static void render_entry_csv(char * name_field, char * version_field, int tool_type, bool comma);
+static void render_entry_json(const char * name_field, const char * version_field, int tool_type, bool comma);
+static void render_entry_csv(const char * name_field, const char * version_field, int tool_type, bool comma);
 static void render_entry_csv_bare(int tool_type, bool comma);
-static void render_entry_default(char * name_field, int tool_type);
+static void render_entry_default(const char * name_field, int tool_type);
 
 
-static void render_entry_json(char * name_field, char * version_field, int tool_type, bool comma) {
+static void render_entry_json(const char * name_field, const char * version_field, int tool_type, bool comma) {
 
     tool_entry * p_entry = entry_get_first_of_type(tool_type);
 
@@ -32,7 +32,7 @@ static void render_entry_json(char * name_field, char * version_field, int tool_
 }
 
 
-static void render_entry_csv(char * name_field, char * version_field, int tool_type, bool comma) {
+static void render_entry_csv(const char * name_field, const char * version_field, int tool_type, bool comma) {
 
     tool_entry * p_entry = entry_get_first_of_type(tool_type);
 
@@ -59,7 +59,7 @@ static void render_entry_csv_bare(int tool_type, bool comma) {
 
 
 
-static void render_entry_default(char * name_field, int tool_type) {
+static void render_entry_default(const char * name_field, int tool_type) {
 
     tool_entry * p_entry = entry_get_first_of_type(tool_type);
 

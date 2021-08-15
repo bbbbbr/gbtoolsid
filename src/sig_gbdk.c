@@ -48,7 +48,7 @@
 // Check for GBDK 2.x - GBDK-2020
 bool check_gbdk(void) {
 
-    tool_entry entry = {.type = TYPE_TOOLS, .name = "GBDK", .version = ""};
+    tool_entry entry = {.type = TYPE_TOOLS, .c_name = "GBDK", .c_version = ""};
 
     // GBDK-2020 4.0.0
     if (check_pattern_addr(sig_gbdk_0x80_GBDK_4_0_0, sizeof(sig_gbdk_0x80_GBDK_4_0_0), sig_gbdk_0x80_at)) {

@@ -19,13 +19,17 @@
 
 typedef struct tool_entry {
     int  type;
-    char name[MAX_STR_LEN];
-    char version[MAX_STR_LEN];
+    // For passing in designated inits that work on both linux gcc & mingw builds
+    const char * c_name;
+    const char * c_version;
+    // Final rendered name/version
+    char         version[MAX_STR_LEN];
+    char         name[MAX_STR_LEN];
 } tool_entry;
 
 
 void entry_add(tool_entry);
-void entry_add_with_version(tool_entry, char *);
+void entry_add_with_version(tool_entry, const char *);
 
 int entry_get_count(int);
 bool entry_type_is_found(int);

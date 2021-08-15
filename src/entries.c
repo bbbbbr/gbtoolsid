@@ -18,6 +18,14 @@ void entry_add(tool_entry new_entry) {
 
     if (tool_entry_count < TOOL_ENTRY_COUNT_MAX) {
 
+        // Copy const name to mutable one
+        snprintf(new_entry.name, MAX_STR_LEN, "%s", new_entry.c_name);
+
+        // Only copy version field if the mutable one is not pre-populated (by entry_add_with_version)
+        if (new_entry.version[0] == '\0')
+            snprintf(new_entry.version, MAX_STR_LEN, "%s", new_entry.c_version);
+
+        // Copy the finished entry into the pool
         tool_entries[tool_entry_count] = new_entry;
 
         if ((new_entry.type >= TYPE_MIN) && (new_entry.type <= TYPE_MAX))
@@ -30,7 +38,7 @@ void entry_add(tool_entry new_entry) {
 
 
 // Register an entry
-void entry_add_with_version(tool_entry new_entry, char * version) {
+void entry_add_with_version(tool_entry new_entry, const char * version) {
 
     snprintf(new_entry.version, MAX_STR_LEN, "%s", version);
     entry_add(new_entry);
