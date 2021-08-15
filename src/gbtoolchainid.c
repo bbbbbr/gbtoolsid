@@ -14,14 +14,9 @@
 #include "sig_zgb.h"
 #include "sig_gbstudio.h"
 
-#include "sig_music_gbtplayer.h"
-#include "sig_music_hugetracker.h"
-#include "sig_music_carillon.h"
-#include "sig_music_paragon5.h"
-#include "sig_music_lemon.h"
-#include "sig_music_tbengine.h"
+#include "sig_music.h"
 
-#include "sig_soundfx_fxhammer.h"
+#include "sig_soundfx.h"
 
 static uint8_t * g_p_searchbuf = NULL;
 static uint32_t g_searchbuf_len = 0;
@@ -111,15 +106,10 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     }
 
     // Check for music drivers
-    // TODO: Should only one driver per ROM be supported? 2+ is unlikely, but...
-    check_music_gbtplayer();
-    check_music_hugetracker();
-    check_music_carillon();
-    check_music_paragon5();
-    check_music_lemon();
-    check_music_tbengine();
+    // May report multiple drivers (if found) in default output mode
+    check_music();
 
     // Check for sound fx drivers
-    check_soundfx_fxhammer();
+    check_soundfx();
 }
 
