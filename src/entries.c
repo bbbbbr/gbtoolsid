@@ -9,21 +9,19 @@
 
 bool       types_found[TYPE_MAX + 1];
 int        tool_entry_count = 0;
+int        cur_entry = 0;
 tool_entry tool_entries[TOOL_ENTRY_COUNT_MAX];
 
 
 // Register an entry
 void entry_add(tool_entry new_entry) {
 
-// printf("entry_add: %d, %s, %s\n", new_entry.type, new_entry.name, new_entry.version);
     if (tool_entry_count < TOOL_ENTRY_COUNT_MAX) {
 
         tool_entries[tool_entry_count] = new_entry;
 
         if ((new_entry.type >= TYPE_MIN) && (new_entry.type <= TYPE_MAX))
             types_found[new_entry.type] = true;
-
-// printf("%d entry_add: %d, %s, %s\n", tool_entry_count, tool_entries[tool_entry_count].type, tool_entries[tool_entry_count].name, tool_entries[tool_entry_count].version);
 
         tool_entry_count++;
     } else
@@ -62,11 +60,26 @@ tool_entry * entry_get_first_of_type(int tool_type) {
 
      for (int c = 0; c < tool_entry_count; c++)
         if (tool_entries[c].type == tool_type) {
+           cur_entry = c;
            return &(tool_entries[c]);
        }
 
     return NULL;
 }
+
+
+// Get the next entry of a given tool type
+tool_entry * entry_get_next_of_type(int tool_type) {
+
+     for (int c = cur_entry + 1; c < tool_entry_count; c++)
+        if (tool_entries[c].type == tool_type) {
+           cur_entry = c;
+           return &(tool_entries[c]);
+       }
+
+    return NULL;
+}
+
 
 
 // Get max number of entries

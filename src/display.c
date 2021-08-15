@@ -64,13 +64,17 @@ static void render_entry_default(char * name_field, int tool_type) {
     tool_entry * p_entry = entry_get_first_of_type(tool_type);
 
     if (p_entry) {
-        fprintf(stdout,"%s: %s", name_field, p_entry->name);
+        // This mode shows multiple entries for a given tool type if present
+        while (p_entry) {
+            fprintf(stdout,"%s: %s", name_field, p_entry->name);
 
-        // Don't print empty versions
-        if (strlen(p_entry->version) > 0)
-            fprintf(stdout,", Version: %s", p_entry->version);
+            // Don't print empty versions
+            if (strlen(p_entry->version) > 0)
+                fprintf(stdout,", Version: %s", p_entry->version);
 
-        fprintf(stdout,"\n");
+            fprintf(stdout,"\n");
+            p_entry = entry_get_next_of_type(tool_type);
+        };
     }
     else
         if (tool_type == TYPE_TOOLS) // Only display unknown value for main tools type

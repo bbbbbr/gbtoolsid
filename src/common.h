@@ -10,4 +10,7 @@
 #define OUTPUT_CSV      2
 #define OUTPUT_CSV_BARE 3
 
+// Get string length without trailing terminator
+#define sizeof_str_noterm(instr) (sizeof(instr) - 1)
+
 #endif // _COMMON_H

@@ -27,10 +27,11 @@ typedef struct tool_entry {
 void entry_add(tool_entry);
 void entry_add_with_version(tool_entry, char *);
 
+int entry_get_count(int);
 bool entry_type_is_found(int);
 tool_entry * entry_get(int);
 tool_entry * entry_get_first_of_type(int tool_type);
-int entry_get_count(int);
+tool_entry * entry_get_next_of_type(int tool_type);
 
 
 
