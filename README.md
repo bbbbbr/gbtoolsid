@@ -9,12 +9,33 @@ https://github.com/bbbbbr/gbtoolsid
 
 
 It attempts to identify the toolchain and engine through binary fingerprints:
+
+Toolchains:
 - GBDK 2.x and GBDK-2020
+
+Game Engines:
 - ZGB
 - GBStudio
 
+Audio Drivers:
+- Carillon Player
+- DevSound
+- Freaq
+- GHX
+- GB Sound System
+- GBT Player
+- hUGETracker
+- Lemon
+- LSDJ
+- MusyX
+- Trackerboy
+- Visual Impact's
+
+Sound FX Drivers:
+- FX Hammer
+
 Output is available in several formats:
-- standard text
+- standard text (only this mode shows multiple entries for a given category if found)
 - json (`-oj`)
 - csv row (`-oc` and `-oC`)
 
