@@ -28,11 +28,10 @@ static int handle_args(int argc, char * argv[]);
 void cleanup(void);
 
 
-// TODO: exclusive mode: only one entry per category (default = enabled?)
 static void display_help(void) {
     fprintf(stdout,
        "gbtoolsid [options] infile.gb[c]\n"
-       "Version: 1.0.0\n"
+       "Version: 1.1.0\n"
        "Use: Try to identify the toolchain used to build a\n"
        "     Game Boy game the result is printed to stdout.\n"
        "\n"
