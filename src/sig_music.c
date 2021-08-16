@@ -43,6 +43,11 @@
     // engine.asm, tbe_thumbprint::
     const uint8_t sig_tbengine_noisetable[] = "tbengine - sound driver by stoneface";
 
+
+    // Black Box Music Player
+    const uint8_t sig_blackboxplayer[] = {0x09,  0x06,  0x25,  0x06,  0x40,  0x06,  0x59,  0x06,  0x70,  0x06,  0x87,  0x06,  0x9C,  0x06,  0xB0,  0x06,  0xC3,  0x06,  0xD5,  0x06,  0xE5,  0x06,  0xF5,  0x06,  0x04,  0x07};
+
+
     // From "Sliced" 32KB SRAM File (*.sav) into two files (or ROM banks for assembler)
     // Slices a 32KB SRAM File (*.sav) into two files (or ROM banks for assembler):
         // 1) 16KB music player code and music data (*.bin)
@@ -113,6 +118,9 @@ void check_music(void) {
     if (find_pattern(sig_tbengine_noisetable, sizeof_str_noterm(sig_tbengine_noisetable)))
         entry_add(entry);
 
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Black Box Music Box", .c_version = ""};
+    if (find_pattern(sig_blackboxplayer, sizeof(sig_blackboxplayer)))
+        entry_add(entry);
 
     entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Lemon", .c_version = ""};
     if (find_pattern(sig_lemon_wave_default, sizeof(sig_lemon_wave_default)))
