@@ -13,6 +13,7 @@
 #include "sig_gbdk.h"
 #include "sig_zgb.h"
 #include "sig_gbstudio.h"
+#include "sig_turborascal.h"
 
 #include "sig_music.h"
 
@@ -104,6 +105,9 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
         check_zgb();
         check_gbstudio();
     }
+
+    // Turbo Rascal
+    check_turborascal();
 
     // Check for music drivers
     // May report multiple drivers (if found) in default output mode
