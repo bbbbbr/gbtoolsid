@@ -21,14 +21,23 @@
         const uint8_t sig_fxhammer_info_1[] = "FX HAMMER";
         const uint8_t sig_fxhammer_info_2[] = "FX@HAMMER";
 
+// ==== CBT-FX
+// Records can be at any location
+        const uint8_t sig_cbtfx_info[] = "CBT-FX BY COFFEEBAT 2021";
+
 // Check for Sound FX drivers
 void check_soundfx(void) {
 
-    tool_entry entry = {.type = TYPE_SOUNDFX, .c_name = "FX Hammer", .c_version = ""};
+    tool_entry entry;
 
     // FXHammer music 1.0
+    entry = (tool_entry){.type = TYPE_SOUNDFX, .c_name = "FX Hammer", .c_version = ""};
     if (find_pattern(sig_fxhammer_info_1, sizeof_str_noterm(sig_fxhammer_info_1)) ||
-        find_pattern(sig_fxhammer_info_2, sizeof_str_noterm(sig_fxhammer_info_2))
-        )
+        find_pattern(sig_fxhammer_info_2, sizeof_str_noterm(sig_fxhammer_info_2)) )
+        entry_add(entry);
+
+    // CBT-FX : https://github.com/datguywitha3ds/CBT-FX/tree/main
+    entry = (tool_entry){.type = TYPE_SOUNDFX, .c_name = "CBT-FX", .c_version = ""};
+    if (find_pattern(sig_cbtfx_info, sizeof_str_noterm(sig_cbtfx_info)))
         entry_add(entry);
 }
