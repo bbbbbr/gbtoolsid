@@ -20,6 +20,7 @@ char filename_in[MAX_STR_LEN] = {'\0'};
 uint8_t * p_buf_in  = NULL;
 
 int opt_output_style = OUTPUT_DEFAULT;
+int opt_path_output_style = PATH_STYLE_DEFAULT;
 bool opt_strict_checks = false;
 
 
@@ -41,6 +42,7 @@ static void display_help(void) {
        "-oc  : csv style output\n"
        "-oC  : Bare csv style output (no field names)\n"
        "-s   : Strict mode: require GBDK match before testing ZGB or GBStudio\n"
+       "-pF  : Show full path to file in output (default: filename only)\n"
        "\n"
        "Example: \"gbtoolchainid petris.gbc\"\n"
        );
@@ -73,6 +75,9 @@ int handle_args(int argc, char * argv[]) {
             }
             else if (strstr(argv[i], "-oC") == argv[i]) {
                 opt_output_style = OUTPUT_CSV_BARE;
+            }
+            else if (strstr(argv[i], "-pF") == argv[i]) {
+                opt_path_output_style = PATH_STYLE_FULL;
             }
             else if (strstr(argv[i], "-s") == argv[i]) {
                 opt_strict_checks = true;
@@ -111,7 +116,7 @@ static int process_file() {
         return true;
     }
 
-    return false;    
+    return false;
 }
 
 
@@ -125,8 +130,11 @@ int main( int argc, char *argv[] )  {
 
     if (handle_args(argc, argv)) {
         if (process_file()) {
-            display_output(opt_output_style, get_filename_from_path(filename_in));
-            ret = EXIT_SUCCESS;            
+            if (opt_path_output_style == PATH_STYLE_FULL)
+                display_output(opt_output_style, filename_in);
+            else
+                display_output(opt_output_style, get_filename_from_path(filename_in));
+            ret = EXIT_SUCCESS;
         }
     }
     cleanup();
