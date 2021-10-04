@@ -16,7 +16,7 @@
     const uint8_t sig_str_ghx_audio[] = "GHX Audio Engine";
     const uint8_t sig_str_ghx_sound[] = "GHX Sound Engine";
 
-    const uint8_t sig_str_devsound[] = "DevSound GB music player";
+    const uint8_t sig_str_devsound_standard[] = "DevSound GB music player";
     const uint8_t sig_str_devsound_lite[] = "DevSound Lite";
 
     const uint8_t sig_str_gbmusicplayer_audio[] = "GB Music Player Copyright VISUAL IMPACT BVBA";
@@ -104,13 +104,14 @@ void check_music(void) {
         find_pattern(sig_str_ghx_sound, sizeof_str_noterm(sig_str_ghx_sound)))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = ""};
-    if (find_pattern(sig_str_devsound, sizeof_str_noterm(sig_str_devsound)))
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = "Standard"};
+    if (find_pattern(sig_str_devsound_standard, sizeof_str_noterm(sig_str_devsound_standard)))
         entry_add(entry);
-    
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound Lite", .c_version = ""};
-    if (find_pattern(sig_str_devsound_lite, sizeof_str_noterm(sig_str_devsound_lite)))
-        entry_add(entry);
+    else {
+        entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = "Lite"};
+        if (find_pattern(sig_str_devsound_lite, sizeof_str_noterm(sig_str_devsound_lite)))
+            entry_add(entry);
+    }
 
     entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Visual Impact", .c_version = ""};
     if (find_pattern(sig_str_gbmusicplayer_audio, sizeof_str_noterm(sig_str_gbmusicplayer_audio)))
