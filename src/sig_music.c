@@ -38,8 +38,16 @@
     const uint8_t sig_str_gbsoundsystem_1[] = "SoundSystem";
     const uint8_t sig_str_gbsoundsystem_2[] = "Hockenhull";
 
-    // _load_note_data -> lookup_note : https://github.com/untoxa/hUGEBuild/blame/master/hUGEDriver.asm#L332
-    const uint8_t sig_hugetracker_load_note_data[] = {0x67, 0x84, 0x84, 0xC6, 0x02, 0x26, 0x00, 0x6F, 0x09, 0x3A, 0x4F, 0x3A, 0x47, 0x7E, 0xC9, };
+    // hUGEDriver
+        // // _load_note_data -> lookup_note : https://github.com/untoxa/hUGEBuild/blame/master/hUGEDriver.asm#L332
+        // const uint8_t sig_hugetracker_load_note_data[] = {0x67, 0x84, 0x84, 0xC6, 0x02, 0x26, 0x00, 0x6F, 0x09, 0x3A, 0x4F, 0x3A, 0x47, 0x7E, 0xC9 };
+        // https://github.com/SuperDisk/hUGEDriver/blob/e996cfab0b16bea6e394f269e89a5729d8421bb2/hUGEDriver.asm#L295 -> 308
+        // const uint8_t sig_hugetracker_load_note_data_v2[] = {0x67, 0x84, 0x84, 0x26, 0x00, 0x6F, 0x09, 0x2A, 0x46, 0x23, 0x4E, 0xC9}
+    // https://github.com/SuperDisk/hUGEDriver/blame/3e67d4ea8a27f5317fd5be73a534c543614130ef/hUGEDriver.asm#L760 -> 772
+    const uint8_t sig_hugetracker_fx_vol_slide_base_v1[] = {0x79, 0xE6, 0x0F, 0x57, 0x79, 0xE6, 0xF0, 0x5F, 0xCB, 0x33   ,0x7E, 0xE6, 0xF0, 0xCB, 0x37, 0x92};
+    // https://github.com/SuperDisk/hUGEDriver/blob/e996cfab0b16bea6e394f269e89a5729d8421bb2/hUGEDriver.asm#L736 -> 743
+    const uint8_t sig_hugetracker_fx_vol_slide_base_v2[] = {0x79, 0xE6, 0x0F, 0x57, 0x79, 0xE6, 0xF0, 0x5F, 0xCB, 0x33   ,0x78, 0x87, 0x87, 0x80, 0xC6, 0x12, 0x4F, 0xF2, 0xE6, 0xF0, 0xCB, 0x37, 0x92};
+
 
     // engine.asm, tbe_thumbprint::
     const uint8_t sig_tbengine_noisetable[] = "tbengine - sound driver by stoneface";
@@ -134,7 +142,9 @@ void check_music(void) {
         entry_add(entry);
 
     entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "hUGETracker", .c_version = ""};
-    if (find_pattern(sig_hugetracker_load_note_data, sizeof(sig_hugetracker_load_note_data)))
+    if (find_pattern(sig_hugetracker_fx_vol_slide_base_v1, sizeof(sig_hugetracker_fx_vol_slide_base_v1)))
+        entry_add(entry);
+    else if (find_pattern(sig_hugetracker_fx_vol_slide_base_v2, sizeof(sig_hugetracker_fx_vol_slide_base_v2)))
         entry_add(entry);
 
     entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Trackerboy engine", .c_version = ""};
