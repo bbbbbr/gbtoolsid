@@ -86,7 +86,7 @@ bool check_gbdk(void) {
                 return true;
             }
 
-            // GBDK-2020 4.0.3 and later
+            // GBDK-2020 4.0.3 - 4.0.4
             if (check_pattern_addr(sig_gbdk_0x153_GBDK_2020_403_plus, sizeof(sig_gbdk_0x153_GBDK_2020_403_plus), sig_gbdk_0x153_GBDK_2020_403_plus_at)) {
 
                 // GBDK-2020 4.0.4 and later
