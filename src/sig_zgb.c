@@ -44,6 +44,10 @@ bool check_zgb(void) {
 
     tool_entry entry = {.type = TYPE_ENGINE, .c_name = "ZGB", .c_version = ""};
 
+    // Exception to the rule: The Squire fails this due to removing ZGB default sound consts
+    // https://freshdeus.itch.io/the-squire-gameboy
+    // So the requirement is relaxed for versions after 2020.0 which have additional tests
+    //
     // Require sound const pattern, as starting filter
     if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound))) {
 
@@ -59,42 +63,41 @@ bool check_zgb(void) {
             entry_add_with_version(entry, "2020.0");
             return true;
         }
+    }
 
-        // ZGB 2020.1
-        if ((find_pattern(sig_zgb_2020_1_plus_pushbank, sizeof(sig_zgb_2020_1_plus_pushbank))) &&
-            (find_pattern(sig_zgb_2020_1_plus_popbank, sizeof(sig_zgb_2020_1_plus_popbank)))) {
+    // ZGB 2020.1
+    if ((find_pattern(sig_zgb_2020_1_plus_pushbank, sizeof(sig_zgb_2020_1_plus_pushbank))) &&
+        (find_pattern(sig_zgb_2020_1_plus_popbank, sizeof(sig_zgb_2020_1_plus_popbank)))) {
 
-            if (find_pattern(sig_zgb_2020_1_settile, sizeof(sig_zgb_2020_1_settile))) {
-                entry_add_with_version(entry, "2020.1");
+        if (find_pattern(sig_zgb_2020_1_settile, sizeof(sig_zgb_2020_1_settile))) {
+            entry_add_with_version(entry, "2020.1");
+            return true;
+        }
+        else if (find_pattern(sig_zgb_2020_2_plus_settile, sizeof(sig_zgb_2020_2_plus_settile))) {
+
+            // v2020.2 - gbdk 2020 v3.1.1 - Jun 5, 2020
+            // Use sig for: GBDK 2.x - GBDK-2020 3.2.0
+            if (check_pattern_addr(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
+                entry_add_with_version(entry, "2020.2");
                 return true;
             }
-            else if (find_pattern(sig_zgb_2020_2_plus_settile, sizeof(sig_zgb_2020_2_plus_settile))) {
 
-                // v2020.2 - gbdk 2020 v3.1.1 - Jun 5, 2020
-                // Use sig for: GBDK 2.x - GBDK-2020 3.2.0
-                if (check_pattern_addr(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
-                    entry_add_with_version(entry, "2020.2");
-                    return true;
-                }
-
-                // 2021.0 -  gbdk 2020 v4.0.2 - Jan 22, 2021
-                // Could also check via GBDK version
-                // const uint8_t sig_gbdk_0x150[] = {0xF3, 0x57, 0xAF, 0x31};
-                // const uint32_t sig_gbdk_0x150_GBDK_2020_401_to_402_at  = 0x0153;
-                //
-                if (find_pattern(sig_zgb_2021_0_flushoamsprite, sizeof(sig_zgb_2021_0_flushoamsprite))) {
-                    entry_add_with_version(entry, "2021.0");
-                    return true;
-                }
-
-                // 2021.1 could also be checked with GBDK 4.0.5
-                // const uint8_t sig_gbdk_0x157_GBDK_2020_405_plus[] = {0xF3, 0x57, 0x58, 0x31};
-                // const uint32_t sig_gbdk_0x157_GBDK_2020_405_plus_at = 0x0157;
-                //
-                entry_add_with_version(entry, "2021.1+");
+            // 2021.0 -  gbdk 2020 v4.0.2 - Jan 22, 2021
+            // Could also check via GBDK version
+            // const uint8_t sig_gbdk_0x150[] = {0xF3, 0x57, 0xAF, 0x31};
+            // const uint32_t sig_gbdk_0x150_GBDK_2020_401_to_402_at  = 0x0153;
+            //
+            if (find_pattern(sig_zgb_2021_0_flushoamsprite, sizeof(sig_zgb_2021_0_flushoamsprite))) {
+                entry_add_with_version(entry, "2021.0");
                 return true;
-
             }
+
+            // 2021.1 could also be checked with GBDK 4.0.5
+            // const uint8_t sig_gbdk_0x157_GBDK_2020_405_plus[] = {0xF3, 0x57, 0x58, 0x31};
+            // const uint32_t sig_gbdk_0x157_GBDK_2020_405_plus_at = 0x0157;
+            //
+            entry_add_with_version(entry, "2021.1+");
+            return true;
         }
     }
 
