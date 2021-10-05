@@ -32,7 +32,7 @@ Output is available in several formats:
 
 ```
 gbtoolsid [options] infile.gb[c]
-Version: 1.0.0
+Version: 1.3.0
 Use: Try to identify the toolchain used to build a
      Game Boy game the result is printed to stdout.
 
@@ -41,7 +41,8 @@ Options
 -oj  : json style output
 -oc  : csv style output
 -oC  : Bare csv style output (no field names)
--s   : Strict mode: require GBDK match before testing for ZGB or GBStudio
+-s   : Strict mode: require GBDK match before testing ZGB or GBStudio
+-pF  : Show full path to file in output (default: filename only)
 
 Example: "gbtoolchainid petris.gbc"
 
