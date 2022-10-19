@@ -23,6 +23,7 @@ Audio Drivers:
 
 Sound FX Drivers:
 - FX Hammer
+- [CBT-FX](https://github.com/datguywitha3ds/CBT-FX)
 
 Output is available in several formats:
 - standard text (only this mode shows multiple entries for a given category if found)
