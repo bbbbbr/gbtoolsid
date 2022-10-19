@@ -48,6 +48,10 @@
     const uint32_t sig_gbdk_0x157_GBDK_2020_405_plus_at = 0x0157;
 
 
+// ==== TODO: ====
+    // GBDK 4.0.6 (there are some post initial 4.0.5 changes that muddy 4.0.5 a little
+
+
 // Check for GBDK 2.x - GBDK-2020
 bool check_gbdk(void) {
 

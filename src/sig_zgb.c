@@ -30,10 +30,24 @@
     // https://github.com/Zal0/ZGB/compare/v2021.0...v2021.1#diff-931c0cc99a46f6a0f5a477d9ff63eb1e31108cb60e6e40bb50529fa6f2380d00L75
     const uint8_t sig_zgb_2021_0_flushoamsprite[] = {0x2A, 0x02, 0x0c, 0x2A, 0x02, 0x0C, 0x2A, 0x02, 0x0C, 0x2A, 0x02, 0x0C};
 
+// ==== TODO: ====
+    // https://github.com/Zal0/ZGB/releases
+    //
+    // v2021.0 - https://github.com/Zal0/ZGB/commit/97064af78d2f6cab9d7ad09ec9d41e64d14446b0
+    //
+    // v2021.1 - Sep 16, 2021
+    //   https://github.com/Zal0/ZGB/commit/3a730b2ab98999c4b9ed1acd7327a6f82a466d68
+    //     https://github.com/Zal0/ZGB/compare/v2021.0...v2021.1
+    // v2021.2 - Oct 09, 2021 - gbdk-4.0.5
+    //   https://github.com/Zal0/ZGB/commit/50979d278fb6ade2e93f177981686c446a910646
+    // v2021.2 - Nov 20, 2021
+    //   https://github.com/Zal0/ZGB/commit/4836e19dbf210068db3e5a097bdfc60969bb002b
+
+
 // ==== GBDK refs ====
     // For ZGB 2020.2 vs 2021.0
-    static const uint8_t sig_gbdk_bmp[] = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
-    static const uint32_t sig_gbdk_bmp_2x_to_2020_320_at = 0x0010;
+    const uint8_t sig_zgb_gbdk_bmp[] = {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+    const uint32_t sig_zgb_gbdk_bmp_2x_to_2020_320_at = 0x0010;
 
 
 
@@ -77,7 +91,7 @@ bool check_zgb(void) {
 
             // v2020.2 - gbdk 2020 v3.1.1 - Jun 5, 2020
             // Use sig for: GBDK 2.x - GBDK-2020 3.2.0
-            if (check_pattern_addr(sig_gbdk_bmp, sizeof(sig_gbdk_bmp), sig_gbdk_bmp_2x_to_2020_320_at)) {
+            if (check_pattern_addr(sig_zgb_gbdk_bmp, sizeof(sig_zgb_gbdk_bmp), sig_zgb_gbdk_bmp_2x_to_2020_320_at)) {
                 entry_add_with_version(entry, "2020.2");
                 return true;
             }
