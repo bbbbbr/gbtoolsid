@@ -30,6 +30,10 @@
     // https://github.com/Zal0/ZGB/compare/v2021.0...v2021.1#diff-931c0cc99a46f6a0f5a477d9ff63eb1e31108cb60e6e40bb50529fa6f2380d00L75
     const uint8_t sig_zgb_2021_0_flushoamsprite[] = {0x2A, 0x02, 0x0c, 0x2A, 0x02, 0x0C, 0x2A, 0x02, 0x0C, 0x2A, 0x02, 0x0C};
 
+    // Present in 2021.2+
+    // https://github.com/Zal0/ZGB/commit/5d99766198c71da35d60c13992c80147ea47c001
+    const uint8_t sig_zgb_2021_2_plus_update_attr[] = {0xF8, 0x04, 0x3A, 0x57, 0x3A, 0xB7, 0xC8, 0x5F, 0x7E, 0x87, 0x87, 0xC6, 0x03, 0x6F};
+
 // ==== TODO: ====
     // https://github.com/Zal0/ZGB/releases
     //
@@ -105,13 +109,34 @@ bool check_zgb(void) {
                 entry_add_with_version(entry, "2021.0");
                 return true;
             }
+            else {
+                // 2021.1+ - ZGB        2021.1: Removed FlushOAMSprite inline asm
 
-            // 2021.1 could also be checked with GBDK 4.0.5
-            // const uint8_t sig_gbdk_0x157_GBDK_2020_405_plus[] = {0xF3, 0x57, 0x58, 0x31};
-            // const uint32_t sig_gbdk_0x157_GBDK_2020_405_plus_at = 0x0157;
-            //
-            entry_add_with_version(entry, "2021.1+");
-            return true;
+
+                // 2021.2+
+                if (find_pattern(sig_zgb_2021_2_plus_update_attr, sizeof(sig_zgb_2021_2_plus_update_attr))) {
+                    // entry_check_match() Relies on GBDK tool check being run before ZGB is tested (it is)
+
+                    // Not sure whether there is a discernable 2021.2 and 2021.3 division
+                    // The crt0 in the zip file is the same between the two releases (4.0.5.v1),
+                    // yet some games (MHz Athletic World Demo) have the old 4.0.5.zgb + asm update_attr
+                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_v0_zgb) ||
+                        entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_v1_retracted)) {
+                        entry_add_with_version(entry, "2021.2 - 2021.3");
+                        return true;
+                    }
+                }
+                // 2021.1
+                // Since it's not 2021.2+, can test for 2021.1 using the version shared with 2021.2
+                else if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_v0_zgb)) {
+                    entry_add_with_version(entry, "2021.1");
+                    return true;
+                }
+
+                // It's ZGB 2020.2+ something, but unclear what version
+                entry_add_with_version(entry, "Unknown");
+                return true;
+            }
         }
     }
 
