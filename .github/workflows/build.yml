@@ -1,0 +1,88 @@
+name: Build and Package
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # Triggers the workflow on push or pull request events but only for the develop branch
+  # push:
+  #   branches: [ develop ]
+  # pull_request:
+  #   branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            name: Linux-x64
+          - os: macos-10.15
+            name: MacOS-x64
+    steps:
+
+
+
+      # ==== OS Specific Dependencies ====
+      - name: Linux Depends
+        if: matrix.name == 'Linux-x64'
+        # For Windows crossbuild
+        # Use "x64" for 64 bit (x86_64-w64-mingw32-gcc), "x86" for 32 bit (i686-w64-mingw32-gcc)
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
+      # ==== Build Steps ====
+      - name: Check out repo
+        uses: actions/checkout@v2
+        with:
+          path: gbtoolsid-root
+          submodules: false
+
+      # ==== Builds ====
+      - name: Build MacOS
+        if: (matrix.name == 'MacOS-x64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make macoszip
+          cd ..
+
+      - name: Build Linux
+        if: (matrix.name == 'Linux-x64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make linuxzip
+          make clean
+          make wincrosszip
+          cd ..
+
+      # ==== Packaging ====
+      - name: Package build Linux/MacOS
+        if: (matrix.name == 'Linux-x64') || (matrix.name == 'MacOS-x64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          ls -la package
+          # 7z a package.zip package/*
+          cd ..
+
+      - name: Store build
+        if: (matrix.name == 'Linux-x64')
+        uses: actions/upload-artifact@v2
+        with:
+          name: gbtoolsid build Linux & Windows
+          # path: gbtoolsid-root/package/${{ env.BUILD_PACKAGE_FILENAME }}
+          path: gbtoolsid-root/package
+          # retention-days: 30
+
+      - name: Store build
+        if: (matrix.name == 'MacOS-x64')
+        uses: actions/upload-artifact@v2
+        with:
+          name: gbtoolsid build MacOS
+          # path: gbtoolsid-root/package/${{ env.BUILD_PACKAGE_FILENAME }}
+          path: gbtoolsid-root/package
+          # retention-days: 30
+
