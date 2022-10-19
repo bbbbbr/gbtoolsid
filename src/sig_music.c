@@ -175,7 +175,7 @@ void check_music(void) {
     else if (find_pattern(sig_mplay1, sizeof(sig_mplay1)))
         entry_add_with_version(entry, "1");
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "BlitterObject"};
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "Modern"};
     if (find_pattern(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx))) {
         entry_add(entry);
     }

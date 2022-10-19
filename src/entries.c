@@ -66,11 +66,12 @@ tool_entry * entry_get(int index) {
 // Get the first entry of a given tool type
 tool_entry * entry_get_first_of_type(int tool_type) {
 
-     for (int c = 0; c < tool_entry_count; c++)
+    for (int c = 0; c < tool_entry_count; c++) {
         if (tool_entries[c].type == tool_type) {
            cur_entry = c;
            return &(tool_entries[c]);
-       }
+        }
+    }
 
     return NULL;
 }
@@ -79,11 +80,12 @@ tool_entry * entry_get_first_of_type(int tool_type) {
 // Get the next entry of a given tool type
 tool_entry * entry_get_next_of_type(int tool_type) {
 
-     for (int c = cur_entry + 1; c < tool_entry_count; c++)
+    for (int c = cur_entry + 1; c < tool_entry_count; c++) {
         if (tool_entries[c].type == tool_type) {
            cur_entry = c;
            return &(tool_entries[c]);
-       }
+        }
+    }
 
     return NULL;
 }
@@ -93,5 +95,31 @@ tool_entry * entry_get_next_of_type(int tool_type) {
 // Get max number of entries
 int entry_get_count(int index) {
     return tool_entry_count;
+}
+
+
+// Check to see if any tool name (and optionally version) match specified strings
+bool entry_check_match(int tool_type, char * str_match_name, char * str_match_version) {
+
+    tool_entry * p_entry = entry_get_first_of_type(tool_type);
+
+    if ((p_entry) && (str_match_name)) {
+        // Loop through all entries of matching tool type and test them for matches
+        while (p_entry) {
+            // Name matched
+            if (strcmp(str_match_name, p_entry->name) == 0) {
+                // If version specified, check for match
+                if (str_match_version) {
+                    if (strcmp(str_match_version, p_entry->version) == 0)
+                        return true;
+                }
+                else
+                    return true;
+            }
+            // Advance to next entry if no match found
+            p_entry = entry_get_next_of_type(tool_type);
+        }
+    }
+    return false;
 }
 
