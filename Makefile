@@ -7,6 +7,7 @@ TESTOPT =
 
 SRCDIR      = src
 OBJDIR      = obj
+MKDIRS = $(OBJDIR) $(BINDIR) $(PACKDIR)
 BINS        = $(OBJDIR)/$(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c)))
 OBJS        = $(CSOURCES:%.c=$(OBJDIR)/%.o)
@@ -27,6 +28,8 @@ $(OBJDIR)/%.o:  $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@
 
+# MacOS uses linux target
+macos: linux
 
 # Linux build
 linux: CC = gcc
@@ -42,14 +45,23 @@ wincross: LDFLAGS = -s -static
 wincross: $(OBJS)
 	$(CC) -o $(BIN_WIN) $^ $(LDFLAGS)
 
+macoszip: macos
+	mkdir -p bin
+	# -j discards (junks) path to file
+	zip -j $(BIN)_macos.zip $(BIN)
+	mv $(BIN)_macos.zip bin
+
+
 linuxzip: linux
 	mkdir -p bin
-	zip $(BIN)_linux.zip $(BIN)
+	# -j discards (junks) path to file
+	zip -j $(BIN)_linux.zip $(BIN)
 	mv $(BIN)_linux.zip bin
 
 wincrosszip: wincross
 	mkdir -p bin
-	zip $(BIN)_windows.zip $(BIN_WIN)
+	# -j discards (junks) path to file
+	zip -j $(BIN)_windows.zip $(BIN_WIN)
 	mv $(BIN)_windows.zip bin
 
 
@@ -58,3 +70,8 @@ package:
 	${MAKE} wincrosszip
 	${MAKE} clean
 	${MAKE} linuxzip
+
+# create necessary directories after Makefile is parsed but before build
+# info prevents the command from being pasted into the makefile
+$(info $(shell mkdir -p $(MKDIRS)))
+
