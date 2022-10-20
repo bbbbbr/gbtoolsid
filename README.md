@@ -85,3 +85,11 @@ SoundFX: FX Hammer
 
 ```
 
+To scan in bulk, it can be combined with other tools, for example:
+```
+find path/to/some/ROMs/* -iname "*.gb*" -type f -print0 | xargs -0 -n1 path/to/gbtoolsid
+```
+Or, scan in bulk and dump to csv:
+```
+find path/to/some/ROMs/* -iname "*.gb" -type f | xargs -I {} path/to/gbtoolsid -pF -oC "{}" > path/to/someoutputfile.csv
+```
