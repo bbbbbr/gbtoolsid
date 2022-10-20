@@ -110,8 +110,9 @@ bool entry_check_match(int tool_type, char * str_match_name, char * str_match_ve
             if (strcmp(str_match_name, p_entry->name) == 0) {
                 // If version specified, check for match
                 if (str_match_version) {
-                    if (strcmp(str_match_version, p_entry->version) == 0)
+                    if (strcmp(str_match_version, p_entry->version) == 0) {
                         return true;
+                    }
                 }
                 else
                     return true;

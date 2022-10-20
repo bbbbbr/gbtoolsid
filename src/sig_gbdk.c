@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 #include "common.h"
 #include "entries.h"
@@ -93,8 +92,6 @@ bool check_gbdk(void) {
         entry_add_with_version(entry, STR_GBDK_2_x_to_2020_3_2_0);
         return true;
     }
-
-
 
 
     // GBDK-2020 4.0.1 and later
