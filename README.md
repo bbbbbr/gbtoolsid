@@ -33,7 +33,7 @@ Output is available in several formats:
 
 ```
 gbtoolsid [options] infile.gb[c]
-Version: 1.3.0
+
 Use: Try to identify the toolchain used to build a
      Game Boy game the result is printed to stdout.
 
