@@ -32,7 +32,7 @@
     const uint8_t sig_str_lsdj_2[] = "LITTLE SOUND DJ";
 
     // GBSoundSystem only (not 100% sure) : soundsys.asm : SSFP_multi_sfx
-    const uint8_t sig_gbsoundsystem_blitterobj_SSFP_multi_sfx[] = {0x57, 0x78, 0x06, 0x00, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10, 0x83, 0x6F, 0x3E, 0x00, 0x8A, 0x80, 0x67};
+    const uint8_t sig_gbsoundsystem_modern_SSFP_multi_sfx[] = {0x57, 0x78, 0x06, 0x00, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10, 0x83, 0x6F, 0x3E, 0x00, 0x8A, 0x80, 0x67};
     // Paragon5 only : sndsys_c.asm : MultiSFXLoop
     const uint8_t sig_gbsoundsystem_MultiSFXLoop[] = {0x2A, 0x4E, 0x06, 0x00, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10, 0x87, 0xCB, 0x10};
     const uint8_t sig_str_gbsoundsystem_1[] = "SoundSystem";
@@ -175,8 +175,8 @@ void check_music(void) {
     else if (find_pattern(sig_mplay1, sizeof(sig_mplay1)))
         entry_add_with_version(entry, "1");
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "BlitterObject"};
-    if (find_pattern(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_blitterobj_SSFP_multi_sfx))) {
+    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "Modern"};
+    if (find_pattern(sig_gbsoundsystem_modern_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_modern_SSFP_multi_sfx))) {
         entry_add(entry);
     }
     else {
