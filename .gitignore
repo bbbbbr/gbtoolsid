@@ -5,3 +5,4 @@ gbtoolsid.exe
 bin
 calc
 test/output
+test_norepo
