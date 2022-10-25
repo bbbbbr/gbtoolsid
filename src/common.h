@@ -17,4 +17,6 @@
 // Get string length without trailing terminator
 #define sizeof_str_noterm(instr) (sizeof(instr) - 1)
 
+// DEBUG_LOG_MATCHES
+
 #endif // _COMMON_H

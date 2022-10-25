@@ -76,7 +76,12 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
 
             if (memcmp(p_match, p_pattern, pattern_len) == 0) {
                 cur_addr = (uint32_t)(p_match - g_p_searchbuf);
-
+                #ifdef DEBUG_LOG_MATCHES
+                    printf("At: 0x%8x\n", cur_addr);
+                    for (int c=0; c < pattern_len; c++)
+                        printf("0x%2x, ", p_pattern[c]);
+                    printf("\n\n");
+                #endif
                 return true;
             }
         } else
