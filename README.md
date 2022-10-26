@@ -3,8 +3,8 @@ gbtoolsid - Game Boy Toolchain ID
 
 A command line app for identifying tools used to build Game Boy ROMs
 
-For the web version see:  
-https://bbbbbr.github.io/gbtoolsid_web/  
+For the web version see:
+https://bbbbbr.github.io/gbtoolsid_web/
 https://github.com/bbbbbr/gbtoolsid_web
 
 
@@ -19,11 +19,12 @@ Game Engines:
 - GBStudio
 
 Audio Drivers:
-- Carillon Player, DevSound, Freaq, GHX, GB Sound System, GBT Player, hUGETracker, Lemon, LSDJ, MPlay, Music Box Black Box, MusyX, Trackerboy, Visual Impact's
+- Carillon Player, [DevSound](https://github.com/DevEd2/DevSound) & [DevSoundLite](https://github.com/DevEd2/DevSoundLite), Freaq, GHX, GB Sound System, [GBT Player](https://github.com/AntonioND/gbt-player), [hUGETracker](https://github.com/SuperDisk/hUGETracker) & [fortISSimO](https://github.com/ISSOtm/fortISSimO), Lemon, LSDJ, MPlay, Music Box Black Box, MusyX, [Trackerboy](https://github.com/stoneface86/tbengine), Visual Impact's
 
 Sound FX Drivers:
 - FX Hammer
-- [CBT-FX](https://github.com/datguywitha3ds/CBT-FX)
+- [CBT-FX](https://github.com/datguywitha3ds/CBT-FX), [VAL-FX](https://github.com/ISSOtm/val-fx), [VGM2GBSFX](https://github.com/untoxa/VGM2GBSFX)
+
 
 Output is available in several formats:
 - standard text (only this mode shows multiple entries for a given category if found)
