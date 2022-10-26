@@ -47,7 +47,9 @@
     const uint8_t sig_hugetracker_fx_vol_slide_base_v1[] = {0x79, 0xE6, 0x0F, 0x57, 0x79, 0xE6, 0xF0, 0x5F, 0xCB, 0x33   ,0x7E, 0xE6, 0xF0, 0xCB, 0x37, 0x92};
     // https://github.com/SuperDisk/hUGEDriver/blob/e996cfab0b16bea6e394f269e89a5729d8421bb2/hUGEDriver.asm#L736 -> 743
     const uint8_t sig_hugetracker_fx_vol_slide_base_v2[] = {0x79, 0xE6, 0x0F, 0x57, 0x79, 0xE6, 0xF0, 0x5F, 0xCB, 0x33   ,0x78, 0x87, 0x87, 0x80, 0xC6, 0x12, 0x4F, 0xF2, 0xE6, 0xF0, 0xCB, 0x37, 0x92};
-
+    // ADDED: Initial Release (2022-10)
+    // asm: https://github.com/ISSOtm/fortISSimO/blob/master/fortISSimO.asm#L937
+    const uint8_t sig_hugetracker_fortissimo_fx_vol_slide[] = {0xA1, 0xC8, 0xEE, 0x02, 0x3C, 0xEE, 0x04, 0xC6, 0x12, 0x4F, 0x78, 0x06, 0xF0, 0xA0, 0x67, 0x78, 0xCB, 0x37, 0xA0, 0x6F, 0xF2, 0xA0, 0x95};
 
     // engine.asm, tbe_thumbprint::
     const uint8_t sig_tbengine_noisetable[] = "tbengine - sound driver by stoneface";
@@ -107,86 +109,91 @@
 void check_music(void) {
     tool_entry entry;
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GHX", .c_version = ""};
-    if (find_pattern(sig_str_ghx_audio, sizeof_str_noterm(sig_str_ghx_audio)) ||
-        find_pattern(sig_str_ghx_sound, sizeof_str_noterm(sig_str_ghx_sound)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"GHX", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_ghx_audio) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_ghx_sound))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = "Standard"};
-    if (find_pattern(sig_str_devsound_standard, sizeof_str_noterm(sig_str_devsound_standard)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Standard");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_standard))
         entry_add(entry);
     else {
-        entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "DevSound", .c_version = "Lite"};
-        if (find_pattern(sig_str_devsound_lite, sizeof_str_noterm(sig_str_devsound_lite)))
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Lite");
+        if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_lite))
             entry_add(entry);
     }
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Visual Impact", .c_version = ""};
-    if (find_pattern(sig_str_gbmusicplayer_audio, sizeof_str_noterm(sig_str_gbmusicplayer_audio)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Visual Impact", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_gbmusicplayer_audio))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "MusyX", .c_version = ""};
-    if (find_pattern(sig_str_MusyX_1, sizeof_str_noterm(sig_str_MusyX_1)) ||
-        find_pattern(sig_str_MusyX_2, sizeof_str_noterm(sig_str_MusyX_2)) ||
-        find_pattern(sig_str_MusyX_3, sizeof_str_noterm(sig_str_MusyX_3)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"MusyX", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_MusyX_1) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_MusyX_2) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_MusyX_3))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Freaq", .c_version = ""};
-    if (find_pattern(sig_str_freaq_1, sizeof_str_noterm(sig_str_freaq_1)) ||
-        find_pattern(sig_str_freaq_2, sizeof_str_noterm(sig_str_freaq_2)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Freaq", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_freaq_1) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_freaq_2))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "LSDJ", .c_version = ""};
-    if (find_pattern(sig_str_lsdj_1, sizeof_str_noterm(sig_str_lsdj_1)) ||
-        find_pattern(sig_str_lsdj_2, sizeof_str_noterm(sig_str_lsdj_2)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"LSDJ", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_lsdj_1) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_lsdj_2))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "hUGETracker", .c_version = ""};
-    if (find_pattern(sig_hugetracker_fx_vol_slide_base_v1, sizeof(sig_hugetracker_fx_vol_slide_base_v1)))
+    // hUGETracker and variants
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"hUGETracker","SuperDisk");
+    if (FIND_PATTERN_BUF(sig_hugetracker_fx_vol_slide_base_v1))
         entry_add(entry);
-    else if (find_pattern(sig_hugetracker_fx_vol_slide_base_v2, sizeof(sig_hugetracker_fx_vol_slide_base_v2)))
+    else if (FIND_PATTERN_BUF(sig_hugetracker_fx_vol_slide_base_v2))
+        entry_add(entry);
+    else if (FIND_PATTERN_BUF(sig_hugetracker_fortissimo_fx_vol_slide)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"hUGETracker","fortISSimO");
+        entry_add(entry);
+    }
+
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Trackerboy engine", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_tbengine_noisetable))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Trackerboy engine", .c_version = ""};
-    if (find_pattern(sig_tbengine_noisetable, sizeof_str_noterm(sig_tbengine_noisetable)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Black Box Music Box", "");
+    if (FIND_PATTERN_BUF(sig_blackboxplayer_1) &&
+        FIND_PATTERN_BUF(sig_blackboxplayer_2))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Black Box Music Box", .c_version = ""};
-    if (find_pattern(sig_blackboxplayer_1, sizeof(sig_blackboxplayer_1)) &&
-        find_pattern(sig_blackboxplayer_2, sizeof(sig_blackboxplayer_2)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Lemon", "");
+    if (FIND_PATTERN_BUF(sig_lemon_wave_default))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Lemon", .c_version = ""};
-    if (find_pattern(sig_lemon_wave_default, sizeof(sig_lemon_wave_default)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"GBT Player", "");
+    if (FIND_PATTERN_BUF(sig_gbtplayer_gbt_wave))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBT Player", .c_version = ""};
-    if (find_pattern(sig_gbtplayer_gbt_wave, sizeof(sig_gbtplayer_gbt_wave)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Carillon Player", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_carillon_player_1) ||
+        FIND_PATTERN_STR_NOTERM(sig_carillon_player_2))
         entry_add(entry);
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "Carillon Player", .c_version = ""};
-    if (find_pattern(sig_carillon_player_1, sizeof_str_noterm(sig_carillon_player_1)) ||
-        find_pattern(sig_carillon_player_2, sizeof_str_noterm(sig_carillon_player_2)))
-        entry_add(entry);
-
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "MPlay", .c_version = ""};
-    if (find_pattern(sig_mplay2, sizeof(sig_mplay2)))
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"MPlay", "");
+    if (FIND_PATTERN_BUF(sig_mplay2))
         entry_add_with_version(entry, "2");
-    else if (find_pattern(sig_mplay1, sizeof(sig_mplay1)))
+    else if (FIND_PATTERN_BUF(sig_mplay1))
         entry_add_with_version(entry, "1");
 
-    entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "Modern"};
-    if (find_pattern(sig_gbsoundsystem_modern_SSFP_multi_sfx, sizeof(sig_gbsoundsystem_modern_SSFP_multi_sfx))) {
+    // GBSoundSystem (Paragon5) and variants
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"GBSoundSystem","Modern");
+    if (FIND_PATTERN_BUF(sig_gbsoundsystem_modern_SSFP_multi_sfx)) {
         entry_add(entry);
     }
     else {
-        entry = (tool_entry){.type = TYPE_MUSIC, .c_name = "GBSoundSystem", .c_version = "Classic"};
-        if (find_pattern(sig_str_gbsoundsystem_1, sizeof_str_noterm(sig_str_gbsoundsystem_1)) &&
-            find_pattern(sig_str_gbsoundsystem_2, sizeof_str_noterm(sig_str_gbsoundsystem_2)))
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"GBSoundSystem","Classic");
+        if (FIND_PATTERN_STR_NOTERM(sig_str_gbsoundsystem_1) &&
+            FIND_PATTERN_STR_NOTERM(sig_str_gbsoundsystem_2))
             entry_add(entry);
-        else if (find_pattern(sig_gbsoundsystem_MultiSFXLoop, sizeof(sig_gbsoundsystem_MultiSFXLoop)))
+        else if (FIND_PATTERN_BUF(sig_gbsoundsystem_MultiSFXLoop))
             entry_add(entry);
     }
-
 
 }

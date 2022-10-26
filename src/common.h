@@ -17,6 +17,12 @@
 // Get string length without trailing terminator
 #define sizeof_str_noterm(instr) (sizeof(instr) - 1)
 
-// DEBUG_LOG_MATCHES
+// Debug option
+// #define DEBUG_LOG_MATCHES
+
+// For code copy & paste compat between C version and JS version
+#define FIND_PATTERN_BUF(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof(ptr_to_buf)))
+#define FIND_PATTERN_STR_NOTERM(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof_str_noterm(ptr_to_buf)))
+#define FORMAT_ENTRY(e_type, e_name, e_version) ((tool_entry){.type = e_type, .c_name = e_name, .c_version = e_version})
 
 #endif // _COMMON_H
