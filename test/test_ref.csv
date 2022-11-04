@@ -11,3 +11,4 @@
 "test/template_minimal_gbdk_4_0_5_v2_standard.gb","GBDK","2020.4.0.5 - 2020.4.0.6","","","","","",""
 "test/template_minimal_gbdk_4_0_6.gb","GBDK","2020.4.0.5 - 2020.4.0.6","","","","","",""
 "test/template_minimal_gbdk_4_1_0.gb","GBDK","2020.4.1.0+","","","","","",""
+"test/zgb_tempalte_2022.0.gb","GBDK","2020.4.1.0+","ZGB","2022.0+","hUGETracker","SuperDisk","",""

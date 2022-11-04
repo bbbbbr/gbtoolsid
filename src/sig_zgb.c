@@ -46,23 +46,27 @@
 // Check ZGB engine
 bool check_zgb(void) {
 
-    tool_entry entry = {.type = TYPE_ENGINE, .c_name = "ZGB", .c_version = ""};
+    tool_entry entry;
+
+    // ================== Copy & Paste can start below here ==================
+
+    entry = FORMAT_ENTRY(TYPE_ENGINE, "ZGB", "");
 
     // Exception to the rule: The Squire fails this due to removing ZGB default sound consts
     // https://freshdeus.itch.io/the-squire-gameboy
     // So the requirement is relaxed for versions after 2020.0 which have additional tests
     //
     // Require sound const pattern, as starting filter
-    if (find_pattern(sig_zgb_sound, sizeof(sig_zgb_sound))) {
+    if (FIND_PATTERN_BUF(sig_zgb_sound)) {
 
-        if (find_pattern(sig_zgb_2017, sizeof(sig_zgb_2017))) {
+        if (FIND_PATTERN_BUF(sig_zgb_2017)) {
             entry_add_with_version(entry, "2016-2017");
             return true;
         }
 
         // ZGB 2020.0
-        if ((find_pattern(sig_zgb_2020_0_pushbank, sizeof(sig_zgb_2020_0_pushbank))) &&
-            (find_pattern(sig_zgb_2020_0_popbank,  sizeof(sig_zgb_2020_0_popbank)))) {
+        if ((FIND_PATTERN_BUF(sig_zgb_2020_0_pushbank)) &&
+            (FIND_PATTERN_BUF(sig_zgb_2020_0_popbank))) {
 
             entry_add_with_version(entry, "2020.0");
             return true;
@@ -70,18 +74,18 @@ bool check_zgb(void) {
     }
 
     // ZGB 2020.1
-    if ((find_pattern(sig_zgb_2020_1_plus_pushbank, sizeof(sig_zgb_2020_1_plus_pushbank))) &&
-        (find_pattern(sig_zgb_2020_1_plus_popbank, sizeof(sig_zgb_2020_1_plus_popbank)))) {
+    if ((FIND_PATTERN_BUF(sig_zgb_2020_1_plus_pushbank)) &&
+        (FIND_PATTERN_BUF(sig_zgb_2020_1_plus_popbank))) {
 
-        if (find_pattern(sig_zgb_2020_1_settile, sizeof(sig_zgb_2020_1_settile))) {
+        if (FIND_PATTERN_BUF(sig_zgb_2020_1_settile)) {
             entry_add_with_version(entry, "2020.1");
             return true;
         }
-        else if (find_pattern(sig_zgb_2020_2_plus_settile, sizeof(sig_zgb_2020_2_plus_settile))) {
+        else if (FIND_PATTERN_BUF(sig_zgb_2020_2_plus_settile)) {
 
             // v2020.2 - gbdk 2020 v3.1.1 - Jun 5, 2020
             // Use sig for: GBDK 2.x - GBDK-2020 3.2.0
-            if (check_pattern_addr(sig_zgb_gbdk_bmp, sizeof(sig_zgb_gbdk_bmp), sig_zgb_gbdk_bmp_2x_to_2020_320_at)) {
+            if (CHECK_PATTERN_AT_ADDR(sig_zgb_gbdk_bmp,sig_zgb_gbdk_bmp_2x_to_2020_320_at)) {
                 entry_add_with_version(entry, "2020.2");
                 return true;
             }
@@ -91,7 +95,7 @@ bool check_zgb(void) {
             // const uint8_t sig_gbdk_0x150[] = {0xF3, 0x57, 0xAF, 0x31};
             // const uint32_t sig_gbdk_0x150_GBDK_2020_401_to_402_at  = 0x0153;
             //
-            if (find_pattern(sig_zgb_2021_0_flushoamsprite, sizeof(sig_zgb_2021_0_flushoamsprite))) {
+            if (FIND_PATTERN_BUF(sig_zgb_2021_0_flushoamsprite)) {
                 entry_add_with_version(entry, "2021.0");
                 return true;
             }
@@ -100,7 +104,7 @@ bool check_zgb(void) {
 
 
                 // 2021.2+
-                if (find_pattern(sig_zgb_2021_2_plus_update_attr, sizeof(sig_zgb_2021_2_plus_update_attr))) {
+                if (FIND_PATTERN_BUF(sig_zgb_2021_2_plus_update_attr)) {
                     // entry_check_match() Relies on GBDK tool check being run before ZGB is tested (it is)
 
                     // Not sure whether there is a discernable 2021.2 and 2021.3 division
@@ -109,6 +113,11 @@ bool check_zgb(void) {
                     if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_v0_zgb) ||
                         entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_v1_retracted)) {
                         entry_add_with_version(entry, "2021.2 - 2021.3");
+                        return true;
+                    }
+                    // 2022.2 uses GBDK 4.1.0
+                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_1_0_plus)) {
+                        entry_add_with_version(entry, "2022.0+");
                         return true;
                     }
                 }

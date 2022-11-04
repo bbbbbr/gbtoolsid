@@ -73,7 +73,7 @@ package:
 
 runtest:
 	mkdir -p test/output
-	find test/* -iname "*.gb" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test/output/test_run.csv
+	find test/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test/output/test_run.csv
 	diff --brief test/test_ref.csv test/output/test_run.csv
 
 
