@@ -51,6 +51,14 @@
     // ADDED: Initial Release (2022-10)
     // asm: https://github.com/ISSOtm/fortISSimO/blob/master/fortISSimO.asm#L937
     DEF_PATTERN_BUF(sig_hugetracker_fortissimo_fx_vol_slide, AR_ARGS(0xA1, 0xC8, 0xEE, 0x02, 0x3C, 0xEE, 0x04, 0xC6, 0x12, 0x4F, 0x78, 0x06, 0xF0, 0xA0, 0x67, 0x78, 0xCB, 0x37, 0xA0, 0x6F, 0xF2, 0xA0, 0x95));
+    // get_note_poly is highly conserved, appears distinct, can use it as a fallback
+    // v1: https://github.com/SuperDisk/hUGEDriver/blame/3e67d4ea8a27f5317fd5be73a534c543614130ef/hUGEDriver.asm#L388
+    // v2: https://github.com/SuperDisk/hUGEDriver/blob/e996cfab0b16bea6e394f269e89a5729d8421bb2/hUGEDriver.asm#L361 - 392
+    // Valen: https://github.com/datguywitha3ds/Valens-Game-Boy-Graveyard/blob/main/hUGEDriver-5.5/hUGEDriver.asm#L427
+    DEF_PATTERN_BUF(sig_hugetracker_fx_get_note_poly, AR_ARGS(0xC6, 0xC0, 0x2F, 0xFE, 0x07, 0xD8, 0x67, 0xD6, 0x04, 0xCB, 0x3F, 0xCB, 0x3F, 0x6F, 0x7C, 0xE6, 0x03, 0xC6, 0x04, 0xCB, 0x35, 0xB5, 0xC9));
+    // https://github.com/datguywitha3ds/Valens-Game-Boy-Graveyard/blob/main/hUGEDriver-5.5/hUGEDriver.asm#L1409 - 1416
+    // Shorter pattern, so combine with get_note_poly
+    DEF_PATTERN_BUF(sig_hugetracker_fx_coffeebat_get_shift_ch3, AR_ARGS(0xCB, 0x37, 0xCB, 0x3F, 0x4F, 0xAF, 0x91, 0xE6, 0x03, 0x4F));
 
     // engine.asm, tbe_thumbprint::
     DEF_PATTERN_STR(sig_tbengine_noisetable, "tbengine - sound driver by stoneface");
@@ -157,6 +165,13 @@ void check_music(void) {
     else if (FIND_PATTERN_BUF(sig_hugetracker_fortissimo_fx_vol_slide)) {
         entry = FORMAT_ENTRY(TYPE_MUSIC,"hUGETracker","fortISSimO");
         entry_add(entry);
+    } else if (FIND_PATTERN_BUF(sig_hugetracker_fx_get_note_poly)) {
+
+        if (FIND_PATTERN_BUF(sig_hugetracker_fx_coffeebat_get_shift_ch3)) {
+            entry = FORMAT_ENTRY(TYPE_MUSIC,"hUGETracker","Coffee Bat");
+            entry_add(entry);
+        } else
+            entry_add(entry); // Fallback, default HT entry
     }
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"Trackerboy engine", "");
