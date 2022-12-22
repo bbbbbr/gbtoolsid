@@ -130,6 +130,13 @@
     // https://github.com/Retro-Hax/mmlgb2/commit/b79306a89e886f2d37d89f2416b16eb61ef79935#diff-81ba965f2e900e504b3ac868a4856fc7a37d4a89b758a4fa9b7a9df7a5f5833cR117
     DEF_PATTERN_BUF(sig_mmlgb_v2, AR_ARGS(55, 54, 53, 52, 39, 38, 37, 36, 23, 22, 21, 20, 0, 0, 0, 0, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0));
 
+
+    // GBMC (GameBoy Music Compiler)
+    // http://mydocuments.g2.xrea.com/html/gb/sounddriver.html
+    // sdrv_0.z80 Snd_EXEC_MODV (midway through)
+    DEF_PATTERN_BUF(sig_gbmc_snd_exec_modv, AR_ARGS(0x7E, 0xCB, 0x37, 0x0F, 0x4F, 0x3E, 0x04, 0x91, 0xE6, 0x03, 0x80, 0xFE, 0x04, 0x38, 0x06, 0x07, 0x3E, 0x03, 0x30, 0x01, 0xAF, 0x47, 0x3E, 0x04, 0x90, 0xE6, 0x03, 0x87, 0xCB, 0x37));
+
+
 // Check for misc sound drivers
 void check_music(void) {
     tool_entry entry;
@@ -240,4 +247,9 @@ void check_music(void) {
         else
             entry_add(entry);
     }
+
+    // GBMC (Game Boy Music Compiler)
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"GBMC", "");
+    if (FIND_PATTERN_BUF(sig_gbmc_snd_exec_modv))
+            entry_add(entry);
 }
