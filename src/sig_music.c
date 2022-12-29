@@ -137,6 +137,13 @@
     DEF_PATTERN_BUF(sig_gbmc_snd_exec_modv, AR_ARGS(0x7E, 0xCB, 0x37, 0x0F, 0x4F, 0x3E, 0x04, 0x91, 0xE6, 0x03, 0x80, 0xFE, 0x04, 0x38, 0x06, 0x07, 0x3E, 0x03, 0x30, 0x01, 0xAF, 0x47, 0x3E, 0x04, 0x90, 0xE6, 0x03, 0x87, 0xCB, 0x37));
 
 
+    // Tip via Coffee Bat
+    // Audio Arts (Allister Brimble, Will Davis)
+    // After music / driver data: "0x.1..2v.3S.4!.5..6..7$.8h.9" .. then .. "== THE END =="
+    DEF_PATTERN_STR(sig_audio_arts_term_1, "-- THE END --");
+    DEF_PATTERN_BUF(sig_audio_arts_term_2, AR_ARGS(0x30, 0x78, 0x01, 0x31, 0x88, 0x01, 0x32, 0x76, 0x01, 0x33, 0x53, 0x01, 0x34, 0x21, 0x01, 0x35, 0x00, 0x01, 0x36, 0x01, 0x01, 0x37, 0x24, 0x01, 0x38, 0x68, 0x01, 0x39));
+
+
 // Check for misc sound drivers
 void check_music(void) {
     tool_entry entry;
@@ -251,5 +258,11 @@ void check_music(void) {
     // GBMC (Game Boy Music Compiler)
     entry = FORMAT_ENTRY(TYPE_MUSIC,"GBMC", "");
     if (FIND_PATTERN_BUF(sig_gbmc_snd_exec_modv))
+            entry_add(entry);
+
+    // Audio Arts
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Audio Arts", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_audio_arts_term_1))
+        if (FIND_PATTERN_STR_NOTERM(sig_audio_arts_term_2))
             entry_add(entry);
 }
