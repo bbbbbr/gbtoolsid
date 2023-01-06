@@ -32,7 +32,7 @@ void cleanup(void);
 static void display_help(void) {
     fprintf(stdout,
        "gbtoolsid [options] infile.gb[c]\n"
-       "Version: 1.4.2\n"
+       "Version: 1.4.3\n"
        "Use: Try to identify the toolchain used to build a\n"
        "     Game Boy game the result is printed to stdout.\n"
        "\n"
