@@ -36,7 +36,7 @@ Invocation:`./gbtoolsid -oj test/zgb_template_2022.0.gb`
     "toolsVersion": [null, "", "Unknown", "<various>"],
     "engineName":  [null, "GBStudio", "ZGB"],
     "engineVersion": [null, "", "Unknown", "<various>"],
-    "musicName": [null, "GHX", "DevSound", "DevSound", "Visual Impact", "MusyX", "Freaq", "LSDJ", "hUGETracker", "Trackerboy engine", "Black Box Music Box", "Lemon", "GBT Player", "Carillon Player", "MPlay", "GBSoundSystem", "MMLGB", "GBMC"],
+    "musicName": [null, "GHX", "DevSound", "DevSound", "Visual Impact", "MusyX", "Freaq", "LSDJ", "hUGETracker", "Trackerboy engine", "Black Box Music Box", "Lemon", "GBT Player", "Carillon Player", "MPlay", "GBSoundSystem", "MMLGB", "GBMC", "Audio Arts"],
     "musicVersion": [null, "", "Unknown", "<various>"],
     "soundfxName": [null, "FX Hammer", "CBT-FX", "VAL-FX", "VGM2GBSFX"],
     "soundfxVersion": [null, "", "Unknown", "<various>"],
