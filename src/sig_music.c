@@ -16,7 +16,7 @@
     DEF_PATTERN_STR(sig_str_ghx_audio, "GHX Audio Engine");
     DEF_PATTERN_STR(sig_str_ghx_sound, "GHX Sound Engine");
 
-    DEF_PATTERN_STR(sig_str_devsound_standard, "DevSound GB music player");
+    DEF_PATTERN_STR(sig_str_devsound_classic, "DevSound GB music player");
     DEF_PATTERN_STR(sig_str_devsound_lite, "DevSound Lite");
     DEF_PATTERN_STR(sig_str_devsound_x, "DevSound X sound driver");
 
@@ -174,8 +174,8 @@ void check_music(void) {
         FIND_PATTERN_STR_NOTERM(sig_str_ghx_sound))
         entry_add(entry);
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Standard");
-    if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_standard)) {
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Classic");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_classic)) {
         entry_add(entry);
     }
     else if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_lite)) {
