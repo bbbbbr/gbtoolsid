@@ -20,8 +20,9 @@
 // Check for Turbo Rascal Syntax Error
 void check_turborascal(void) {
 
-    tool_entry entry = {.type = TYPE_TOOLS, .c_name = "Turbo Rascal Syntax Error", .c_version = ""};
+    tool_entry entry;
 
-    if (check_pattern_addr(sig_turborascal_header, sizeof_str_noterm(sig_turborascal_header), sig_turborascal_header_at))
+    entry = FORMAT_ENTRY(TYPE_TOOLS, "Turbo Rascal Syntax Error", "");
+    if (CHECK_PATTERN_AT_ADDR(sig_turborascal_header, sig_turborascal_header_at))
         entry_add(entry);
 }

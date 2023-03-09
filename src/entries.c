@@ -99,7 +99,7 @@ int entry_get_count(int index) {
 
 
 // Check to see if any tool name (and optionally version) match specified strings
-bool entry_check_match(int tool_type, char * str_match_name, char * str_match_version) {
+bool entry_check_match(int tool_type, const char * str_match_name, const char * str_match_version) {
 
     tool_entry * p_entry = entry_get_first_of_type(tool_type);
 

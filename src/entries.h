@@ -28,23 +28,6 @@ typedef struct tool_entry {
 } tool_entry;
 
 
-// Tool
-#define STR_GBDK "GBDK"
-// Versions
-#define STR_GBDK_2_x_to_2020_3_2_0       "2.x - 2020.3.2.0"
-#define STR_GBDK_2020_4_0_0              "2020.4.0.0"
-#define STR_GBDK_2020_4_0_1_to_4_0_2     "2020.4.0.1 - 2020.4.0.2"
-#define STR_GBDK_2020_4_0_3              "2020.4.0.3"
-#define STR_GBDK_2020_4_0_4              "2020.4.0.4"
-#define STR_GBDK_2020_4_0_5_v0_zgb       "2020.4.0.5.v0.zgb"
-#define STR_GBDK_2020_4_0_5_v1_retracted "2020.4.0.5.v1.retracted"
-#define STR_GBDK_2020_4_0_5_to_4_0_6     "2020.4.0.5 - 2020.4.0.6"
-#define STR_GBDK_2020_4_1_0_to_4_1_1     "2020.4.1.0 - 2020.4.1.1"
-#define STR_GBDK_2020_4_2_0_plus         "2020.4.2.0+"
-#define STR_GBDK_2020_4_UNKNOWN          "Unknown"
-
-
-
 void entry_add(tool_entry);
 void entry_add_with_version(tool_entry, const char *);
 
@@ -53,7 +36,7 @@ bool entry_type_is_found(int);
 tool_entry * entry_get(int);
 tool_entry * entry_get_first_of_type(int tool_type);
 tool_entry * entry_get_next_of_type(int tool_type);
-bool entry_check_match(int tool_type, char * str_match_name, char * str_match_version);
+bool entry_check_match(int tool_type, const char * str_match_name, const char * str_match_version);
 
 
 
