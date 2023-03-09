@@ -76,6 +76,10 @@ runtest:
 	find test/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test/output/test_run.csv
 	diff --brief test/test_ref.csv test/output/test_run.csv
 
+updatetest:
+	mkdir -p test/output
+	find test/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test/test_ref.csv
+
 
 # create necessary directories after Makefile is parsed but before build
 # info prevents the command from being pasted into the makefile

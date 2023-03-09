@@ -116,7 +116,7 @@ bool check_zgb(void) {
                         return true;
                     }
                     // 2022.2 uses GBDK 4.1.0
-                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_1_0_plus)) {
+                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_1_0_to_4_1_1)) {
                         entry_add_with_version(entry, "2022.0+");
                         return true;
                     }

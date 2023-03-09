@@ -39,7 +39,8 @@ typedef struct tool_entry {
 #define STR_GBDK_2020_4_0_5_v0_zgb       "2020.4.0.5.v0.zgb"
 #define STR_GBDK_2020_4_0_5_v1_retracted "2020.4.0.5.v1.retracted"
 #define STR_GBDK_2020_4_0_5_to_4_0_6     "2020.4.0.5 - 2020.4.0.6"
-#define STR_GBDK_2020_4_1_0_plus         "2020.4.1.0+"
+#define STR_GBDK_2020_4_1_0_to_4_1_1     "2020.4.1.0 - 2020.4.1.1"
+#define STR_GBDK_2020_4_2_0_plus         "2020.4.2.0+"
 #define STR_GBDK_2020_4_UNKNOWN          "Unknown"
 
 

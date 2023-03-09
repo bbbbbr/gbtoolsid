@@ -42,6 +42,12 @@
 // 0x80
     const uint32_t sig_gbdk_0x80_at = 0x0080;
     const uint8_t sig_gbdk_0x80_GBDK_4_0_0[]  = {0xC5, 0xD5, 0x2A, 0xB6, 0x28, 0x09, 0xE5, 0x3A, 0x6E, 0x67, 0xE7, 0xE1, 0x23, 0x18, 0xF3, 0xD1, 0xC1, 0xE1, 0xF0, 0x41, 0xE6, 0x02, 0x20, 0xFA, 0xF1, 0xD9};
+
+// 0xCC
+    // In 4.2.0 crt0.s vsync/wait_vbl_done moved from ~0x250 -> 0xCC
+    const uint32_t sig_gbdk_0xCC_at = 0x00CC;
+    const uint8_t sig_gbdk_0xCC_GBDK_4_2_0_vsync[]  = {0xF0, 0x40, 0xE6, 0x80, 0xC8, 0xAF, 0xE0, 0x91, 0x76, 0x00, 0xF0, 0x91, 0xB7, 0x28, 0xF9, 0xC9};
+
 // 0x100
     const uint32_t sig_gbdk_0x100_at = 0x0100;
     const uint8_t sig_gbdk_0x100_GBDK_4_0_4[]  = {0x18, 0x51};
@@ -139,7 +145,12 @@ bool check_gbdk(void) {
                 }
                 // 4.1.0+
                 else if (check_pattern_addr(sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus , sizeof(sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus), sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus_at)) {
-                    entry_add_with_version(entry, STR_GBDK_2020_4_1_0_plus);
+
+                    if (check_pattern_addr(sig_gbdk_0xCC_GBDK_4_2_0_vsync , sizeof(sig_gbdk_0xCC_GBDK_4_2_0_vsync), sig_gbdk_0xCC_at))
+                        entry_add_with_version(entry, STR_GBDK_2020_4_2_0_plus);
+                    else
+                        entry_add_with_version(entry, STR_GBDK_2020_4_1_0_to_4_1_1);
+
                     return true;
                 }
                 // Some ZGB versions uses a GBDK version somewhere between 4.0.4 and 4.0.5.v1
