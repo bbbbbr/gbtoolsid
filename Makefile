@@ -80,6 +80,15 @@ updatetest:
 	mkdir -p test/output
 	find test/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test/test_ref.csv
 
+runtest-norepo:
+	mkdir -p test_norepo/output
+	find test_norepo/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test_norepo/output/test_run.csv
+	diff --brief test_norepo/test_ref.csv test_norepo/output/test_run.csv
+
+updatetest-norepo:
+	mkdir -p test_norepo/output
+	find test_norepo/* -iname "*.gb*" -type f | xargs -I {} $(BIN) -pF -oC "{}" > test_norepo/test_ref.csv
+
 
 # create necessary directories after Makefile is parsed but before build
 # info prevents the command from being pasted into the makefile
