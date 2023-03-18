@@ -13,7 +13,7 @@
 
 // Check for misc sound drivers
 void check_music(void) {
-    
+
     tool_entry entry;
 
     // ==== SHARED CODE WITH C STARTS HERE ====

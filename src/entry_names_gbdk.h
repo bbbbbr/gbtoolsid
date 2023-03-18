@@ -9,7 +9,7 @@
 
 
     // ==== SHARED CODE WITH C STARTS HERE ====
-    
+
     // These are also used by GBStudio and ZGB
     // Tool
     DEF_NAME_STR(STR_GBDK, "GBDK");

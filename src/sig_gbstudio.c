@@ -83,5 +83,5 @@ bool check_gbstudio(void) {
 
     return false;
 
-    // ==== SHARED CODE WITH C ENDS HERE ====    
+    // ==== SHARED CODE WITH C ENDS HERE ====
 }

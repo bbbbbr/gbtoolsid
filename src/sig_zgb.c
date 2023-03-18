@@ -109,5 +109,5 @@ bool check_zgb(void) {
 
     return false;
 
-   // ==== SHARED CODE WITH C ENDS HERE ====        
+   // ==== SHARED CODE WITH C ENDS HERE ====
 }
