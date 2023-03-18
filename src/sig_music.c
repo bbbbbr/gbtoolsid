@@ -135,5 +135,9 @@ void check_music(void) {
     if (FIND_PATTERN_BUF(sig_imedgboy))
         entry_add(entry);
 
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Cosmigo", "");
+    if (FIND_PATTERN_BUF(sig_cosmigo1) || FIND_PATTERN_BUF(sig_cosmigo2))
+        entry_add(entry);
+
     // ==== SHARED CODE WITH C ENDS HERE ====
 }
