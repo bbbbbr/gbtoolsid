@@ -16,9 +16,9 @@
     DEF_PATTERN_STR(sig_str_ghx_audio, "GHX Audio Engine");
     DEF_PATTERN_STR(sig_str_ghx_sound, "GHX Sound Engine");
 
-    DEF_PATTERN_STR(sig_str_devsound_standard, "DevSound GB music player");
+    DEF_PATTERN_STR(sig_str_devsound_classic, "DevSound GB music player");
     DEF_PATTERN_STR(sig_str_devsound_lite, "DevSound Lite");
-    DEF_PATTERN_STR(sig_str_devsound_x, "DevSound X sound driver");
+    DEF_PATTERN_STR(sig_str_devsound_x, "DevSound X sound driver by DevEd");
 
     DEF_PATTERN_STR(sig_str_gbmusicplayer_audio, "GB Music Player Copyright VISUAL IMPACT BVBA");
 

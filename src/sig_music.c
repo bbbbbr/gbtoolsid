@@ -23,13 +23,17 @@ void check_music(void) {
         FIND_PATTERN_STR_NOTERM(sig_str_ghx_sound))
         entry_add(entry);
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Standard");
-    if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_standard))
+    if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_classic)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Classic");
         entry_add(entry);
-    else {
+    }
+    else if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_lite)) {
         entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","Lite");
-        if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_lite))
-            entry_add(entry);
+        entry_add(entry);
+    }
+    else if (FIND_PATTERN_STR_NOTERM(sig_str_devsound_x)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","X");
+        entry_add(entry);
     }
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"Visual Impact", "");
