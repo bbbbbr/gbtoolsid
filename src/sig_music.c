@@ -91,10 +91,18 @@ void check_music(void) {
     if (FIND_PATTERN_BUF(sig_gbtplayer_gbt_wave))
         entry_add(entry);
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Carillon Player", "");
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"Carillon Player", "Standard");
     if (FIND_PATTERN_STR_NOTERM(sig_carillon_player_1) ||
         FIND_PATTERN_STR_NOTERM(sig_carillon_player_2))
         entry_add(entry);
+    else if (FIND_PATTERN_BUF(sig_carillon_player_3)) {
+        if (FIND_PATTERN_BUF(sig_makrillon_1)) {
+            entry = FORMAT_ENTRY(TYPE_MUSIC,"Carillon Player", "Makrillon");
+            entry_add(entry);
+        } else {
+            entry_add(entry);
+        }
+    }
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"MPlay", "");
     if (FIND_PATTERN_BUF(sig_mplay2))
