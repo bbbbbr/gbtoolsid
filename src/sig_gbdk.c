@@ -79,10 +79,16 @@ bool check_gbdk(void) {
                 else if (CHECK_PATTERN_AT_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus, sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus_at)) {
 
                     if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0xCC_GBDK_4_2_0_vsync, sig_gbdk_0xCC_at))
-                        entry_add_with_version(entry, STR_GBDK_2020_4_2_0_plus);
+                        entry_add_with_version(entry, STR_GBDK_2020_4_2_0_interim);
                     else
                         entry_add_with_version(entry, STR_GBDK_2020_4_1_0_to_4_1_1);
 
+                    return true;
+                }
+                // 4.2.0+
+                else if (CHECK_PATTERN_AT_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus, sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus_at)) {
+
+                    entry_add_with_version(entry, STR_GBDK_2020_4_2_0_plus);
                     return true;
                 }
                 // Some ZGB versions uses a GBDK version somewhere between 4.0.4 and 4.0.5.v1
