@@ -27,7 +27,7 @@
 #define FORMAT_ENTRY(e_type, e_name, e_version) ((tool_entry){.type = e_type, .c_name = e_name, .c_version = e_version})
 
 // Reference example: Formerly: #define STR_GBDK_2_x_to_2020_3_2_0       "2.x - 2020.3.2.0"
-#define DEF_NAME_STR(varname, str_content) static const uint8_t varname[] = str_content
+#define DEF_NAME_STR(varname, str_content) static const char varname[] = str_content
 
 // Reference example: const uint8_t sig_str_devsound_lite[] = "DevSound Lite";
 #define DEF_PATTERN_STR(varname, str_content) static const uint8_t varname[] = str_content
