@@ -6,6 +6,8 @@ Changelog
 - Detect Makrillon variant of Carillon
 - Detect Cosmigo player
 - Detect IMEDGBoy
+- Rename: DevSound Standard -> DevSound Classic
+- Rename: Audio Arts -> QuickThunder
 
 
 # Version 1.4.3
