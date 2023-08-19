@@ -1,6 +1,9 @@
 Changelog
 =========
 
+# Version 1.4.5
+- Detect ZGB 2023.0
+
 # Version 1.4.4
 - Detect GBDK 4.2.0+
 - Detect Makrillon variant of Carillon

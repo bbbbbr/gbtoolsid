@@ -87,9 +87,14 @@ bool check_zgb(void) {
                         entry_add_with_version(entry, "2021.2 - 2021.3");
                         return true;
                     }
-                    // 2022.2 uses GBDK 4.1.0
+                    // 2022.0 uses GBDK 4.1.0
                     if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_1_0_to_4_1_1)) {
                         entry_add_with_version(entry, "2022.0+");
+                        return true;
+                    }
+                    // 2023.0 uses GBDK 4.2.0
+                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_2_0_plus)) {
+                        entry_add_with_version(entry, "2023.0+");
                         return true;
                     }
                 }
