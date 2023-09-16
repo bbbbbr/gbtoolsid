@@ -55,6 +55,8 @@ void check_music(void) {
     if (FIND_PATTERN_STR_NOTERM(sig_str_lsdj_1) ||
         FIND_PATTERN_STR_NOTERM(sig_str_lsdj_2))
         entry_add(entry);
+    else if (CHECK_PATTERN_AT_ADDR(sig_lsdpack_header_title, sig_lsdpack_header_title_at_0x134))
+        entry_add(entry);
 
     // hUGETracker and variants
     entry = FORMAT_ENTRY(TYPE_MUSIC,"hUGETracker","SuperDisk");
@@ -149,6 +151,10 @@ void check_music(void) {
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"Cosmigo", "");
     if (FIND_PATTERN_BUF(sig_cosmigo3))
+        entry_add(entry);
+
+    entry = FORMAT_ENTRY(TYPE_MUSIC,"DefleMask", "");
+    if (CHECK_PATTERN_AT_ADDR(sig_deflemask_romstart, sig_deflemask_at_0x0001))
         entry_add(entry);
 
     // ==== SHARED CODE WITH C ENDS HERE ====

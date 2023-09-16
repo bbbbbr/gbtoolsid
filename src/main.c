@@ -16,8 +16,9 @@
 #include "display.h"
 
 char filename_in[MAX_STR_LEN] = {'\0'};
-
 uint8_t * p_buf_in  = NULL;
+
+#define VERSION "1.4.6"
 
 int opt_output_style = OUTPUT_DEFAULT;
 int opt_path_output_style = PATH_STYLE_DEFAULT;
@@ -32,7 +33,7 @@ void cleanup(void);
 static void display_help(void) {
     fprintf(stdout,
        "gbtoolsid [options] infile.gb[c]\n"
-       "Version: 1.4.5\n"
+       "Version: "VERSION"\n"
        "Use: Try to identify the toolchain used to build a\n"
        "     Game Boy game the result is printed to stdout.\n"
        "\n"

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# Version 1.4.6
+- Detect LSDPack player for LSDJ
+- Detect DMGBVGM player for DefleMask
+
 # Version 1.4.5
 - Detect ZGB 2023.0
 
