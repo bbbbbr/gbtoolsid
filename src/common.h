@@ -20,6 +20,8 @@
 // Debug option
 // #define DEBUG_LOG_MATCHES
 
+#define GET_ADDR_LAST_MATCH() (get_addr_last_match())
+
 // For code copy & paste compat between C version and JS version
 #define FIND_PATTERN_BUF(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof(ptr_to_buf)))
 #define FIND_PATTERN_STR_NOTERM(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof_str_noterm(ptr_to_buf)))

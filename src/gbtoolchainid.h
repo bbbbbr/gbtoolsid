@@ -9,4 +9,6 @@ void display_output(int, const char *);
 bool check_pattern_addr(const uint8_t *, uint32_t, uint32_t);
 bool find_pattern(const uint8_t *, uint32_t);
 
+uint32_t get_addr_last_match(void);
+
 #endif // _GBTOOLCHAINID_H

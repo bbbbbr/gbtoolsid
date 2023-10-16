@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# Version 1.4.7
+- Detect GBForth
+- Detect GBBasic Alpha 3
+
 # Version 1.4.6
 - Detect LSDPack player for LSDJ
 - Detect DMGBVGM player for DefleMask

@@ -14,6 +14,8 @@
 #include "sig_zgb.h"
 #include "sig_gbstudio.h"
 #include "sig_turborascal.h"
+#include "sig_gbforth.h"
+#include "sig_gbbasic.h"
 
 #include "sig_music.h"
 
@@ -21,6 +23,7 @@
 
 static uint8_t * g_p_searchbuf = NULL;
 static uint32_t g_searchbuf_len = 0;
+static uint32_t addr_last_match = 0;
 
 
 static void set_search_buf(uint8_t *, uint32_t);
@@ -29,6 +32,10 @@ static void set_search_buf(uint8_t *, uint32_t);
 static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
     g_p_searchbuf = p_rom_data;
     g_searchbuf_len = rom_size;
+}
+
+uint32_t get_addr_last_match(void) {
+    return addr_last_match;
 }
 
 // Test for a pattern at a specific address
@@ -46,8 +53,15 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
     if ((match_index + pattern_len - 1) > (g_searchbuf_len - 1))
         return false;
 
-    if (memcmp(&p_match[match_index], p_pattern, pattern_len) == 0)
+    if (memcmp(&p_match[match_index], p_pattern, pattern_len) == 0) {
+            #ifdef DEBUG_LOG_MATCHES
+                printf("At: 0x%08x\n", match_index);
+                for (int c=0; c < pattern_len; c++)
+                    printf("0x%02x, ", p_pattern[c]);
+                printf("\n\n");
+            #endif
         return true;
+    }
     else
         return false;
 }
@@ -59,8 +73,6 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 // return (memmem(g_p_searchbuf, g_searchbuf_len, p_pattern, pattern_len) != NULL);
 //
 bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
-
-    uint32_t cur_addr = 0;
 
     if ((g_p_searchbuf == NULL) || (p_pattern == NULL) ||
         (g_searchbuf_len == 0)  || (pattern_len == 0)  ||
@@ -75,11 +87,11 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
         if (pattern_len <= remaining) {
 
             if (memcmp(p_match, p_pattern, pattern_len) == 0) {
-                cur_addr = (uint32_t)(p_match - g_p_searchbuf);
+                addr_last_match = (uint32_t)(p_match - g_p_searchbuf);
                 #ifdef DEBUG_LOG_MATCHES
-                    printf("At: 0x%8x\n", cur_addr);
+                    printf("At: 0x%08x\n", addr_last_match);
                     for (int c=0; c < pattern_len; c++)
-                        printf("0x%2x, ", p_pattern[c]);
+                        printf("0x%02x, ", p_pattern[c]);
                     printf("\n\n");
                 #endif
                 return true;
@@ -105,14 +117,18 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     result_gbdk = check_gbdk();
 
     // If strict mode is turned on, only test
-    // for ZGB and GBStudio when GBDK is present
+    // for ZGB, GBStudio, GBBasic when GBDK is present
     if ((strict_mode == false) || (result_gbdk == true)) {
         check_zgb();
         check_gbstudio();
+        check_gbbasic();
     }
 
     // Turbo Rascal
     check_turborascal();
+
+    // GB Forth
+    check_gbforth();
 
     // Check for music drivers
     // May report multiple drivers (if found) in default output mode
