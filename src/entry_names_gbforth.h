@@ -13,9 +13,12 @@
     // ==== GBForth ====
     //
     DEF_PATTERN_BUF(sig_gbforth_startup_1, AR_ARGS(0x0E, 0xFE, 0x31, 0xFF, 0xCF, 0x3E));
-    // ... one byte gap for variable value ...
+    // ... one byte gap for variable value ... (TODO: bitmask for search patterns to make this easier)
     DEF_PATTERN_ADDR(sig_gbforth_startup_1_next_at, (6 + 1));
-    DEF_PATTERN_BUF(sig_gbforth_startup_2, AR_ARGS(0xEA, 0x00, 0xC0, 0x3E, 0xC0, 0xEA, 0x01, 0xC0, 0xCD));
+    DEF_PATTERN_BUF(sig_gbforth_startup_2, AR_ARGS(0xEA, 0x00, 0xC0, 0x3E));
+    // ... one byte gap for variable value ...
+    DEF_PATTERN_ADDR(sig_gbforth_startup_2_next_at, (4 + 1));
+    DEF_PATTERN_BUF(sig_gbforth_startup_3, AR_ARGS(0xEA, 0x01, 0xC0, 0xCD));
 
     // ==== GBForth
     // https://gbforth.org/
@@ -53,7 +56,7 @@
     //         ld   sp, $CFFF  ; rp-init (return stack pointer)
     //         ld   a, ...N...     ; cp-init <- Value loaded varies by program
     //         ld   [_RAM_C000_], a
-    //         ld   a, $C0
+    //         ld   a, ...N...     ;  <- Value loaded varies by program
     //         ld   [_RAM_C001_], a
     //         call ..
 

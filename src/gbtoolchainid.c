@@ -60,6 +60,7 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
                     printf("0x%02x, ", p_pattern[c]);
                 printf("\n\n");
             #endif
+        addr_last_match = match_index;
         return true;
     }
     else

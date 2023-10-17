@@ -22,7 +22,10 @@ void check_gbforth(void) {
     if (FIND_PATTERN_BUF(sig_gbforth_startup_1)) {
         // Gap of one byte, then next pattern
         if (CHECK_PATTERN_AT_ADDR(sig_gbforth_startup_2, (GET_ADDR_LAST_MATCH() + sig_gbforth_startup_1_next_at))) {
-            entry_add(entry);
+            // Gap of one byte, then next pattern
+            if (CHECK_PATTERN_AT_ADDR(sig_gbforth_startup_3, (GET_ADDR_LAST_MATCH() + sig_gbforth_startup_2_next_at))) {
+                entry_add(entry);
+            }
         }
     }
 
