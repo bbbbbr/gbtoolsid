@@ -48,20 +48,20 @@ wincross: $(OBJS)
 macoszip: macos
 	mkdir -p bin
 	# -j discards (junks) path to file
-	zip -j $(BIN)_macos.zip $(BIN)
+	zip -j $(BIN)_macos.zip $(BIN) Changelog.md README.md
 	mv $(BIN)_macos.zip bin
 
 
 linuxzip: linux
 	mkdir -p bin
 	# -j discards (junks) path to file
-	zip -j $(BIN)_linux.zip $(BIN)
+	zip -j $(BIN)_linux.zip $(BIN) Changelog.md README.md
 	mv $(BIN)_linux.zip bin
 
 wincrosszip: wincross
 	mkdir -p bin
 	# -j discards (junks) path to file
-	zip -j $(BIN)_windows.zip $(BIN_WIN)
+	zip -j $(BIN)_windows.zip $(BIN_WIN) Changelog.md README.md
 	mv $(BIN)_windows.zip bin
 
 
