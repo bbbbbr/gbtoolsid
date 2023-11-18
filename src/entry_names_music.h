@@ -187,6 +187,10 @@
     DEF_PATTERN_ADDR(sig_deflemask_at_0x0001, 0x0001);
     //DEF_PATTERN_STR(sig_deflemask_2, "DeflemaskGBVGM");
 
+    // TonicFur
+    DEF_PATTERN_STR(sig_tonicfur, "TonicFur Audio Engine");
+
+
     // ==== SHARED CODE WITH C ENDS HERE ====
 
 

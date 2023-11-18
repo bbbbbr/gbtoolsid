@@ -36,20 +36,24 @@ void check_music(void) {
         entry_add(entry);
     }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Visual Impact", "");
-    if (FIND_PATTERN_STR_NOTERM(sig_str_gbmusicplayer_audio))
+    if (FIND_PATTERN_STR_NOTERM(sig_str_gbmusicplayer_audio)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Visual Impact", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"MusyX", "");
     if (FIND_PATTERN_STR_NOTERM(sig_str_MusyX_1) ||
         FIND_PATTERN_STR_NOTERM(sig_str_MusyX_2) ||
-        FIND_PATTERN_STR_NOTERM(sig_str_MusyX_3))
-        entry_add(entry);
+        FIND_PATTERN_STR_NOTERM(sig_str_MusyX_3)) {
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Freaq", "");
-    if (FIND_PATTERN_STR_NOTERM(sig_str_freaq_1) ||
-        FIND_PATTERN_STR_NOTERM(sig_str_freaq_2))
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"MusyX", "");
         entry_add(entry);
+    }
+
+    if (FIND_PATTERN_STR_NOTERM(sig_str_freaq_1) ||
+        FIND_PATTERN_STR_NOTERM(sig_str_freaq_2)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Freaq", "");
+        entry_add(entry);
+    }
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"LSDJ", "");
     if (FIND_PATTERN_STR_NOTERM(sig_str_lsdj_1) ||
@@ -76,22 +80,26 @@ void check_music(void) {
             entry_add(entry); // Fallback, default HT entry
     }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Trackerboy engine", "");
-    if (FIND_PATTERN_STR_NOTERM(sig_tbengine_noisetable))
+    if (FIND_PATTERN_STR_NOTERM(sig_tbengine_noisetable)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Trackerboy engine", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Black Box Music Box", "");
     if (FIND_PATTERN_BUF(sig_blackboxplayer_1) &&
-        FIND_PATTERN_BUF(sig_blackboxplayer_2))
+        FIND_PATTERN_BUF(sig_blackboxplayer_2)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Black Box Music Box", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Lemon", "");
-    if (FIND_PATTERN_BUF(sig_lemon_wave_default))
+    if (FIND_PATTERN_BUF(sig_lemon_wave_default)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Lemon", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"GBT Player", "");
-    if (FIND_PATTERN_BUF(sig_gbtplayer_gbt_wave))
+    if (FIND_PATTERN_BUF(sig_gbtplayer_gbt_wave)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"GBT Player", "");
         entry_add(entry);
+    }
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"Carillon Player", "Standard");
     if (FIND_PATTERN_STR_NOTERM(sig_carillon_player_1) ||
@@ -127,8 +135,9 @@ void check_music(void) {
     }
 
     // MMLGB and variants
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"MMLGB", "");
     if ((FIND_PATTERN_BUF(sig_mmlgb1)) || (FIND_PATTERN_BUF(sig_mmlgb2))) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"MMLGB", "");
+
         if (FIND_PATTERN_BUF(sig_mmlgb_v2))
             entry_add_with_version(entry, "Retro-Hax");
         else
@@ -136,26 +145,36 @@ void check_music(void) {
     }
 
     // GBMC (Game Boy Music Compiler)
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"GBMC", "");
-    if (FIND_PATTERN_BUF(sig_gbmc_snd_exec_modv))
-            entry_add(entry);
+    if (FIND_PATTERN_BUF(sig_gbmc_snd_exec_modv)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"GBMC", "");
+        entry_add(entry);
+    }
 
     // QuickThunder (Audio Arts)
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"QuickThunder", "");
-    if (FIND_PATTERN_STR_NOTERM(sig_quickthunder_audio_arts_ch2))
+    if (FIND_PATTERN_STR_NOTERM(sig_quickthunder_audio_arts_ch2)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"QuickThunder", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"IMEDGBoy", "");
-    if (FIND_PATTERN_BUF(sig_imedgboy))
+    if (FIND_PATTERN_BUF(sig_imedgboy)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"IMEDGBoy", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"Cosmigo", "");
-    if (FIND_PATTERN_BUF(sig_cosmigo3))
+    if (FIND_PATTERN_BUF(sig_cosmigo3)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"Cosmigo", "");
         entry_add(entry);
+    }
 
-    entry = FORMAT_ENTRY(TYPE_MUSIC,"DefleMask", "");
-    if (CHECK_PATTERN_AT_ADDR(sig_deflemask_romstart, sig_deflemask_at_0x0001))
+    if (CHECK_PATTERN_AT_ADDR(sig_deflemask_romstart, sig_deflemask_at_0x0001)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"DefleMask", "");
         entry_add(entry);
+    }
+
+    if (FIND_PATTERN_STR_NOTERM(sig_tonicfur)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"TonicFur Audio Engine", "");
+        entry_add(entry);
+    }
 
     // ==== SHARED CODE WITH C ENDS HERE ====
 }
