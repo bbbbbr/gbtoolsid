@@ -4,6 +4,7 @@ Changelog
 # Version 1.4.7
 - Detect GBForth
 - Detect GBBasic Alpha 3
+- Detect TonicFur Audio Engine
 
 # Version 1.4.6
 - Detect LSDPack player for LSDJ

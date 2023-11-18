@@ -32,11 +32,11 @@ Invocation:`./gbtoolsid -oj test/zgb_template_2022.0.gb`
 ```
 {
     "file": [<string quoted filename>],
-    "toolsName": [null, "GBDK", "Turbo Rascal Syntax Error"],
+    "toolsName": [null, "GBDK", "Turbo Rascal Syntax Error","GBForth","GBBasic"],
     "toolsVersion": [null, "", "Unknown", "<various>"],
     "engineName":  [null, "GBStudio", "ZGB"],
     "engineVersion": [null, "", "Unknown", "<various>"],
-    "musicName": [null, "GHX", "DevSound", "DevSound", "Visual Impact", "MusyX", "Freaq", "LSDJ", "hUGETracker", "Trackerboy engine", "Black Box Music Box", "Lemon", "GBT Player", "Carillon Player", "MPlay", "GBSoundSystem", "MMLGB", "GBMC", "QuickThunder", "IMEDGBoy", "Cosmigo"],
+    "musicName": [null, "GHX", "DevSound", "DevSound", "Visual Impact", "MusyX", "Freaq", "LSDJ", "hUGETracker", "Trackerboy engine", "Black Box Music Box", "Lemon", "GBT Player", "Carillon Player", "MPlay", "GBSoundSystem", "MMLGB", "GBMC", "QuickThunder", "IMEDGBoy", "Cosmigo", "DefleMask", "TonicFur Audio Engine"],
     "musicVersion": [null, "", "Unknown", "<various>"],
     "soundfxName": [null, "FX Hammer", "CBT-FX", "VAL-FX", "VGM2GBSFX"],
     "soundfxVersion": [null, "", "Unknown", "<various>"],
