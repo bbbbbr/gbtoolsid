@@ -14,7 +14,12 @@
     // Tool
     DEF_NAME_STR(STR_GBDK, "GBDK");
     // Versions
-    DEF_NAME_STR(STR_GBDK_2_x_to_2020_3_2_0,       "2.x - 2020.3.2.0");
+    DEF_NAME_STR(STR_GBDK_1_x,                     "1.x");
+    DEF_NAME_STR(STR_GBDK_2_0_x_to_2_0_17,         "2.0.x - 2.0.17");
+    DEF_NAME_STR(STR_GBDK_2_0_18_to_2_1_5,         "2.0.18 - 2.1.5");
+    DEF_NAME_STR(STR_GBDK_2_9_0_to_2_9_4,          "2.9.0 - 2.9.4");
+    DEF_NAME_STR(STR_GBDK_2_9_5_to_2020_3_1_0,     "2.9.5 - 2020.3.1.0");
+    DEF_NAME_STR(STR_GBDK_2020_3_2_0,              "2020.3.2.0");
     DEF_NAME_STR(STR_GBDK_2020_4_0_0,              "2020.4.0.0");
     DEF_NAME_STR(STR_GBDK_2020_4_0_1_to_4_0_2,     "2020.4.0.1 - 2020.4.0.2");
     DEF_NAME_STR(STR_GBDK_2020_4_0_3,              "2020.4.0.3");
@@ -71,11 +76,33 @@
     DEF_PATTERN_BUF(sig_gbdk_0x100_GBDK_4_0_4, AR_ARGS(0x18, 0x51));
     // ZGB uses a pre-release 4.0.5 where .code_start has been moved down, but is missing _refresh_OAM:: and .clear_WRAM
     DEF_PATTERN_BUF(sig_gbdk_0x100_GBDK_4_0_5_v0_zgb, AR_ARGS(0x18, 0x55));
-    // 0x150
+    // 0x150 - 1.x
+        DEF_PATTERN_ADDR(sig_gbdk_0x150_GBDK_1_x_at, 0x0150);
+        DEF_PATTERN_BUF(sig_gbdk_0x150_GBDK_1_x, AR_ARGS(0xF3, 0x31, 0xFF, 0xCF, 0xAF, 0xEA));
+        DEF_PATTERN_ADDR(sig_gbdk_0x158_GBDK_1_x_at, 0x0158);
+        DEF_PATTERN_BUF(sig_gbdk_0x158_GBDK_1_x, AR_ARGS(0x21, 0xFF, 0xDF, 0x0E, 0x10, 0x06, 0x00, 0x32, 0x05, 0x20, 0xFC, 0x0D, 0x20, 0xF9, 0xCD));
+    // 0x150 - 2.x+
         // These should only be used when stacked on other entries
         DEF_PATTERN_BUF(sig_gbdk_0x150, AR_ARGS(0xF3, 0x57, 0xAF, 0x31));
             // This one is incorrect, 4.0.1 and 4.0.2 have an indistinguishable crt0.s
                 // DEF_PATTERN_ADDR(sig_gbdk_0x150_GBDK_2x_to_2020_401_at, 0x0150);
+    // 0x150 - 2.x
+        DEF_PATTERN_BUF( sig_gbdk_0x1c2_GBDK_20x_to_2017, AR_ARGS(0x3E, 0x80, 0xE0, 0x02, 0xCD));
+        DEF_PATTERN_ADDR(sig_gbdk_0x1c2_GBDK_20x_to_2017_at, 0x01C2);
+        // The malloc list was added in GBDK 2.0.18.
+        DEF_PATTERN_BUF( sig_gbdk_0x1c2_GBDK_2018_to_215, AR_ARGS(0x3E, 0x80, 0xE0, 0x02, 0xAF, 0xEA));
+        DEF_PATTERN_ADDR(sig_gbdk_0x1c2_GBDK_2018_to_215_at, 0x01C2);
+        // GBDK 2.9.0 commented out the manual variable clears here, but not the preceding XOR.
+        DEF_PATTERN_BUF( sig_gbdk_0x1c2_GBDK_29x, AR_ARGS(0x3E, 0x80, 0xE0, 0x02, 0xAF, 0xCD));
+        DEF_PATTERN_ADDR(sig_gbdk_0x1c2_GBDK_29x_at, 0x01C2);
+        // To distinguish GBDK <= 2.9.4 from >= 2.9.5, we need to observe a small change in the crt0's final calls.
+        // CALL -> EI, CALL
+        DEF_PATTERN_BUF( sig_gbdk_0x1ca_GBDK_295, AR_ARGS(0xFB, 0xCD));
+        DEF_PATTERN_ADDR(sig_gbdk_0x1ca_GBDK_295_at, 0x01CA);
+        // GBDK 3.2.0 replaced an LD HL, #0xFEFF with #0xFFFF here.
+        DEF_PATTERN_BUF( sig_gbdk_0x164_GBDK_320, AR_ARGS(0x21, 0xFF, 0xFF, 0x06, 0x80));
+        DEF_PATTERN_ADDR(sig_gbdk_0x164_GBDK_320_at, 0x0164);
+    // 0x150 - 4.x
         DEF_PATTERN_ADDR(sig_gbdk_0x150_GBDK_2020_401_to_402_at, 0x0153);
         // 0x0153
         DEF_PATTERN_BUF(sig_gbdk_0x153_GBDK_2020_403_plus, AR_ARGS(0xF3, 0x57, 0x31));

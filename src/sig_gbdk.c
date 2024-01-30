@@ -31,7 +31,32 @@ bool check_gbdk(void) {
 
     // GBDK 2.x - GBDK-2020 3.2.0
     if (CHECK_PATTERN_AT_ADDR(sig_gbdk_bmp, sig_gbdk_bmp_2x_to_2020_320_at)) {
-        entry_add_with_version(entry, STR_GBDK_2_x_to_2020_3_2_0);
+        // GBDK-2020 3.2.0
+        if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x164_GBDK_320, sig_gbdk_0x164_GBDK_320_at)) {
+            entry_add_with_version(entry, STR_GBDK_2020_3_2_0);
+            return true;
+        }
+
+        // GBDK 2.9.0 - GBDK-2020 3.1.0
+        if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x1c2_GBDK_29x, sig_gbdk_0x1c2_GBDK_29x_at)) {
+            // GBDK 2.9.5 - GBDK-2020 3.1.0
+            if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x1ca_GBDK_295, sig_gbdk_0x1ca_GBDK_295_at)) {
+                entry_add_with_version(entry, STR_GBDK_2_9_5_to_2020_3_1_0);
+                return true;
+            }
+
+            // GBDK 2.9.0 - GBDK 2.9.4
+            entry_add_with_version(entry, STR_GBDK_2_9_0_to_2_9_4);
+            return true;
+        }
+
+        // GBDK 2.0.18 - GBDK 2.0.15
+        if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x1c2_GBDK_2018_to_215, sig_gbdk_0x1c2_GBDK_2018_to_215_at)) {
+            entry_add_with_version(entry, STR_GBDK_2_0_18_to_2_1_5);
+            return true;
+        }
+
+        entry_add_with_version(entry, STR_GBDK_2_0_x_to_2_0_17);
         return true;
     }
 
@@ -104,6 +129,13 @@ bool check_gbdk(void) {
 
         } // end GBDK-2020 4.0.1 and later extra match
     } // end GBDK-2020 4.0.1 and later
+
+    // GBDK 1.x
+    if ((CHECK_PATTERN_AT_ADDR(sig_gbdk_0x150_GBDK_1_x, sig_gbdk_0x150_GBDK_1_x_at)) &&
+        (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x158_GBDK_1_x, sig_gbdk_0x158_GBDK_1_x_at))) {
+        entry_add_with_version(entry, STR_GBDK_1_x);
+        return true;
+    }
 
     return false;
 
