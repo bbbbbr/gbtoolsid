@@ -3,6 +3,7 @@ Changelog
 
 # Version 1.4.8
 - Detect GBStudio 3.2.0
+- Detect gbnim
 
 # Version 1.4.7
 - Detect GBForth
