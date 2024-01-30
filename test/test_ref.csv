@@ -7,6 +7,7 @@
 "test/gbforth_happy-birthday.gb","GBForth","","","","","","",""
 "test/gbforth_simon.gb","GBForth","","","","","","",""
 "test/gbforth_sokoban.gb","GBForth","","","","","","",""
+"test/gbnim_pocketclicker.gb","gbnim","","","","","","",""
 "test/gbstudio_3.2.0.gb","GBDK","2020.4.2.0+","GBStudio","3.2.0","hUGETracker","SuperDisk","",""
 "test/template_minimal_gbdk_4_0_0.gb","GBDK","2020.4.0.0","","","","","",""
 "test/template_minimal_gbdk_4_0_1.gb","GBDK","2020.4.0.1 - 2020.4.0.2","","","","","",""
