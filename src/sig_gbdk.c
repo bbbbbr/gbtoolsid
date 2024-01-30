@@ -56,7 +56,9 @@ bool check_gbdk(void) {
             return true;
         }
 
-        entry_add_with_version(entry, STR_GBDK_2_0_x_to_2_0_17);
+        // GBDK 2.x, cannot narrow down further
+        // (for example, Demotronic uses a modified crt0 which fails the above checks)
+        entry_add_with_version(entry, STR_GBDK_2_x);
         return true;
     }
 
@@ -130,10 +132,10 @@ bool check_gbdk(void) {
         } // end GBDK-2020 4.0.1 and later extra match
     } // end GBDK-2020 4.0.1 and later
 
-    // GBDK 1.x
+    // GBDK 1.x - 2.0.x
     if ((CHECK_PATTERN_AT_ADDR(sig_gbdk_0x150_GBDK_1_x, sig_gbdk_0x150_GBDK_1_x_at)) &&
         (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x158_GBDK_1_x, sig_gbdk_0x158_GBDK_1_x_at))) {
-        entry_add_with_version(entry, STR_GBDK_1_x);
+        entry_add_with_version(entry, STR_GBDK_1_x_to_2_0_x);
         return true;
     }
 
