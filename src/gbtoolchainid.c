@@ -115,6 +115,7 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
 
     set_search_buf(p_rom_data, rom_size);
 
+    // Note: GBStudio entry_check_match() relies on GBDK tool check being run here before ZGB is tested
     result_gbdk = check_gbdk();
 
     // If strict mode is turned on, only test

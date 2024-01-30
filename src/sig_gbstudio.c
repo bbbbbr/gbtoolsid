@@ -56,29 +56,38 @@ bool check_gbstudio(void) {
     }
 
     // GBStudio 3.0.0+
-    if (FIND_PATTERN_BUF(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus) &&
-        FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_2_0_0_b5_plus)) {
+    if (FIND_PATTERN_BUF(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus)) {
+
+        if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_2_0_0_b5_to_3_1_0)) {
         // entry_check_match() Relies on GBDK tool check being run before ZGB is tested (it is)
 
-        // ADDED:Apr 30, 2021 (v2.0.0-beta5) -> REMOVED:Feb 20, 2022 (3.0.3)
-        if (FIND_PATTERN_BUF(sig_gbs_musicmanager_c_FX_ADDR_LO__2_0_0_b5_to_3_0_3)) {
+            // ADDED:Apr 30, 2021 (v2.0.0-beta5) -> REMOVED:Feb 20, 2022 (3.0.3)
+            if (FIND_PATTERN_BUF(sig_gbs_musicmanager_c_FX_ADDR_LO__2_0_0_b5_to_3_0_3)) {
 
-            // GBStudio 3.0.0 alpha 1+ uses GBDK 4.0.4
-            if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_4)) {
-                entry_add_with_version(entry, "3.0.0 alpha 1+");
-                return true;
+                // GBStudio 3.0.0 alpha 1+ uses GBDK 4.0.4
+                if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_4)) {
+                    entry_add_with_version(entry, "3.0.0 alpha 1+");
+                    return true;
+                }
+                // GBStudio 3.0.0 official - 3.1.0+ uses GBDK 4.0.5 & 4.0.6 (which cannot be differentiated
+                else if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_to_4_0_6)) {
+                    entry_add_with_version(entry, "3.0.0 - 3.0.3");
+                    return true;
+                }
             }
-            // GBStudio 3.0.0 official - 3.1.0+ uses GBDK 4.0.5 & 4.0.6 (which cannot be differentiated
-            else if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_0_5_to_4_0_6)) {
-                entry_add_with_version(entry, "3.0.0 - 3.0.3");
+            else {
+                entry_add_with_version(entry, "3.1.0+");
                 return true;
             }
         }
-        else {
-            entry_add_with_version(entry, "3.1.0+");
-        }
+        else if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_3_2_0_plus)) {
 
-        return true;
+            // GBStudio 3.2.0 uses GBDK 4.2.0
+            if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_2_0_plus)) {
+                entry_add_with_version(entry, "3.2.0");
+                return true;
+            }
+        }
     }
 
     return false;

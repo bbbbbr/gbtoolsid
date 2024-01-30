@@ -1,6 +1,9 @@
 Changelog
 =========
 
+# Version 1.4.8
+- Detect GBStudio 3.2.0
+
 # Version 1.4.7
 - Detect GBForth
 - Detect GBBasic Alpha 3
