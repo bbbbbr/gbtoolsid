@@ -11,7 +11,7 @@
 "test/gbstudio_3.2.0.gb","GBDK","2020.4.2.0+","GBStudio","3.2.0","hUGETracker","SuperDisk","",""
 "test/rand_gbdk_2_1_5.gb","GBDK","2.0.18 - 2.1.5","","","","","",""
 "test/rpn_gbdk_1_0.gb","GBDK","1.x - 2.0.x","","","","","",""
-"test/rpn_gbdk_2_0_17.gb","GBDK","2.x","","","","","",""
+"test/rpn_gbdk_2_0_17.gb","GBDK","2.0.x - 2.0.17","","","","","",""
 "test/rpn_gbdk_2_9_2.gb","GBDK","2.9.0 - 2.9.4","","","","","",""
 "test/rpn_gbdk_2_9_4.gb","GBDK","2.9.0 - 2.9.4","","","","","",""
 "test/rpn_gbdk_2_9_5.gb","GBDK","2.9.5 - 2020.3.1.0","","","","","",""

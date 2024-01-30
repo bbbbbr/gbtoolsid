@@ -56,6 +56,12 @@ bool check_gbdk(void) {
             return true;
         }
 
+        // GBDK 2.0.x - GBDK 2.0.17
+        if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x1c2_GBDK_20x_to_2017, sig_gbdk_0x1c2_GBDK_20x_to_2017_at)) {
+            entry_add_with_version(entry, STR_GBDK_2_0_x_to_2_0_17);
+            return true;
+        }
+
         // GBDK 2.x, cannot narrow down further
         // (for example, Demotronic uses a modified crt0 which fails the above checks)
         entry_add_with_version(entry, STR_GBDK_2_x);

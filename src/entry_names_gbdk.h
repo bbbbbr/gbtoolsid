@@ -16,6 +16,7 @@
     // Versions
     DEF_NAME_STR(STR_GBDK_1_x_to_2_0_x,            "1.x - 2.0.x");
     DEF_NAME_STR(STR_GBDK_2_x,                     "2.x");
+    DEF_NAME_STR(STR_GBDK_2_0_x_to_2_0_17,         "2.0.x - 2.0.17");
     DEF_NAME_STR(STR_GBDK_2_0_18_to_2_1_5,         "2.0.18 - 2.1.5");
     DEF_NAME_STR(STR_GBDK_2_9_0_to_2_9_4,          "2.9.0 - 2.9.4");
     DEF_NAME_STR(STR_GBDK_2_9_5_to_2020_3_1_0,     "2.9.5 - 2020.3.1.0");
