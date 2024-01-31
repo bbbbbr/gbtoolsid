@@ -18,7 +18,7 @@
 char filename_in[MAX_STR_LEN] = {'\0'};
 uint8_t * p_buf_in  = NULL;
 
-#define VERSION "1.4.8"
+#define VERSION "1.4.9"
 
 int opt_output_style = OUTPUT_DEFAULT;
 int opt_path_output_style = PATH_STYLE_DEFAULT;

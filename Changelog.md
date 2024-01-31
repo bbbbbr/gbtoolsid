@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# Version 1.4.9
+- Improved detection accuracy of versions 1.0 - 2020.3.2.0 (asie)
+- Improved gbnim detection
+
 # Version 1.4.8
 - Detect GBStudio 3.2.0
 - Detect gbnim
