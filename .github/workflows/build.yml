@@ -34,7 +34,7 @@ jobs:
 
       # ==== Build Steps ====
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: gbtoolsid-root
           submodules: false
@@ -71,7 +71,7 @@ jobs:
 
       - name: Store build
         if: (matrix.name == 'Linux-x64')
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gbtoolsid build Linux & Windows
           # path: gbtoolsid-root/bin/${{ env.BUILD_PACKAGE_FILENAME }}
@@ -80,7 +80,7 @@ jobs:
 
       - name: Store build
         if: (matrix.name == 'MacOS-x64')
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gbtoolsid build MacOS
           # path: gbtoolsid-root/bin/${{ env.BUILD_PACKAGE_FILENAME }}
