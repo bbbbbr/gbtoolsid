@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# Version 1.5.0
+- Detect GBDK 4.3.0+
+- Update GBStudio 3.2.0 due to using an interim build between GBDK 4.2.0 and 4.3.0
+- Detect GBBasic Alpha 4
+
 # Version 1.4.9
 - Improved detection accuracy of GBDK versions 1.0 - 2020.3.2.0 (asie)
 - Improved gbnim detection

@@ -30,7 +30,8 @@
     DEF_NAME_STR(STR_GBDK_2020_4_0_5_to_4_0_6,     "2020.4.0.5 - 2020.4.0.6");
     DEF_NAME_STR(STR_GBDK_2020_4_1_0_to_4_1_1,     "2020.4.1.0 - 2020.4.1.1");
     DEF_NAME_STR(STR_GBDK_2020_4_2_0_interim,      "2020.4.2.0 interim");
-    DEF_NAME_STR(STR_GBDK_2020_4_2_0_plus,         "2020.4.2.0+");
+    DEF_NAME_STR(STR_GBDK_2020_4_2_0,              "2020.4.2.0");
+    DEF_NAME_STR(STR_GBDK_2020_4_3_0_plus,         "2020.4.3.0+");
     DEF_NAME_STR(STR_GBDK_2020_4_UNKNOWN,          "Unknown");
 
 
@@ -129,8 +130,12 @@
         DEF_PATTERN_BUF( sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus, AR_ARGS(0x67, 0xAF, 0x6F, 0x0E, 0xA0, 0xEF, 0xC9));
         DEF_PATTERN_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_410_plus_at, 0x00C5);
         // 4.2.0+
-        DEF_PATTERN_BUF( sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus, AR_ARGS(0x67, 0xAF, 0x6F, 0x0E, 0xA0, 0xC3, 0x28));
-        DEF_PATTERN_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus_at, 0x00C4);
+        DEF_PATTERN_BUF( sig_gbdk_clear_WRAM_tail_GBDK_2020_420, AR_ARGS(0x67, 0xAF, 0x6F, 0x0E, 0xA0, 0xC3, 0x28));
+        DEF_PATTERN_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_420_at, 0x00C4);
+    // 0x00CC set_interrupts : 4.3.0+
+        DEF_PATTERN_BUF( sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus, AR_ARGS(0xF3, 0xE0, 0xFF, 0xAF, 0xFB, 0xE0, 0x0F, 0xC9));
+        DEF_PATTERN_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus_at, 0x00CC);
+
 
     // ==== SHARED CODE WITH C ENDS HERE ====
 

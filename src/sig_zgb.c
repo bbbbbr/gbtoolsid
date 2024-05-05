@@ -93,7 +93,7 @@ bool check_zgb(void) {
                         return true;
                     }
                     // 2023.0 uses GBDK 4.2.0
-                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_2_0_plus)) {
+                    if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_2_0)) {
                         entry_add_with_version(entry, "2023.0+");
                         return true;
                     }

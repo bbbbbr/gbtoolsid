@@ -119,13 +119,21 @@ bool check_gbdk(void) {
                     return true;
                 }
                 // 4.2.0+
-                else if (CHECK_PATTERN_AT_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus, sig_gbdk_clear_WRAM_tail_GBDK_2020_420_plus_at)) {
+                else if (CHECK_PATTERN_AT_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_420, sig_gbdk_clear_WRAM_tail_GBDK_2020_420_at)) {
 
-                    entry_add_with_version(entry, STR_GBDK_2020_4_2_0_plus);
+                    // 4.3.0+
+                    if (CHECK_PATTERN_AT_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus, sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus_at)) {
+
+                        entry_add_with_version(entry, STR_GBDK_2020_4_3_0_plus);
+                        return true;
+                    }
+
+                    entry_add_with_version(entry, STR_GBDK_2020_4_2_0);
                     return true;
                 }
                 // Some ZGB versions uses a GBDK version somewhere between 4.0.4 and 4.0.5.v1
-                else if(CHECK_PATTERN_AT_ADDR(sig_gbdk_0x100_GBDK_4_0_5_v0_zgb, sig_gbdk_0x100_at)) {
+                else if (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x100_GBDK_4_0_5_v0_zgb, sig_gbdk_0x100_at)) {
+
                     entry_add_with_version(entry, STR_GBDK_2020_4_0_5_v0_zgb);
                     return true;
                 }

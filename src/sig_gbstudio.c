@@ -82,8 +82,8 @@ bool check_gbstudio(void) {
         }
         else if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_3_2_0_plus)) {
 
-            // GBStudio 3.2.0 uses GBDK 4.2.0
-            if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_2_0_plus)) {
+            // GBStudio 3.2.0 uses an interim build between GBDK 4.2.0 and 4.3.0
+            if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_3_0_plus)) {
                 entry_add_with_version(entry, "3.2.0");
                 return true;
             }
