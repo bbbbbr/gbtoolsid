@@ -41,8 +41,8 @@ NASCAR Heat.gbc
 Player Manager 2001.gbc  
 Pocket Smash Out & Race Time.gbc  
 Pocket Smash Out.gbc  
-Pocket Voice Multi-ROM Menu V0.1.gb(multiple)
-Pocket Voice V1.0.gbc(multiple)
+Pocket Voice Multi-ROM Menu V0.1.gb(multiple)  
+Pocket Voice V1.0.gbc(multiple)  
 Pro Darts.gbc  
 Pro Pool.gbc  
 Puzzled.gbc  
