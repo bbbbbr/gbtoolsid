@@ -11,6 +11,7 @@
 #include "common.h"
 
 #include "files.h"
+#include "entries.h"
 #include "path_ops.h"
 #include "gbtoolchainid.h"
 #include "display.h"
@@ -27,6 +28,7 @@ bool opt_strict_checks = false;
 
 static void display_help(void);
 static int handle_args(int argc, char * argv[]);
+void init(void);
 void cleanup(void);
 
 
@@ -52,50 +54,60 @@ static void display_help(void) {
 
 int handle_args(int argc, char * argv[]) {
 
-    int i = 1; // start at first arg
+    int i;
+    bool filename_present = false;
 
     if( argc < 2 ) {
         display_help();
         return false;
     }
 
-    if (strstr(argv[i], "-h") == argv[i]) {
-        display_help();
-        return false;  // Don't parse input when -h is used
-    }
+    // Start at first optional argument ([0] is executable)
+    for (i = 1; i < argc; i++ ) {
 
-    // Start at first optional argument
-    // Last argument *must* be input files
-    for (i = 1; i < (argc - 1); i++ ) {
-        if (argv[i][0] == '-') {
-            if (strstr(argv[i], "-oj") == argv[i]) {
-                opt_output_style = OUTPUT_JSON;
-            }
-            else if (strstr(argv[i], "-oc") == argv[i]) {
-                opt_output_style = OUTPUT_CSV;
-            }
-            else if (strstr(argv[i], "-oC") == argv[i]) {
-                opt_output_style = OUTPUT_CSV_BARE;
-            }
-            else if (strstr(argv[i], "-pF") == argv[i]) {
-                opt_path_output_style = PATH_STYLE_FULL;
-            }
-            else if (strstr(argv[i], "-s") == argv[i]) {
-                opt_strict_checks = true;
-            } else
-                printf("gbtoolchainid: Warning: Ignoring unknown option %s\n", argv[i]);
+        if (strstr(argv[i], "-h") == argv[i]) {
+            display_help();
+            return false;  // Don't parse input when -h is used
+        }
+        else if (strstr(argv[i], "-oj") == argv[i]) {
+            opt_output_style = OUTPUT_JSON;
+        }
+        else if (strstr(argv[i], "-oc") == argv[i]) {
+            opt_output_style = OUTPUT_CSV;
+        }
+        else if (strstr(argv[i], "-oC") == argv[i]) {
+            opt_output_style = OUTPUT_CSV_BARE;
+        }
+        else if (strstr(argv[i], "-pF") == argv[i]) {
+            opt_path_output_style = PATH_STYLE_FULL;
+        }
+        else if (strstr(argv[i], "-s") == argv[i]) {
+            opt_strict_checks = true;
+
+        } else if (argv[i][0] == '-') {
+            printf("gbtoolchainid: Warning: Ignoring unknown option %s\n", argv[i]);
+            return false;
+        }
+
+        // Copy input filename (if not preceded with option dash)
+        else if (argv[i][0] != '-') {
+            snprintf(filename_in, sizeof(filename_in), "%s", argv[i]);
+            filename_present = true;
         }
     }
 
-    // Copy input filename from last argument if not preceded with option dash
-    if (argv[i][0] != '-') {
-        snprintf(filename_in, sizeof(filename_in), "%s", argv[i++]);
+    if (filename_present) {
         return true;
+    } else {
+        display_help();
+        return false;
     }
-
-    return false;
 }
 
+
+void init(void) {
+    entry_init();
+}
 
 // Called by atexit() (or earlier) to free resources
 void cleanup(void) {
@@ -122,6 +134,8 @@ static int process_file() {
 
 
 int main( int argc, char *argv[] )  {
+
+    init();
 
     // Exit with failure by default
     int ret = EXIT_FAILURE;

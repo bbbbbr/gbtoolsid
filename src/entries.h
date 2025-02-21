@@ -27,6 +27,7 @@ typedef struct tool_entry {
     char         name[MAX_STR_LEN];
 } tool_entry;
 
+void entry_init(void);
 
 void entry_add(tool_entry);
 void entry_add_with_version(tool_entry, const char *);

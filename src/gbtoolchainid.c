@@ -31,6 +31,9 @@ static void set_search_buf(uint8_t *, uint32_t);
 
 // Set the global search buffer
 static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
+    // Reset from any previous searches (only matters with web/emscripten runtime)
+    addr_last_match = 0;
+
     g_p_searchbuf = p_rom_data;
     g_searchbuf_len = rom_size;
 }

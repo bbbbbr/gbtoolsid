@@ -13,6 +13,12 @@ int        cur_entry = 0;
 tool_entry tool_entries[TOOL_ENTRY_COUNT_MAX];
 
 
+void entry_init(void) {
+    tool_entry_count = 0;
+    cur_entry = 0;
+}
+
+
 // Register an entry
 void entry_add(tool_entry new_entry) {
 
