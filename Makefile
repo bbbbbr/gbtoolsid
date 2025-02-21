@@ -3,11 +3,13 @@ DEL = rm -f
 
 BIN = gbtoolsid
 BIN_WIN = $(BIN).exe
+BIN_WEB = $(WEBDIR)/$(BIN)_web
 TESTOPT =
 
+WEBDIR      = web
 SRCDIR      = src
 OBJDIR      = obj
-MKDIRS = $(OBJDIR) $(BINDIR) $(PACKDIR)
+MKDIRS      = $(OBJDIR) $(BINDIR) $(PACKDIR) $(WEBDIR)
 BINS        = $(OBJDIR)/$(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c)))
 OBJS        = $(CSOURCES:%.c=$(OBJDIR)/%.o)
@@ -26,7 +28,7 @@ clean:
 # Compile .c files in "src/" to .o object files
 $(OBJDIR)/%.o:  $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # MacOS uses linux target
 macos: linux
@@ -71,7 +73,26 @@ package:
 	${MAKE} clean
 	${MAKE} linuxzip
 
-.PHONY: test
+
+# Requires emscripten
+web_build: CC = emcc
+web_build: CFLAGS = -O2
+web_build: LDFLAGS = -s INVOKE_RUN=0 # Don't run main automatically
+web_build: LDFLAGS += -s ALLOW_MEMORY_GROWTH=1
+web_build: LDFLAGS += -s EXPORTED_FUNCTIONS="['_main', '_malloc', '_free']"
+web_build: LDFLAGS += -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
+web_build: LDFLAGS += -s FORCE_FILESYSTEM=1
+web_build: $(OBJS)
+	$(CC) -o $(BIN_WEB).js $^ $(LDFLAGS)
+
+web_install:
+	cp -f -r web/* ../gbtoolsid_web/
+
+web:
+	${MAKE} clean
+	${MAKE} web_build
+
+.PHONY: test web
 
 test:
 	mkdir -p test/output

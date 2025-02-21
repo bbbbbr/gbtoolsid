@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Game Boy Tools Identifier</title>
+
+    <meta http-equiv="content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="Game Boy ROM tools identifier"/>
+    <meta name="keywords" content="game boy gameboy gbdk zgb gbstudio .gb .gbc"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    <link rel="shortcut icon" href="./images/favicon.png"  type="image/png" sizes="16x16"/>
+    <link rel="shortcut icon" href="./images/icon_192.png" type="image/png" sizes="192x192"/>
+
+    <link type="text/css" rel="stylesheet" href="./style/style.css" media="all"/>
+
+    <script type="text/javascript" src="./js/wasm_interface.js"></script>
+    <script type="text/javascript" src="./gbtoolsid_web.js"></script>
+
+    <script type="text/javascript" src="./js/display.js"></script>
+    <script type="text/javascript" src="./js/file_io.js"></script>
+
+
+</head>
+
+<!-- Clear Output Text on Reload -->
+<body onreset="setInfoText('');" onload="setInfoText('');">
+
+    <div id="column">
+
+        <div class="centered_grid">
+
+            <!-- Drag and drop area -->
+            <div class="centered_grid file_drop_zone"
+                 id="file_drop_zone"
+                 ondrop="dropFileHandler.call(this, event);"
+                 ondragover="dragOverHandler.call(this, event);"
+                 ondragleave="dragLeaveHandler.call(this, event)">
+                <div>
+                    Drag-and-drop Game Boy ROMs into this area to identify their tools
+                    <div class="drop_delay_note">(wait for area to turn green before dropping)</div>
+                </div>
+                <div class="gb_image">
+                    <img src="./images/icon_gb_200.png" />
+                </div>
+            </div>
+
+            <!-- Text output area -->
+            <div class="info_area info_header">
+                <div class="info_header_text info_header_label">ROM Tools info:</div>
+                <div class="info_header_text info_clear_button" onclick="setInfoText('');" >clear</div>
+
+            </div>
+            <div class="info_area info_body">
+                <!-- contenteditable -->
+                <textarea id="info_area_text" class="info_text"></textarea>
+            </div>
+
+        </div>
+
+
+        <footer>
+            Game Boy Tools Identifier :
+            <a href="https://github.com/bbbbbr/gbtoolsid_web/" target="_blank">GitHub</a>
+        </footer>
+
+    </div>
+</body>
+</html>
