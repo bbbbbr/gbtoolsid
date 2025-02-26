@@ -22,7 +22,7 @@ bool check_gbstudio(void) {
     entry = FORMAT_ENTRY(TYPE_ENGINE, "GBStudio", "");
 
     // GBStudio 1.0.0 - 1.2.1
-    if (FIND_PATTERN_BUF(sig_gbs_fades_1_0_0_to_1_2_1)) {
+    if (FIND_PATTERN_BUF(sig_gbs_fades_1_0_0_to_1_2_2)) {
 
         if (FIND_PATTERN_BUF(sig_gbs_uicolors_1_0_0)) {
             entry_add_with_version(entry, "1.0.0");
@@ -30,7 +30,7 @@ bool check_gbstudio(void) {
         }
         // GBStudio 1.1.0 - 1.2.1
         else if (FIND_PATTERN_BUF(sig_gbs_uicolors_1_1_0_plus)) {
-            entry_add_with_version(entry, "1.0.0 - 1.2.1");
+            entry_add_with_version(entry, "1.0.0 - 1.2.2");
             return true;
         }
     }
@@ -61,6 +61,8 @@ bool check_gbstudio(void) {
         if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_2_0_0_b5_to_3_1_0)) {
         // entry_check_match() Relies on GBDK tool check being run before ZGB is tested (it is)
 
+            // TODO: FIXME: Just GBStudio 3.0.0 also registers as 3.1.0, so must be failing this test below
+            //
             // ADDED:Apr 30, 2021 (v2.0.0-beta5) -> REMOVED:Feb 20, 2022 (3.0.3)
             if (FIND_PATTERN_BUF(sig_gbs_musicmanager_c_FX_ADDR_LO__2_0_0_b5_to_3_0_3)) {
 
@@ -76,15 +78,30 @@ bool check_gbstudio(void) {
                 }
             }
             else {
-                entry_add_with_version(entry, "3.1.0+");
+                entry_add_with_version(entry, "3.1.0");
                 return true;
             }
         }
         else if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_3_2_0_plus)) {
 
+
             // GBStudio 3.2.0 uses an interim build between GBDK 4.2.0 and 4.3.0
             if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_3_0_plus)) {
-                entry_add_with_version(entry, "3.2.0");
+
+                if (FIND_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_0_0_plus, sig_gbs_vminstruct_4_0_0_plus_mask)) {
+
+                    if (FIND_PATTERN_BUF_MASKED(sig_gbs_iotafmt_4_2_0_plus, sig_gbs_iotafmt_4_2_0_plus_mask)) {
+                        entry_add_with_version(entry, "4.1.0+");
+                        return true;
+                    }
+
+
+                    entry_add_with_version(entry, "4.0.0 - 4.0.2");
+                    return true;
+                }
+
+
+                entry_add_with_version(entry, "3.2.0 - 3.2.1");
                 return true;
             }
         }

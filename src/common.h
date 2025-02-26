@@ -14,6 +14,8 @@
 #define PATH_STYLE_FULL     1
 #define PATH_STYLE_DEFAULT  PATH_STYLE_FILEONLY
 
+#define ARRAY_LEN(A)         (sizeof(A) / sizeof(A[0]))
+
 // Get string length without trailing terminator
 #define sizeof_str_noterm(instr) (sizeof(instr) - 1)
 
@@ -24,6 +26,8 @@
 
 // For code copy & paste compat between C version and JS version
 #define FIND_PATTERN_BUF(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof(ptr_to_buf)))
+#define FIND_PATTERN_BUF_MASKED(ptr_to_buf, ptr_to_mask) (find_pattern_masked(ptr_to_buf, ptr_to_mask, sizeof(ptr_to_buf)))
+
 #define FIND_PATTERN_STR_NOTERM(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof_str_noterm(ptr_to_buf)))
 #define CHECK_PATTERN_AT_ADDR(ptr_to_buf, check_addr) (check_pattern_addr(ptr_to_buf, sizeof(ptr_to_buf), check_addr))
 #define FORMAT_ENTRY(e_type, e_name, e_version) ((tool_entry){.type = e_type, .c_name = e_name, .c_version = e_version})
@@ -42,5 +46,6 @@
 // Need an additional macro wrapper AR_ARGS() to pass and expand a set of values to the array declaration
 #define AR_ARGS(...) __VA_ARGS__
 #define DEF_PATTERN_BUF(varname, buf_content) static const uint8_t varname[] = {buf_content}
+#define DEF_PATTERN_BUF_MASKED(varname, varname_mask, buf_content, mask_content) static const uint8_t varname[] = {buf_content}; static const uint8_t varname_mask[ sizeof(varname) ] = {mask_content};
 
 #endif // _COMMON_H

@@ -113,6 +113,78 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
 }
 
 
+// Try to find a pattern in a buffer, only checking bytes enabled in a mask pattern (0 == ignore, 1+ == check)
+//
+bool find_pattern_masked(const uint8_t * p_pattern, const uint8_t * p_pattern_mask, uint32_t pattern_len) {
+    uint32_t start_offset = 0;
+
+    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) || (p_pattern_mask == NULL) ||
+        (g_searchbuf_len == 0)  || (pattern_len == 0)  ||
+        (pattern_len > g_searchbuf_len))
+        return false;
+
+    // Find first non-masked byte in pattern
+    while (start_offset < pattern_len) {
+        if (p_pattern_mask[start_offset]) break;
+        start_offset++;
+    }
+    // Pattern had no unmasked bytes -> fail
+    if (start_offset == pattern_len)
+        return false;
+    else {
+        // Reduce pattern size by start offset (strip off unused bytes at start)
+        p_pattern      += start_offset;
+        p_pattern_mask += start_offset;
+        pattern_len    -= start_offset;
+    }
+
+    // Try to locate first possible instance
+    uint8_t * p_match = (uint8_t *)memchr(g_p_searchbuf, p_pattern[0], g_searchbuf_len);
+    uint32_t remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
+
+    while (p_match != NULL) {
+        if (pattern_len <= remaining) {
+
+            // Check for a pattern match at the current location
+            bool full_match = true;
+            for (uint32_t c=0; c < pattern_len; c++) {
+                if (p_pattern_mask[c]) {
+                    if (p_pattern[c] != p_match[c]) {
+                        // Match failed, break out
+                        full_match = false;
+                        break;
+                    }
+                }
+            }
+
+            if (full_match) {
+                #ifdef DEBUG_LOG_MATCHES
+                    addr_last_match = (uint32_t)(p_match - g_p_searchbuf);
+                    printf("** MATCH AT: 0x%08x\n", addr_last_match);
+                    for (int i=0; i < pattern_len; i++) {
+                        if ((i % 4) == 0) printf("\n");
+                        if (p_pattern_mask[i])
+                            printf("  [Y]0x%02x|0x%02x, ", p_pattern[i],p_match[i]);
+                        else
+                            printf("  [n]0x%02x|0x%02x, ", p_pattern[i],p_match[i]);
+                    }
+                    printf("\n\n");
+                #endif
+                return true; // Success, end of pattern reached without mismatch
+            }
+
+        } else
+            break;
+
+        p_match++;
+        p_match = (uint8_t *)memchr(p_match, p_pattern[0], remaining);
+        remaining = g_searchbuf_len - (p_match - g_p_searchbuf);
+    }
+
+    return false;
+}
+
+
 void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
 
     bool result_gbdk = false;

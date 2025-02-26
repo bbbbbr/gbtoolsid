@@ -13,7 +13,7 @@
     // ====GB STUDIO
     // All GB Studio records can be at any location (depends on where the linker places them)
     // Fades
-        DEF_PATTERN_BUF(sig_gbs_fades_1_0_0_to_1_2_1, AR_ARGS(0x0, 0x1, 0x3, 0x7, 0xF, 0x1F, 0x3F, 0x00, 0x00, 0x42, 0x82, 0xD2, 0xD2, 0x00, 0x00, 0x40, 0x90, 0xA4, 0xE4));
+        DEF_PATTERN_BUF(sig_gbs_fades_1_0_0_to_1_2_2, AR_ARGS(0x0, 0x1, 0x3, 0x7, 0xF, 0x1F, 0x3F, 0x00, 0x00, 0x42, 0x82, 0xD2, 0xD2, 0x00, 0x00, 0x40, 0x90, 0xA4, 0xE4));
         // Similar to above, but lacks lead in bytes
         DEF_PATTERN_BUF(sig_gbs_fades_2_0_0_beta1, AR_ARGS(0x00, 0x00, 0x42, 0x82, 0xD2, 0xD2, 0x00, 0x00, 0x40, 0x90, 0xA4, 0xE4));
         DEF_PATTERN_BUF(sig_gbs_fades_2_0_0_beta2_plus, AR_ARGS(0x00, 0x00, 0x40, 0x80, 0x90, 0xD0, 0xD0, 0x00, 0x00, 0x40, 0x90, 0xA4, 0xE4, 0xE4, 0xFF, 0xFF, 0xF8, 0xE4, 0xD4, 0xD0, 0xD0, 0xFF, 0xFF, 0xFE, 0xE9, 0xE5, 0xE4, 0xE4));
@@ -40,6 +40,36 @@
 
     //TODO: See SFX: sig_vgm2gbsfx_aud3waveram_load[] for GBStudio 3.1.0+ (not confirmed present for all)
 
+    // ADDED: 2/12/2024: 4.0.0+
+    // src/core/vm_instructions.c
+    // const SCRIPT_CMD script_cmds[] = {
+    // Removed 8 x rows of vm_instructions script_cmds[] entries that ended in "4s and one 3" lines 48-55
+    // https://github.com/chrismaltby/gbvm/commit/78a030f4a9f794e38b4990641183c52c3c7c0048
+    // Second row is mask, 0 = don't check, 1 = check. In this table, rows which are all 0s can have all their masks enabled (stronger)
+    DEF_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_0_0_plus, sig_gbs_vminstruct_4_0_0_plus_mask, \
+        AR_ARGS(0,0,0,6, 0,0,0,6, 0,0,0,8, 0,0,0,2, 0,0,0,2, 0,0,0,1, 0,0,0,4, 0,0,0,4, 0,0,0,0, 0,0,0,2, 0,0,0,2, 0,0,0,0, 0,0,0,4, 0,0,0,8,   0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0), \
+        AR_ARGS(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1,   1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1));
+
+
+    // ADDED: 7/29/2024: 4.1.0+
+    // src/core/vm_ui_a.s
+    // https://github.com/chrismaltby/gbvm/commit/25d83288fa8e099a23e8d01929fa5f97a3424399
+    // Minor asm changes to _itoa_fmt (removing a jr and call) the masked 0x13 is a jr value that's variable(?)
+    DEF_PATTERN_BUF_MASKED(sig_gbs_iotafmt_4_2_0_plus, sig_gbs_iotafmt_4_2_0_plus_mask, \
+        AR_ARGS(0x2A, 0x4F, 0x46, 0xC5, 0x7A, 0x87, 0x30, 0x13, 0x1F, 0x2F, 0x57, 0x7B, 0x2F, 0x5F, 0x13, 0x21,), \
+        AR_ARGS(0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,));
+
+/*
+    // ADDED: 10/15/2024 - THIS WILL BE POST GB Studio v4.1.3
+    // src/core/vm_instructions.c
+    // const SCRIPT_CMD script_cmds[] = {
+    // Changed one row of vm_instructions script_cmds[] from 4 -> 5
+    // https://github.com/chrismaltby/gbvm/commit/95b9c6f58bf63380a4c403ad6688fd8ca3237142
+    // TODO: Redundant with above, also 4.0.0+
+    DEF_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_0_x_plus, sig_gbs_vminstruct_4_0_x_plus_mask, \
+           AR_ARGS(0,0,0,3, 0,0,0,3, 0,0,0,1, 0,0,0,2, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,3,   0,0,0,4,   0,0,0,0, 0,0,0,2, 0,0,0,4, 0,0,0,1, 0,0,0,4, 0,0,0,4), \
+           AR_ARGS(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,1, 0,0,0,1, 0,0,0,1, 0,0,0,1,   0,0,0,1,   1,1,1,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1));
+*/
 
     // ==== SHARED CODE WITH C ENDS HERE ====
 
