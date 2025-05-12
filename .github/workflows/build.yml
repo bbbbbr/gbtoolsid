@@ -44,15 +44,31 @@ jobs:
           submodules: false
 
       # ==== Builds ====
-      - name: Build single OS
-        if: (matrix.name == 'MacOS-x64') || (matrix.name == 'MacOS-arm64') || (matrix.name == 'Linux-arm64')
+      - name: Build Mac x64
+        if: (matrix.name == 'MacOS-x64')
         shell: bash
         run: |
           cd gbtoolsid-root
           make macoszip
           cd ..
 
-      - name: Build Linux + WinCross
+      - name: Build Mac Arm64
+        if: (matrix.name == 'MacOS-arm64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make macos_armzip
+          cd ..
+
+      - name: Build Linux Arm64
+        if: (matrix.name == 'Linux-arm64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make linux_armzip
+          cd ..
+
+      - name: Build Linux + WinCross x64
         if: (matrix.name == 'Linux-Wincross-x64')
         shell: bash
         run: |
