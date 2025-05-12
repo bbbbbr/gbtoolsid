@@ -53,12 +53,23 @@ macoszip: macos
 	zip -j $(BIN)_macos.zip $(BIN) Changelog.md README.md
 	mv $(BIN)_macos.zip bin
 
+macos_armzip: macos
+	mkdir -p bin
+	# -j discards (junks) path to file
+	zip -j $(BIN)_macos_arm.zip $(BIN) Changelog.md README.md
+	mv $(BIN)_macos_arm.zip bin
 
 linuxzip: linux
 	mkdir -p bin
 	# -j discards (junks) path to file
 	zip -j $(BIN)_linux.zip $(BIN) Changelog.md README.md
 	mv $(BIN)_linux.zip bin
+
+linux_armzip: linux
+	mkdir -p bin
+	# -j discards (junks) path to file
+	zip -j $(BIN)_linux_arm.zip $(BIN) Changelog.md README.md
+	mv $(BIN)_linux_arm.zip bin
 
 wincrosszip: wincross
 	mkdir -p bin

@@ -16,8 +16,12 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04
-            name: Linux-x64
-          - os: macos-11
+            name: Linux-Wincross-x64
+          - os: ubuntu-22.04-arm
+            name: Linux-arm64            
+          - os: macos-14
+            name: MacOS-arm64
+          - os: macos-13
             name: MacOS-x64
     steps:
 
@@ -25,7 +29,7 @@ jobs:
 
       # ==== OS Specific Dependencies ====
       - name: Linux Depends
-        if: matrix.name == 'Linux-x64'
+        if: matrix.name == 'Linux-Wincross-x64'
         # For Windows crossbuild
         # Use "x64" for 64 bit (x86_64-w64-mingw32-gcc), "x86" for 32 bit (i686-w64-mingw32-gcc)
         uses: egor-tensin/setup-mingw@v2
@@ -40,7 +44,7 @@ jobs:
           submodules: false
 
       # ==== Builds ====
-      - name: Build MacOS
+      - name: Build Mac x64
         if: (matrix.name == 'MacOS-x64')
         shell: bash
         run: |
@@ -48,8 +52,24 @@ jobs:
           make macoszip
           cd ..
 
-      - name: Build Linux
-        if: (matrix.name == 'Linux-x64')
+      - name: Build Mac Arm64
+        if: (matrix.name == 'MacOS-arm64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make macos_armzip
+          cd ..
+
+      - name: Build Linux Arm64
+        if: (matrix.name == 'Linux-arm64')
+        shell: bash
+        run: |
+          cd gbtoolsid-root
+          make linux_armzip
+          cd ..
+
+      - name: Build Linux + WinCross x64
+        if: (matrix.name == 'Linux-Wincross-x64')
         shell: bash
         run: |
           cd gbtoolsid-root
@@ -59,8 +79,7 @@ jobs:
           cd ..
 
       # ==== Packaging ====
-      - name: Package build Linux/MacOS
-        if: (matrix.name == 'Linux-x64') || (matrix.name == 'MacOS-x64')
+      - name: Package build
         shell: bash
         run: |
           cd gbtoolsid-root
@@ -70,19 +89,9 @@ jobs:
           cd ..
 
       - name: Store build
-        if: (matrix.name == 'Linux-x64')
         uses: actions/upload-artifact@v4
         with:
-          name: gbtoolsid build Linux & Windows
-          # path: gbtoolsid-root/bin/${{ env.BUILD_PACKAGE_FILENAME }}
-          path: gbtoolsid-root/bin
-          # retention-days: 30
-
-      - name: Store build
-        if: (matrix.name == 'MacOS-x64')
-        uses: actions/upload-artifact@v4
-        with:
-          name: gbtoolsid build MacOS
+          name: gbtoolsid build ${{ matrix.name }}
           # path: gbtoolsid-root/bin/${{ env.BUILD_PACKAGE_FILENAME }}
           path: gbtoolsid-root/bin
           # retention-days: 30
