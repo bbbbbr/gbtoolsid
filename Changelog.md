@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# Version 1.5.1
+- Detect GBSDK
+- Improve GBStudio detection and version numbers
+- Linux and Mac Arm64 builds
+
 # Version 1.5.0
 - Detect GBDK 4.3.0+
 - Update GBStudio 3.2.0 due to using an interim build between GBDK 4.2.0 and 4.3.0
