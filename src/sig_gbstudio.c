@@ -56,7 +56,8 @@ bool check_gbstudio(void) {
     }
 
     // GBStudio 3.0.0+
-    if (FIND_PATTERN_BUF(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus)) {
+    if ((FIND_PATTERN_BUF(sig_gbs_math_c_sinetable_3_0_0_alpha1_plus)) ||
+        (FIND_PATTERN_BUF(sig_gbs_vm_c_vm_step_3_0_0_alpha1_plus))) {
 
         if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_2_0_0_b5_to_3_1_0)) {
         // entry_check_match() Relies on GBDK tool check being run before ZGB is tested (it is)
@@ -82,14 +83,15 @@ bool check_gbstudio(void) {
                 return true;
             }
         }
-        else if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_3_2_0_plus)) {
+        // GBStudio 3.2.0 uses an interim build between GBDK 4.2.0 and 4.3.0
+        else if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_3_0_plus)) {
 
-
-            // GBStudio 3.2.0 uses an interim build between GBDK 4.2.0 and 4.3.0
-            if (entry_check_match(TYPE_TOOLS, STR_GBDK, STR_GBDK_2020_4_3_0_plus)) {
+            // Fade Street plugin (used by a few notable entries) breaks the fade manager test
+            // by removing the inline asm fade code
+            //
+            // else if (FIND_PATTERN_BUF(sig_gbs_fade_manager_c_dmgfadetowhitestep_3_2_0_plus)) {
 
                 if (FIND_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_0_0_plus, sig_gbs_vminstruct_4_0_0_plus_mask)) {
-
                     if (FIND_PATTERN_BUF_MASKED(sig_gbs_iotafmt_4_2_0_plus, sig_gbs_iotafmt_4_2_0_plus_mask)) {
                         entry_add_with_version(entry, "4.1.0+");
                         return true;
@@ -103,7 +105,7 @@ bool check_gbstudio(void) {
 
                 entry_add_with_version(entry, "3.2.0 - 3.2.1");
                 return true;
-            }
+            // }
         }
     }
 
