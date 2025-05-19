@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# Version 1.5.2
+- Improve GBStudio detection when using Fade Street plugin
+- Improve VGM2GBSFX detection
+
 # Version 1.5.1
 - Detect GBSDK
 - Improve GBStudio detection and version numbers
