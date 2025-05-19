@@ -32,7 +32,8 @@ void check_soundfx(void) {
         entry_add(entry);
 
     entry = FORMAT_ENTRY(TYPE_SOUNDFX,"VGM2GBSFX", "");
-    if (FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load))
+    if (FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load) ||
+        FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load_v2))
         entry_add(entry);
 
     // ==== SHARED CODE WITH C ENDS HERE ====
