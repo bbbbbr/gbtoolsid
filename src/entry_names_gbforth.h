@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_GBFORTH_H
 
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     // ==== GBForth ====
     //
     DEF_PATTERN_BUF(sig_gbforth_startup_1, AR_ARGS(0x0E, 0xFE, 0x31, 0xFF, 0xCF, 0x3E));
@@ -59,8 +57,6 @@
     //         ld   a, ...N...     ;  <- Value loaded varies by program
     //         ld   [_RAM_C001_], a
     //         call ..
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 
 
 #endif // _ENTRY_NAMES_GBFORTH_H

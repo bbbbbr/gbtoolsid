@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_GBSTUDIO_H
 
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     // ====GB STUDIO
     // All GB Studio records can be at any location (depends on where the linker places them)
     // Fades
@@ -72,8 +70,6 @@
            AR_ARGS(0,0,0,3, 0,0,0,3, 0,0,0,1, 0,0,0,2, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,3,   0,0,0,4,   0,0,0,0, 0,0,0,2, 0,0,0,4, 0,0,0,1, 0,0,0,4, 0,0,0,4), \
            AR_ARGS(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,1, 0,0,0,1, 0,0,0,1, 0,0,0,1,   0,0,0,1,   1,1,1,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1));
 */
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 
 
 #endif // _ENTRY_NAMES_GBSTUDIO_H

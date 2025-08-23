@@ -18,11 +18,8 @@ void check_gbsdk(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
     entry = FORMAT_ENTRY(TYPE_TOOLS, "gbsdk", "");
     if (FIND_PATTERN_BUF(sig_gbsdk_joypad)) {
         entry_add(entry);
     }
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 }

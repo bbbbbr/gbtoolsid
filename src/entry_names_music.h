@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_MUSIC_H
 
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     // ==== Various
     // Records can be at any location
 
@@ -189,9 +187,6 @@
 
     // TonicFur
     DEF_PATTERN_STR(sig_tonicfur, "TonicFur Audio Engine");
-
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 
 
 #endif // _ENTRY_NAMES_MUSIC_H

@@ -16,7 +16,7 @@ void check_music(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
+
 
     entry = FORMAT_ENTRY(TYPE_MUSIC,"GHX", "");
     if (FIND_PATTERN_STR_NOTERM(sig_str_ghx_audio) ||
@@ -176,5 +176,5 @@ void check_music(void) {
         entry_add(entry);
     }
 
-    // ==== SHARED CODE WITH C ENDS HERE ====
+
 }

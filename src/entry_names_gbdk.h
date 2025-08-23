@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_GBDK_H
 
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     // These are also used by GBStudio and ZGB
     // Tool
     DEF_NAME_STR(STR_GBDK, "GBDK");
@@ -135,9 +133,6 @@
     // 0x00CC set_interrupts : 4.3.0+
         DEF_PATTERN_BUF( sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus, AR_ARGS(0xF3, 0xE0, 0xFF, 0xAF, 0xFB, 0xE0, 0x0F, 0xC9));
         DEF_PATTERN_ADDR(sig_gbdk_clear_WRAM_tail_GBDK_2020_430_plus_at, 0x00CC);
-
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 
 
 #endif // _ENTRY_NAMES_GBDK_H

@@ -16,8 +16,6 @@ void check_gbforth(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     entry = FORMAT_ENTRY(TYPE_TOOLS, "GBForth", "");
     if (FIND_PATTERN_BUF(sig_gbforth_startup_1)) {
         // Gap of one byte, then next pattern
@@ -28,6 +26,4 @@ void check_gbforth(void) {
             }
         }
     }
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 }

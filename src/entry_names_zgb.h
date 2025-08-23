@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_ZGB_H
 
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     // ==== ZGB ====
     // All ZGB records can be at any location (depends on where the linker places them)
     DEF_PATTERN_BUF(sig_zgb_sound, AR_ARGS(0x05, 0x04, 0x05, 0x04, 0x03, 0x10, 0xFF, 0x16, 0xFF, 0x1A, 0xFF, 0x20, 0xFF, 0x24, 0xFF));
@@ -38,8 +36,6 @@
     // For ZGB 2020.2 vs 2021.0
     DEF_PATTERN_BUF(sig_zgb_gbdk_bmp, AR_ARGS(0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80));
     DEF_PATTERN_ADDR(sig_zgb_gbdk_bmp_2x_to_2020_320_at, 0x0010);
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 
 
 #endif // _ENTRY_NAMES_ZGB_H

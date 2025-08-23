@@ -16,8 +16,6 @@ void check_gbbasic(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init, sig_gbbasic_actor_init_alpha3_at)) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "Alpha3");
         entry_add(entry);
@@ -26,6 +24,4 @@ void check_gbbasic(void) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "Alpha4");
         entry_add(entry);
     }
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 }

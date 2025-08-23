@@ -16,8 +16,6 @@ void check_soundfx(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     entry = FORMAT_ENTRY(TYPE_SOUNDFX,"FX Hammer", "");
     if (FIND_PATTERN_STR_NOTERM(sig_fxhammer_info_1) ||
         FIND_PATTERN_STR_NOTERM(sig_fxhammer_info_2) )
@@ -35,6 +33,4 @@ void check_soundfx(void) {
     if (FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load) ||
         FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load_v2))
         entry_add(entry);
-
-    // ==== SHARED CODE WITH C ENDS HERE ====
 }

@@ -16,8 +16,6 @@ bool check_gbdk(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     entry = FORMAT_ENTRY(TYPE_TOOLS, STR_GBDK, "");
 
     // GBDK-2020 4.0.0
@@ -154,6 +152,4 @@ bool check_gbdk(void) {
     }
 
     return false;
-
-   // ==== SHARED CODE WITH C ENDS HERE ====
 }

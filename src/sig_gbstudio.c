@@ -17,7 +17,7 @@ bool check_gbstudio(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
+
 
     entry = FORMAT_ENTRY(TYPE_ENGINE, "GBStudio", "");
 
@@ -111,5 +111,5 @@ bool check_gbstudio(void) {
 
     return false;
 
-    // ==== SHARED CODE WITH C ENDS HERE ====
+
 }

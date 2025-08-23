@@ -20,8 +20,6 @@ bool check_zgb(void) {
 
     tool_entry entry;
 
-    // ==== SHARED CODE WITH C STARTS HERE ====
-
     entry = FORMAT_ENTRY(TYPE_ENGINE, "ZGB", "");
 
     // Exception to the rule: The Squire fails this due to removing ZGB default sound consts
@@ -113,6 +111,4 @@ bool check_zgb(void) {
     }
 
     return false;
-
-   // ==== SHARED CODE WITH C ENDS HERE ====
 }
