@@ -199,8 +199,9 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     // for ZGB, GBStudio, GBBasic when GBDK is present
     if ((strict_mode == false) || (result_gbdk == true)) {
         check_zgb();
-        check_gbstudio();
+        // Call GBBasic before gbstudio so it's entries don't get mislabeled as GBStudio first
         check_gbbasic();
+        check_gbstudio();
     }
 
     // Various other toolchains
