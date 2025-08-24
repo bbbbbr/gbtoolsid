@@ -26,10 +26,13 @@ bool check_crosszgb(void) {
 
     // ZGB 2025.0
     if (FIND_PATTERN_BUF(sig_crosszgb_buffer_exchange_v2025_0)) {
-
         entry_add_with_version(entry, "2025.0");
         return true;
     }
+    // else if (FIND_PATTERN_BUF(sig_crosszgb_print_recode__not_always_linked)) {
+    //     entry_add_with_version(entry, "");
+    //     return true;
+    // }
 
     return false;
 }
