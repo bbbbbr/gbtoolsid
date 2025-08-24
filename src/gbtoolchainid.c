@@ -12,6 +12,7 @@
 
 #include "sig_gbdk.h"
 #include "sig_zgb.h"
+#include "sig_crosszgb.h"
 #include "sig_gbstudio.h"
 #include "sig_turborascal.h"
 #include "sig_gbforth.h"
@@ -199,6 +200,7 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     // for ZGB, GBStudio, GBBasic when GBDK is present
     if ((strict_mode == false) || (result_gbdk == true)) {
         check_zgb();
+        check_crosszgb();
         // Call GBBasic before gbstudio so it's entries don't get mislabeled as GBStudio first
         check_gbbasic();
         check_gbstudio();
