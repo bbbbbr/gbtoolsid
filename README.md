@@ -15,6 +15,8 @@ Toolchains:
 - Turbo Rascal Syntax Error
 - GBForth
 - GBBasic
+- GBNim
+- Matlab GB Rom Creator
 
 Game Engines:
 - ZGB

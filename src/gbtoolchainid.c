@@ -19,6 +19,7 @@
 #include "sig_gbbasic.h"
 #include "sig_gbnim.h"
 #include "sig_gbsdk.h"
+#include "sig_matlabgb.h"
 
 #include "sig_music.h"
 
@@ -211,6 +212,7 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     check_gbforth();
     check_gbnim();
     check_gbsdk();
+    check_matlabgb();
 
     // Check for music drivers
     // May report multiple drivers (if found) in default output mode
