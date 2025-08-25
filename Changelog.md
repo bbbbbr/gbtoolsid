@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# Version 1.5.3
+- Detect GBBasic 1.1
+- Detect CrossZGB 2025.0
+- Detect Matlab GB Rom Creator
+
 # Version 1.5.2
 - Improve GBStudio detection when using Fade Street plugin
 - Improve VGM2GBSFX detection
