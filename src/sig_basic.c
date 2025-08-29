@@ -12,20 +12,26 @@
 #include "entry_names_gbbasic.h"
 
 // Check for GB basic
-void check_gbbasic(void) {
+bool check_gbbasic(void) {
 
     tool_entry entry;
 
-    if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init_v11, sig_gbbasic_actor_init_v11_at)) {
+    if ((CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init_v11, sig_gbbasic_actor_init_v11_at)) ||
+        (CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init_v11, sig_gbbasic_actor_init_v11_mod_at))) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.1");
         entry_add(entry);
+        return true;
     }
     else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init_alpha, sig_gbbasic_actor_init_alpha3_at)) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "Alpha3");
         entry_add(entry);
+        return true;
     }
     else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_actor_init_alpha, sig_gbbasic_actor_init_alpha4_at)) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "Alpha4");
         entry_add(entry);
+        return true;
     }
+
+    return false;
 }

@@ -16,6 +16,9 @@
 
     DEF_PATTERN_BUF(sig_gbbasic_actor_init_v11, AR_ARGS(0x19, 0xE5, 0x7D, 0xF8, 0x17, 0x77, 0xE1, 0x7C, 0xF8, 0x16, 0x32, 0x2A, 0x5F, 0x3A, 0x57, 0x1A, 0x22, 0x13, 0x1A, 0x77, 0xF8, 0x0E, 0x2A, 0x5F, 0x56));
     DEF_PATTERN_ADDR(sig_gbbasic_actor_init_v11_at, 0x8650); // Bank 2: 0x4650
+    // Found in gbcompo version of reversi - may be post-1.1 version with engine changes
+    DEF_PATTERN_ADDR(sig_gbbasic_actor_init_v11_mod_at, 0x8242); // Bank 2: 0x4242
+
 
     // Found by checking symbols in "kernel" which is a pre-compiled gb rom
     // bundled with the application. It's a region of stable (pre-compiled)
