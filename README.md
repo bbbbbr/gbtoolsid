@@ -4,8 +4,8 @@ gbtoolsid - Game Boy Toolchain ID
 A command line app for identifying tools used to build Game Boy ROMs
 
 For the web version see:
-https://bbbbbr.github.io/gbtoolsid_web/
-https://github.com/bbbbbr/gbtoolsid_web
+- https://bbbbbr.github.io/gbtoolsid_web/
+- (html + js wrapper source for wasm build): https://github.com/bbbbbr/gbtoolsid_web
 
 
 It attempts to identify the toolchain and engine through binary fingerprints:
