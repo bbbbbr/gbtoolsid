@@ -26,4 +26,13 @@
     DEF_PATTERN_ADDR(sig_matlabgb_update_audio_reg_at, 0x1007);
     DEF_PATTERN_BUF(sig_matlabgb_update_audio_reg, AR_ARGS(0x0A, 0x67, 0x03, 0x0A, 0x6F, 0x46, 0x23, 0x4E, 0x3E, 0xFF));
 
+
+    // Turn off screen where x,x is a call to address N
+    // https://github.com/LyesDemri/Matlab_GB_ROM_Creator/blob/main/turn_off_screen_subroutine_script.m
+    DEF_PATTERN_BUF_MASKED(sig_matlabgb_turn_off_screen, sig_matlabgb_turn_off_screen_mask, \
+        AR_ARGS(0xE5, 0xCD, 0x00, 0x10, 0x21, 0x40, 0xFF, 0xCB, 0xBE, 0xE1, 0xC9), \
+        AR_ARGS(   1,    1,    0,    0,    1,    1,    1,    1,    1,    1,    1));
+
+
+
 #endif // _ENTRY_NAMES_MATLABGB_H

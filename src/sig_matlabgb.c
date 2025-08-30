@@ -25,4 +25,9 @@ void check_matlabgb(void) {
     else if (CHECK_PATTERN_AT_ADDR(sig_matlabgb_update_audio_reg, sig_matlabgb_update_audio_reg_at)) {
         entry_add(entry);
     }
+
+    if (FIND_PATTERN_BUF_MASKED(sig_matlabgb_turn_off_screen, sig_matlabgb_turn_off_screen_mask)) {
+        entry_add(entry);
+    }
+    
 }
