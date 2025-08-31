@@ -4,6 +4,7 @@ Changelog
 # Version 1.5.4
 - Improve GBBasic 1.1 detection
 - Improve Matlab GB Rom Creator detection
+- Detect libgb++ (built with llvm-gb)
 
 # Version 1.5.3
 - Detect GBBasic 1.1
