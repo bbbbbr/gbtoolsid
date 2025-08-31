@@ -8,8 +8,6 @@
 #define _ENTRY_NAMES_MATLABGB_H
 
 
-    // ==== gbnim ====
-    //
     // https://github.com/LyesDemri/Matlab_GB_ROM_Creator/blob/cad1a48ee4ae7983811e2a214366b493b6ec8668/setup_gameboy.m#L10
     // gfx and sound init at 0x150
     DEF_PATTERN_ADDR(sig_matlabgb_setup_gameboy_gfx_at, 0x0150);
