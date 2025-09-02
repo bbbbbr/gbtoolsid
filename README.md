@@ -17,16 +17,17 @@ Toolchains:
 - GBBasic
 - GBNim
 - Matlab GB Rom Creator
+- llvmgb / libgb++
 
 Game Engines:
 - ZGB
 - GBStudio
 
 Audio Drivers:
-- Carillon Player, [DevSound](https://github.com/DevEd2/DevSound) & [DevSoundLite](https://github.com/DevEd2/DevSoundLite), Freaq, GHX, [GB Sound System](https://github.com/gbdev/GBSoundSystem), [GBT Player](https://github.com/AntonioND/gbt-player), [hUGETracker](https://github.com/SuperDisk/hUGETracker) & [fortISSimO](https://github.com/ISSOtm/fortISSimO), Lemon, LSDJ, MPlay, Music Box Black Box, MusyX, [Trackerboy](https://github.com/stoneface86/tbengine), Visual Impact's, [MMLGB](https://github.com/SimonLarsen/mmlgb), [GBMC](http://mydocuments.g2.xrea.com/html/gb/sounddriver.html), QuickThunder (Audio Arts), IMEDGBoy, Cosmigo, Makrillon, DefleMask, TonicFur Audio Engine
+- Carillon Player, [DevSound](https://github.com/DevEd2/DevSound) & [DevSoundLite](https://github.com/DevEd2/DevSoundLite), Freaq, GHX, [GB Sound System](https://github.com/gbdev/GBSoundSystem), [GBT Player](https://github.com/AntonioND/gbt-player), [hUGETracker](https://github.com/SuperDisk/hUGETracker) & [fortISSimO](https://github.com/ISSOtm/fortISSimO), Lemon, LSDJ, MPlay, Music Box Black Box, MusyX, [Trackerboy](https://github.com/stoneface86/tbengine), Visual Impact's, [MMLGB](https://github.com/SimonLarsen/mmlgb), [GBMC](http://mydocuments.g2.xrea.com/html/gb/sounddriver.html), QuickThunder (Audio Arts), IMEDGBoy, Cosmigo, Makrillon, DefleMask, TonicFur Audio Engine, GBMod
 
 Sound FX Drivers:
-- FX Hammer, [CBT-FX](https://github.com/datguywitha3ds/CBT-FX), [VAL-FX](https://github.com/ISSOtm/val-fx), [VGM2GBSFX](https://github.com/untoxa/VGM2GBSFX)
+- FX Hammer, [CBT-FX](https://github.com/datguywitha3ds/CBT-FX), [VAL-FX](https://github.com/ISSOtm/val-fx), [VGM2GBSFX](https://github.com/untoxa/VGM2GBSFX), DevSFX
 
 
 Output is available in several formats:

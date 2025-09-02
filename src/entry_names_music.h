@@ -17,6 +17,8 @@
     DEF_PATTERN_STR(sig_str_devsound_classic, "DevSound GB music player");
     DEF_PATTERN_STR(sig_str_devsound_lite, "DevSound Lite");
     DEF_PATTERN_STR(sig_str_devsound_x, "DevSound X sound driver by DevEd");
+    // https://github.com/DevEd2/potion-panic/blob/ccf7a8283aa05e16c29db0a9d6996c7e134f7628/Audio/GBMod_Player.asm#L30C10-L30C36
+    DEF_PATTERN_STR(sig_str_dev_GBMod, "GBMod music engine by DevEd");
 
     DEF_PATTERN_STR(sig_str_gbmusicplayer_audio, "GB Music Player Copyright VISUAL IMPACT BVBA");
 

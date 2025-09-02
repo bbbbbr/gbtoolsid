@@ -29,6 +29,10 @@ void check_soundfx(void) {
     if (FIND_PATTERN_STR_NOTERM(sig_valfx_info))
         entry_add(entry);
 
+    entry = FORMAT_ENTRY(TYPE_SOUNDFX,"DevSFX", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_str_DevSFX))
+        entry_add(entry);
+
     entry = FORMAT_ENTRY(TYPE_SOUNDFX,"VGM2GBSFX", "");
     if (FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load) ||
         FIND_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load_v2))

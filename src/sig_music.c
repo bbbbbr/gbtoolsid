@@ -35,6 +35,10 @@ void check_music(void) {
         entry = FORMAT_ENTRY(TYPE_MUSIC,"DevSound","X");
         entry_add(entry);
     }
+    else if (FIND_PATTERN_STR_NOTERM(sig_str_dev_GBMod)) {
+        entry = FORMAT_ENTRY(TYPE_MUSIC,"GBMod","");
+        entry_add(entry);
+    }
 
     if (FIND_PATTERN_STR_NOTERM(sig_str_gbmusicplayer_audio)) {
         entry = FORMAT_ENTRY(TYPE_MUSIC,"Visual Impact", "");

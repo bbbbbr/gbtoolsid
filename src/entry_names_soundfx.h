@@ -40,5 +40,9 @@
         // https://github.com/untoxa/VGM2GBSFX/blob/62108bca3afd282ebb6177902d21fb2bebe6f5e6/src/sm83/sfxplayer.c#L60C1-L79C39
         DEF_PATTERN_BUF(sig_vgm2gbsfx_aud3waveram_load_v2, AR_ARGS(0x2A, 0x47, 0xE6, 0x07, 0xFE, 0x05, 0x38,  0x62, 0xFE, 0x07, 0x28, 0x58, 0xF0, 0x25, 0x4F, 0xE6, 0xBB, 0xE0, 0x25, 0xAF, 0xEA, 0x1A, 0xFF, 0x2A, 0xE0, 0x30, 0x2A, 0xE0, 0x31, 0x2A,));
 
+    // ==== DevSFX
+        // https://github.com/DevEd2/potion-panic/blob/ccf7a8283aa05e16c29db0a9d6996c7e134f7628/Audio/DevSFX.asm#L393
+        DEF_PATTERN_STR(sig_str_DevSFX, "DevSFX sound effect engine by DevEd");
+
 
 #endif // _ENTRY_NAMES_SOUNDFX_H
