@@ -1,6 +1,9 @@
 Changelog
 =========
 
+# Version 1.5.5
+- Improve GBBasic 1.1 detection (more reliable)
+
 # Version 1.5.4
 - Improve GBBasic 1.1 detection
 - Improve Matlab GB Rom Creator detection
