@@ -63,7 +63,7 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 
     if (memcmp(&p_match[match_index], p_pattern, pattern_len) == 0) {
             #ifdef DEBUG_LOG_MATCHES
-                printf("At: 0x%08x\n", match_index);
+                printf("** MATCH AT: 0x%08x\n", match_index);
                 for (int c=0; c < pattern_len; c++)
                     printf("0x%02x, ", p_pattern[c]);
                 printf("\n\n");
@@ -98,7 +98,7 @@ bool find_pattern(const uint8_t * p_pattern, uint32_t pattern_len) {
             if (memcmp(p_match, p_pattern, pattern_len) == 0) {
                 addr_last_match = (uint32_t)(p_match - g_p_searchbuf);
                 #ifdef DEBUG_LOG_MATCHES
-                    printf("At: 0x%08x\n", addr_last_match);
+                    printf("** MATCH AT: 0x%08x\n", addr_last_match);
                     for (int c=0; c < pattern_len; c++)
                         printf("0x%02x, ", p_pattern[c]);
                     printf("\n\n");
