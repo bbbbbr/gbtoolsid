@@ -24,6 +24,7 @@
 "test_norepo/gbbasic_v_1_1-text-adventure.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test_norepo/gbbasic_v_1_1-topdown.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test_norepo/gbbasic_v_1_1_R20-reversi.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
+"test_norepo/gbbasic_v_1_1_R22-empty.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test_norepo/gbbasic_v_1_1x-reversi-gbcompo25.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test_norepo/gbdk_4.1.0_modified_crt_gearfo.itch.io_geminorons.gbc","GBDK","2020.4.1.0 - 2020.4.1.1","","","hUGETracker","SuperDisk","",""
 "test_norepo/gbforth_flappy-bird-v1.gb","GBForth","","","","","","",""
