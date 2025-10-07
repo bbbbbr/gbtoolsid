@@ -16,7 +16,12 @@ bool check_gbbasic(void) {
 
     tool_entry entry;
 
-    if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v11, sig_gbbasic_magic_v11_at)) {
+    if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v12, sig_gbbasic_magic_v12_at)) {
+        entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.2");
+        entry_add(entry);
+        return true;
+    }
+    else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v11, sig_gbbasic_magic_v11_at)) {
         entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.1");
         entry_add(entry);
         return true;

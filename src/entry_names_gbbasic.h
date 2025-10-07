@@ -19,6 +19,11 @@
     //                                             .MAJ, .MIN, .REV......, .MAGIC................ 
     DEF_PATTERN_ADDR(sig_gbbasic_magic_v11_at, 0x20000); // Start of Fixed Bank 8: 0x20000
     
+    // TODO: Add support for masked patterns at address (accept start addr and len/-1)
+    DEF_PATTERN_BUF(sig_gbbasic_magic_v12, AR_ARGS(0x01, 0x02, 0x00, 0x00, 0x9B, 0x0B, 0xA5, 0x1C));
+    //                                             .MAJ, .MIN, .REV......, .MAGIC................ 
+    DEF_PATTERN_ADDR(sig_gbbasic_magic_v12_at, 0x20000); // Start of Fixed Bank 8: 0x20000
+
 
     // Found by checking symbols in "kernel" which is a pre-compiled gb rom
     // bundled with the application. It's a region of stable (pre-compiled)
@@ -75,6 +80,10 @@
     //     0x9B, 0x0B, 0xA5, 0x1C
     // };
 
+    // V1.2
+    //
+    // gbb/src/vm/data/builtin.c
+    // https://github.com/paladin-t/gbb/blob/e11a57696f09b022c1678ca07e50b8d858672fd6/src/vm/data/builtin.c#L26
 
 
 #endif // _ENTRY_NAMES_GBBASIC_H

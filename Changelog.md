@@ -1,6 +1,9 @@
 Changelog
 =========
 
+# Version 1.5.6
+- Improve GBBasic 1.2 detection
+
 # Version 1.5.5
 - Improve GBBasic 1.1 detection (more reliable)
 
