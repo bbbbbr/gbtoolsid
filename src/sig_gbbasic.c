@@ -16,13 +16,21 @@ bool check_gbbasic(void) {
 
     tool_entry entry;
 
-    if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v12, sig_gbbasic_magic_v12_at)) {
-        entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.2");
-        entry_add(entry);
-        return true;
-    }
-    else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v11, sig_gbbasic_magic_v11_at)) {
-        entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.1");
+    if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_key, sig_gbbasic_magic_key_at)) {
+        if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v13, sig_gbbasic_magic_version_at)) {
+            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.3");
+        }
+        else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v12, sig_gbbasic_magic_version_at)) {
+            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.2");            
+        }
+        else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v11, sig_gbbasic_magic_version_at)) {
+            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.1");            
+        } else {
+            // Default is un-versioned if unknown version is found
+            // TODO: could read the bytes directly and convert the version
+            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "");
+        }
+
         entry_add(entry);
         return true;
     }
@@ -36,6 +44,7 @@ bool check_gbbasic(void) {
         entry_add(entry);
         return true;
     }
+
 
     return false;
 }

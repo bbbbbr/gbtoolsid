@@ -7,6 +7,7 @@
 "test/gbbasic_v_1_1_R20_minimal.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test/gbbasic_v_1_1_minimal.gb","GBDK","2020.4.3.0+","GBBasic","v1.1","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test/gbbasic_v_1_2_minimal.gb","GBDK","2020.4.3.0+","GBBasic","v1.2","hUGETracker","SuperDisk","VGM2GBSFX",""
+"test/gbbasic_v_1_3_minimal.gb","GBDK","2020.4.3.0+","GBBasic","v1.3","hUGETracker","SuperDisk","VGM2GBSFX",""
 "test/gbforth_aces-up.gb","GBForth","","","","","","",""
 "test/gbforth_happy-birthday.gb","GBForth","","","","","","",""
 "test/gbforth_simon.gb","GBForth","","","","","","",""
