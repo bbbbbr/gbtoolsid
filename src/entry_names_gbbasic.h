@@ -15,14 +15,16 @@
     DEF_PATTERN_ADDR(sig_gbbasic_actor_init_alpha4_at, 0x83C3); // Bank 2: 0x43C3
 
     // Check magic key first
-    DEF_PATTERN_ADDR(sig_gbbasic_magic_key_at, 0x20004); // Start of Fixed Bank 8: 0x20000    
-    DEF_PATTERN_BUF(sig_gbbasic_magic_key, AR_ARGS(                        0x9B, 0x0B, 0xA5, 0x1C));
+    DEF_PATTERN_ADDR(sig_gbbasic_magic_key_at, 0x20004);
+    DEF_PATTERN_BUF(sig_gbbasic_magic_key, AR_ARGS(0x9B, 0x0B, 0xA5, 0x1C));
     // Then check known versions
-    DEF_PATTERN_ADDR(sig_gbbasic_magic_version_at, 0x20000); // Start of Fixed Bank 8: 0x20000
+    DEF_PATTERN_ADDR(sig_gbbasic_magic_version_major_at, 0x20000); // Start of Fixed Bank 8: 0x20000
+    DEF_PATTERN_ADDR(sig_gbbasic_magic_version_minor_at, 0x20001);
+    // Manual versions superseded by extracting version from rom bytes
     //                                                 .MAJ, .MIN, .REV......, .MAGIC................ 
-    DEF_PATTERN_BUF(sig_gbbasic_magic_v11, AR_ARGS(0x01, 0x01, 0x00, 0x00));
-    DEF_PATTERN_BUF(sig_gbbasic_magic_v12, AR_ARGS(0x01, 0x02, 0x00, 0x00));
-    DEF_PATTERN_BUF(sig_gbbasic_magic_v13, AR_ARGS(0x01, 0x03, 0x00, 0x00));
+    // DEF_PATTERN_BUF(sig_gbbasic_magic_v11, AR_ARGS(0x01, 0x01, 0x00, 0x00));
+    // DEF_PATTERN_BUF(sig_gbbasic_magic_v12, AR_ARGS(0x01, 0x02, 0x00, 0x00));
+    // DEF_PATTERN_BUF(sig_gbbasic_magic_v13, AR_ARGS(0x01, 0x03, 0x00, 0x00));
 
 
     // Found by checking symbols in "kernel" which is a pre-compiled gb rom

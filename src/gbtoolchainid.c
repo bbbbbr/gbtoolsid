@@ -42,13 +42,24 @@ static void set_search_buf(uint8_t * p_rom_data, uint32_t rom_size) {
     g_searchbuf_len = rom_size;
 }
 
+
+bool read_byte_addr(uint32_t addr, uint8_t * p_return_byte) {
+
+    if ((g_p_searchbuf == NULL) || (p_return_byte == NULL) || (addr >= g_searchbuf_len))
+        return false;
+
+    *p_return_byte = g_p_searchbuf[addr];
+    return true;
+}
+
+
 uint32_t get_addr_last_match(void) {
     return addr_last_match;
 }
 
 // Test for a pattern at a specific address
 //
-bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t match_index) {
+bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_t match_addr) {
 
     uint8_t * p_match = g_p_searchbuf;
 
@@ -58,17 +69,17 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 
     // Don't try to search if requested match address or
     // pattern length would be past end of [zero indexed] search buffer
-    if ((match_index + pattern_len - 1) > (g_searchbuf_len - 1))
+    if ((match_addr + pattern_len - 1) > (g_searchbuf_len - 1))
         return false;
 
-    if (memcmp(&p_match[match_index], p_pattern, pattern_len) == 0) {
+    if (memcmp(&p_match[match_addr], p_pattern, pattern_len) == 0) {
             #ifdef DEBUG_LOG_MATCHES
-                printf("** MATCH AT: 0x%08x\n", match_index);
+                printf("** MATCH AT: 0x%08x\n", match_addr);
                 for (int c=0; c < pattern_len; c++)
                     printf("0x%02x, ", p_pattern[c]);
                 printf("\n\n");
             #endif
-        addr_last_match = match_index;
+        addr_last_match = match_addr;
         return true;
     }
     else

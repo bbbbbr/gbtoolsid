@@ -3,6 +3,8 @@
 // bbbbbr 2020
 
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 
 #include "common.h"
@@ -17,17 +19,18 @@ bool check_gbbasic(void) {
     tool_entry entry;
 
     if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_key, sig_gbbasic_magic_key_at)) {
-        if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v13, sig_gbbasic_magic_version_at)) {
-            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.3");
-        }
-        else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v12, sig_gbbasic_magic_version_at)) {
-            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.2");            
-        }
-        else if (CHECK_PATTERN_AT_ADDR(sig_gbbasic_magic_v11, sig_gbbasic_magic_version_at)) {
-            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "v1.1");            
+
+        char str_ver[MAX_FILE_STR];
+        uint8_t ver_major, ver_minor;
+
+        // Read version bytes and format them into a string for the entry
+        if (read_byte_addr(sig_gbbasic_magic_version_major_at, &ver_major) &&
+            read_byte_addr(sig_gbbasic_magic_version_minor_at, &ver_minor)) {
+
+            snprintf(str_ver, MAX_STR_LEN, "v%u.%u", (unsigned int)ver_major, (unsigned int)ver_minor);
+            entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", str_ver);
         } else {
-            // Default is un-versioned if unknown version is found
-            // TODO: could read the bytes directly and convert the version
+            // If the read failed for some reason then default is un-versioned
             entry = FORMAT_ENTRY(TYPE_ENGINE, "GBBasic", "");
         }
 
