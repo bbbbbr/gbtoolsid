@@ -17,6 +17,9 @@
     DEF_PATTERN_STR(sig_str_devsound_classic, "DevSound GB music player");
     DEF_PATTERN_STR(sig_str_devsound_lite, "DevSound Lite");
     DEF_PATTERN_STR(sig_str_devsound_x, "DevSound X sound driver by DevEd");
+    // https://codeberg.org/DevEd/DevSoundX2/src/commit/5ec4b653cac0f1f446a17d674667eca0885c75a7/Audio/DevSoundX2.asm#L378
+    DEF_PATTERN_STR(sig_str_devsound_x2, "DevSound X2 sound driver");
+
     // https://github.com/DevEd2/potion-panic/blob/ccf7a8283aa05e16c29db0a9d6996c7e134f7628/Audio/GBMod_Player.asm#L30C10-L30C36
     DEF_PATTERN_STR(sig_str_dev_GBMod, "GBMod music engine by DevEd");
 
