@@ -101,6 +101,10 @@ bool check_gbstudio(void) {
                     entry_add_with_version(entry, "4.0.0 - 4.0.2");
                     return true;
                 }
+                else if (FIND_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_3_0_plus, sig_gbs_vminstruct_4_3_0_plus_mask)) {
+                    entry_add_with_version(entry, "4.3.0+");
+                    return true;
+                }
 
 
                 entry_add_with_version(entry, "3.2.0 - 3.2.1");

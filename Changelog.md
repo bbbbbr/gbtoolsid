@@ -2,8 +2,9 @@ Changelog
 =========
 
 # Version 1.5.6
-- Improve GBBasic 1.2 detection
+- Improve GBBasic 1.2+ detection
 - Detect DevSound X2
+- Detect GBStudio 4.3.0+
 
 # Version 1.5.5
 - Improve GBBasic 1.1 detection (more reliable)

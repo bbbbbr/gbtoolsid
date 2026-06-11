@@ -45,10 +45,31 @@
     // const SCRIPT_CMD script_cmds[] = {
     // Removed 8 x rows of vm_instructions script_cmds[] entries that ended in "4s and one 3" lines 48-55
     // https://github.com/chrismaltby/gbvm/commit/78a030f4a9f794e38b4990641183c52c3c7c0048
+    //
+    // Starts on line for "    {vm_invoke,                         BANK(VM_MAIN),          6}, // 0x0D"
+    // Ends on line for   "    {vm_if_const,                       BANK(VM_MAIN),          8}, // 0x1A" + 4 rows of {0,0,0,0}
+    //
     // Second row is mask, 0 = don't check, 1 = check. In this table, rows which are all 0s can have all their masks enabled (stronger)
     DEF_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_0_0_plus, sig_gbs_vminstruct_4_0_0_plus_mask, \
         AR_ARGS(0,0,0,6, 0,0,0,6, 0,0,0,8, 0,0,0,2, 0,0,0,2, 0,0,0,1, 0,0,0,4, 0,0,0,4, 0,0,0,0, 0,0,0,2, 0,0,0,2, 0,0,0,0, 0,0,0,4, 0,0,0,8,   0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0), \
         AR_ARGS(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1,   1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1));
+
+    // ADDED: 2/11/2026: 4.3.0+
+    // (search for "_script_cmds" in the .sym generated when building the minimal example)
+    //
+    // src/core/vm_instructions.c
+    // const SCRIPT_CMD script_cmds[] = {
+    // These two commits changed since 4.2.0
+    // https://github.com/chrismaltby/gbvm/commit/347939db0733d3c9db72ebb947969258318d3a1b
+    // https://github.com/chrismaltby/gbvm/commit/0757ea9ffb28969beb1f5502337cbd2560b8a34c
+    //
+    // Starts on line for "    {vm_invoke,                         BANK(VM_MAIN),          6}, // 0x0D"
+    // Ends on line for   "    {vm_rate_limit_const,               BANK(VM_MAIN),          6},  // 0x1C" + 2 rows of {0,0,0,0}
+    //
+    // Second row is mask, 0 = don't check, 1 = check. In this table, rows which are all 0s can have all their masks enabled (stronger)
+    DEF_PATTERN_BUF_MASKED(sig_gbs_vminstruct_4_3_0_plus, sig_gbs_vminstruct_4_3_0_plus_mask, \
+        AR_ARGS(0,0,0,6, 0,0,0,6, 0,0,0,8, 0,0,0,2, 0,0,0,2, 0,0,0,1, 0,0,0,4, 0,0,0,4, 0,0,0,0, 0,0,0,2, 0,0,0,2, 0,0,0,0, 0,0,0,4, 0,0,0,8,  0,0,0,0, 0,0,0,6,   0,0,0,0, 0,0,0,0), \
+        AR_ARGS(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1,  0,0,0,1, 0,0,0,1,   1,1,1,1, 1,1,1,1));
 
 
     // ADDED: 7/29/2024: 4.1.0+
