@@ -10,16 +10,16 @@
 #include "gbtoolchainid.h"
 
 
-// ==== Not yet named GBDK based engine
+// ==== RetroGBFull Toolkit, GBDK based engine
 
-    const uint8_t sig_unnamed_engine_signature[] = "RGBFULL!";
+    const uint8_t sig_retrorgbfull_signature[] = "RGBFULL!";
 
-// Check for [Unnamed Engine]
-void check_unnamed_engine(void) {
+// Check for RetroGBFull Toolkit
+void check_retrorgbfull(void) {
 
     tool_entry entry;
 
-    entry = FORMAT_ENTRY(TYPE_TOOLS, "Unnamed Engine", "");
-    if (FIND_PATTERN_STR_NOTERM(sig_unnamed_engine_signature))
+    entry = FORMAT_ENTRY(TYPE_ENGINE, "RetroGBFull Toolkit", "");
+    if (FIND_PATTERN_STR_NOTERM(sig_retrorgbfull_signature))
         entry_add(entry);
 }

@@ -228,7 +228,7 @@ void gbtools_detect(uint8_t * p_rom_data, uint32_t rom_size, bool strict_mode) {
     check_gbsdk();
     check_matlabgb();
     check_llvmgb_libgbxx();
-    check_unnamed_engine();
+    check_retrorgbfull();
 
     // Check for music drivers
     // May report multiple drivers (if found) in default output mode
