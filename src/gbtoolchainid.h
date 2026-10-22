@@ -8,6 +8,7 @@ void display_output(int, const char *);
 
 bool read_byte_addr(uint32_t addr, uint8_t * p_return_byte);
 bool check_pattern_addr(const uint8_t *, uint32_t, uint32_t);
+bool check_pattern_addr_masked(const uint8_t * p_pattern, const uint8_t * p_pattern_mask, uint32_t pattern_len, uint32_t match_addr);
 bool find_pattern(const uint8_t *, uint32_t);
 bool find_pattern_masked(const uint8_t * p_pattern, const uint8_t * p_pattern_mask, uint32_t pattern_len);
 

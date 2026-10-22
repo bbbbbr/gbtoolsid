@@ -88,6 +88,65 @@ bool check_pattern_addr(const uint8_t * p_pattern, uint32_t pattern_len, uint32_
 }
 
 
+// Test for a pattern at a specific address, only checking bytes enabled in a mask pattern (0 == ignore, 1+ == check)
+//
+bool check_pattern_addr_masked(const uint8_t * p_pattern, const uint8_t * p_pattern_mask, uint32_t pattern_len, uint32_t match_addr) {
+
+    uint32_t start_offset = 0;
+
+    if ((g_p_searchbuf == NULL) || (p_pattern == NULL) || (p_pattern_mask == NULL) ||
+        (g_searchbuf_len == 0)  || (pattern_len == 0))
+        return false;
+
+    // Find first non-masked byte in pattern
+    while (start_offset < pattern_len) {
+        if (p_pattern_mask[start_offset]) break;
+        start_offset++;
+    }
+    // Pattern had no unmasked bytes -> fail
+    if (start_offset == pattern_len)
+        return false;
+    else {
+        // Reduce pattern size by start offset (strip off unused bytes at start)
+        p_pattern      += start_offset;
+        p_pattern_mask += start_offset;
+        match_addr     += start_offset;
+        pattern_len    -= start_offset;
+    }
+
+    // Don't try to search if requested match address or
+    // pattern length would be past end of [zero indexed] search buffer
+    if ((match_addr + pattern_len - 1) > (g_searchbuf_len - 1))
+        return false;
+
+    // Check for a pattern match at the current location
+    const uint8_t * p_match = &g_p_searchbuf[match_addr];
+    bool full_match = true;
+
+    for (uint32_t c = 0; c < pattern_len; c++) {
+
+        #ifdef DEBUG_LOG_MATCHES
+            printf("** Checking at AT: 0x%08x (%02x vs %02x)", match_addr + c, p_match[c], p_pattern[c]);
+            if (p_pattern_mask[c]) {
+                if (p_pattern[c] != p_match[c]) {
+                    // Match failed
+                    printf(" FAIL\n");
+                } else printf(" OK\n");
+            } else printf(" Masked OUT\n");
+        #endif
+
+        if (p_pattern_mask[c]) {
+            if (p_pattern[c] != p_match[c]) {
+                // Match failed, break out
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 // Try to find a pattern in a buffer
 //
 // No memmem on MinGW, so use the same for both instead of:

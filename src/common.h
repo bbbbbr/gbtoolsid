@@ -30,6 +30,7 @@
 
 #define FIND_PATTERN_STR_NOTERM(ptr_to_buf) (find_pattern(ptr_to_buf, sizeof_str_noterm(ptr_to_buf)))
 #define CHECK_PATTERN_AT_ADDR(ptr_to_buf, check_addr) (check_pattern_addr(ptr_to_buf, sizeof(ptr_to_buf), check_addr))
+#define CHECK_PATTERN_MASKED_AT_ADDR(ptr_to_buf, ptr_to_mask, check_addr) (check_pattern_addr_masked(ptr_to_buf, ptr_to_mask, sizeof(ptr_to_buf), check_addr))
 #define FORMAT_ENTRY(e_type, e_name, e_version) ((tool_entry){.type = e_type, .c_name = e_name, .c_version = e_version})
 
 // Reference example: Formerly: #define STR_GBDK_2_x_to_2020_3_2_0       "2.x - 2020.3.2.0"

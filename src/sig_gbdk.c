@@ -144,6 +144,12 @@ bool check_gbdk(void) {
         } // end GBDK-2020 4.0.1 and later extra match
     } // end GBDK-2020 4.0.1 and later
 
+    // GBDK-2020 4.6.0 and later
+    if ((CHECK_PATTERN_AT_ADDR(sig_gbdk_0x28_GBDK_2020_460_plus_memset, sig_gbdk_0x28_at)) ||
+        (CHECK_PATTERN_MASKED_AT_ADDR(sig_gbdk_cputest_4_6_0_plus, sig_gbdk_cputest_4_6_0_plus_mask, sig_gbdk_cputest_4_6_0_plus_at))) {
+        entry_add_with_version(entry, STR_GBDK_2020_4_6_0_plus);
+    }
+
     // GBDK 1.x - 2.0.x
     if ((CHECK_PATTERN_AT_ADDR(sig_gbdk_0x150_GBDK_1_x, sig_gbdk_0x150_GBDK_1_x_at)) &&
         (CHECK_PATTERN_AT_ADDR(sig_gbdk_0x158_GBDK_1_x, sig_gbdk_0x158_GBDK_1_x_at))) {

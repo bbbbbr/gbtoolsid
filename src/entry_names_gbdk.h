@@ -29,7 +29,8 @@
     DEF_NAME_STR(STR_GBDK_2020_4_1_0_to_4_1_1,     "2020.4.1.0 - 2020.4.1.1");
     DEF_NAME_STR(STR_GBDK_2020_4_2_0_interim,      "2020.4.2.0 interim");
     DEF_NAME_STR(STR_GBDK_2020_4_2_0,              "2020.4.2.0");
-    DEF_NAME_STR(STR_GBDK_2020_4_3_0_plus,         "2020.4.3.0+");
+    DEF_NAME_STR(STR_GBDK_2020_4_3_0_plus,         "2020.4.3.0 - 2020.4.5.0");
+    DEF_NAME_STR(STR_GBDK_2020_4_6_0_plus,         "2020.4.6.0+");
     DEF_NAME_STR(STR_GBDK_2020_4_UNKNOWN,          "Unknown");
 
 
@@ -44,12 +45,17 @@
     // 0x20
     DEF_PATTERN_ADDR(sig_gbdk_0x20_at, 0x0020);
     // First Entry is ambiguous, must be combined
+    // RST 20 call_hl handler (jp (hl)
     //DEF_PATTERN_BUF(sig_gbdk_0x20_GBDK_2x_to_2020_320, AR_ARGS(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF));
     DEF_PATTERN_BUF(sig_gbdk_0x20_GBDK_2020_400_0x20, AR_ARGS(0xE9)); // {0xE9, 0xFF, 0xFF, 0xFF));
     DEF_PATTERN_BUF(sig_gbdk_0x20_GBDK_2020_401_plus_0x20, AR_ARGS(0xE9)); // {0xE9, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x22, 0x0D, 0x20, 0xFC, 0xC9, 0xFF, 0xFF, 0xFF));
     // 0x28
     DEF_PATTERN_ADDR(sig_gbdk_0x28_at, 0x0028);
     DEF_PATTERN_BUF(sig_gbdk_0x20_GBDK_2020_401_plus_0x28, AR_ARGS(0x22, 0x0D, 0x20, 0xFC, 0xC9)); // {0xE9, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x22, 0x0D, 0x20, 0xFC, 0xC9, 0xFF, 0xFF, 0xFF));
+    // Memset small gained a minor speed optimization (double-write loop) that added some instructions
+    // https://github.com/gbdk-2020/gbdk-2020/commit/f0279fb197b03f42d404b74b4f455068ee5eced4
+    DEF_PATTERN_BUF(sig_gbdk_0x28_GBDK_2020_460_plus_memset, AR_ARGS(0x22, 0x0D, 0xC8, 0x22, 0x0D, 0x20, 0xF9, 0xC9));
+
 
     // 0x30
     DEF_PATTERN_ADDR(sig_gbdk_0x30_at, 0x0030);
@@ -113,6 +119,17 @@
         // _refresh_OAM:: crt0.s JP (HL) was replaced with // JP      .refresh_OAM + (.refresh_OAM_DMA - .start_refresh_OAM)
         DEF_PATTERN_BUF(sig_gbdk_0x157_GBDK_2020_405_v1, AR_ARGS(0xF3, 0x57, 0x58, 0x31));
         DEF_PATTERN_ADDR(sig_gbdk_0x157_GBDK_2020_405_v1_at, 0x0157);
+
+    // Check CPU and init display around 0x16x
+        // GBDK 4.6.0 changed model detection slightly (one less instruction)
+        // https://github.com/gbdk-2020/gbdk-2020/blob/3a3d054578af63c25144917ba9635750b39a7ab2/gbdk-lib/libc/targets/sm83/gb/crt0.s#L230-L247
+        // https://github.com/gbdk-2020/gbdk-2020/commit/d5968cce3043da406221dd5a8e75f80b9b02fb12
+        // 0x16B -> 0x17B (ends on rWY write), masked out __is_GBA addr
+        DEF_PATTERN_ADDR(sig_gbdk_cputest_4_6_0_plus_at, 0x169);
+        DEF_PATTERN_BUF_MASKED(sig_gbdk_cputest_4_6_0_plus, sig_gbdk_cputest_4_6_0_plus_mask, \
+            AR_ARGS(0xFE, 0x11, 0x20, 0x06, 0x7B, 0xE6, 0x01, 0xEA, 0xA1, 0xC0, 0xAF, 0xE0, 0x42, 0xE0, 0x43, 0xE0, 0x41, 0xE0, 0x4A), \
+            AR_ARGS(   1,    1,    1,    1,    1,    1,    1,    1,    0,    0,    1,    1,    1,    1,    1,    1,    1,    1,    1));
+
     // .clear_WRAM:: Tail
             // Single instruction test is ok, but there is a slightly larger block shortly after:
             // DEF_PATTERN_BUF(sig_gbdk_0x00B7_GBDK_2020_410_plus, AR_ARGS(0xAF)); // "xor a".Was [0xD5, 0xAF] (push de, xor a)
