@@ -3,6 +3,7 @@ Changelog
 
 # Version 1.5.7
 - Detect GBDK 4.6.0+
+- Detect GB Maker
 
 # Version 1.5.6
 - Improve GBBasic 1.2+ detection
